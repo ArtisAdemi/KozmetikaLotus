@@ -1,0 +1,90 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
+const db = require("../models");
+const Users = db.Users;
+const validateToken = require('../middleware/AuthMiddleware')
+ 
+// Controller functions
+
+// Get users
+const getUsers = async (req, res) => {
+    try {
+        const users = await Users.findAll();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message});
+    }
+};
+
+// Get UserById
+const getUserById = async (req, res) => {
+    const userId = req.params.id;
+    try{
+        const user = await Users.findByPk(userId);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: "User not found"})
+        }
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+};
+
+// Register User
+
+const registerUser = async (req, res) => {
+    const { email, username, role, password} = req.body;
+    try{
+        // hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        // Create a new user in database
+        const newUser = await Users.create({
+            email: email,
+            username: username,
+            role: role,
+            password: hashedPassword,
+        });
+        res.status(201).json(newUser);
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+}
+
+// login
+const loginUser = async (req, res) => {
+    // getting email and pw from json body
+    const {email, password} = req.body;
+
+    try{
+        // fetch user by email
+        const user = await Users.findOne({ where: {email: email}});
+
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // hash user password and check if it is the same as the on saved in DB
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        if (!validPassword) {
+            return res.status(401).json({message: "Invalid Password"})
+        }
+
+        // Assing a jwt token for user if credentials are correct
+        // In JWT we save useful data for user
+        const token = jwt.sign({id: user.id, email: user.email, username: user.username, role: user.role}, "Thisisveryverysecret", {expiresIn: '1h'});
+        res.status(200).json({token: token});
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+}
+
+// export controller functions
+module.exports = {
+    getUsers,
+    getUserById,
+    registerUser,
+    loginUser
+};
