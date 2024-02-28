@@ -16,6 +16,9 @@ app.use("/users", userRouter);
 // Auth Router
 const authRouter = require('./routes/Auth');
 app.use("/auth", authRouter);
+// CategoryRouter
+const categoryRouter = require('./routes/Categories');
+app.use("/categories", categoryRouter)
 
 
 
