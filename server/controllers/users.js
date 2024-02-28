@@ -1,9 +1,9 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 const db = require("../models");
 const Users = db.Users;
-// Getting Sequelize Users model
-// const Users = require('../models/Users');
-const bcrypt = require('bcrypt')
-
+const validateToken = require('../middleware/AuthMiddleware')
+ 
 // Controller functions
 
 // Get users
@@ -34,7 +34,6 @@ const getUserById = async (req, res) => {
 // Register User
 
 const registerUser = async (req, res) => {
-    console.log("--------------------------------------")
     const { email, username, role, password} = req.body;
     try{
         // hash password
@@ -53,9 +52,39 @@ const registerUser = async (req, res) => {
     }
 }
 
+// login
+const loginUser = async (req, res) => {
+    // getting email and pw from json body
+    const {email, password} = req.body;
+
+    try{
+        // fetch user by email
+        const user = await Users.findOne({ where: {email: email}});
+
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // hash user password and check if it is the same as the on saved in DB
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        if (!validPassword) {
+            return res.status(401).json({message: "Invalid Password"})
+        }
+
+        // Assing a jwt token for user if credentials are correct
+        // In JWT we save useful data for user
+        const token = jwt.sign({id: user.id, email: user.email, username: user.username, role: user.role}, "Thisisveryverysecret", {expiresIn: '1h'});
+        res.status(200).json({token: token});
+    } catch (err) {
+        res.status(500).json({error: err.message});
+    }
+}
+
 // export controller functions
 module.exports = {
     getUsers,
     getUserById,
-    registerUser
+    registerUser,
+    loginUser
 };

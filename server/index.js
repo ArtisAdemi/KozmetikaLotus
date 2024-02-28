@@ -13,10 +13,11 @@ app.use(cors());
 // UserRouter
 const userRouter = require('./routes/users')
 app.use("/users", userRouter);
-
 // Auth Router
 const authRouter = require('./routes/Auth');
 app.use("/auth", authRouter);
+
+
 
 // Creating sequelize sync with db
 db.sequelize.sync().then(() => {
