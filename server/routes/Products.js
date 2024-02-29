@@ -10,6 +10,9 @@ router.post('/', productsController.registerProduct);
 // Update Product
 router.put('/:id', productsController.updateProduct)
 
+// Get Products
+router.get("/", productsController.getProducts)
+
 // Delete Product
 router.delete('/:id', productsController.deleteProduct)
 

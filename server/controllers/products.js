@@ -11,8 +11,30 @@ const getProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default page is 1
     const limit = parseInt(req.query.limit) || 10; //Default limit is 10
     const offset = (page - 1) * limit;
+    const category = req.query.category; // Category will be sent by query
+    const productName = req.query.productName; // Product name will be sent by query
+
     try{
-        const products = await Products.findAll({offset, limit});
+        let products;
+
+        if (category && productName){
+            products = await Products.findAll({
+                where: {'$Categories.name$' : category, title: productName},
+                include: [{model: Categories}]
+            });
+        } else if (category) {
+            products = await Products.findAll({
+                where: { '$Categories.name$': category },
+                include: [{ model: Categories }]
+            });
+        } else if (productName) {
+            products = await Products.findAll({
+                where: { title: productName}
+            });
+        } else {
+            products = await Products.findAll({offset, limit, include: [{ model: Categories }]});
+        }
+
         res.status(200).json(products)
     } catch (err) {
         res.status(500).json({ error: err.message});
