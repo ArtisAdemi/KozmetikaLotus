@@ -11,7 +11,7 @@ const validateToken = (req, res, next) => {
 
     try {
         // Decode jwt token into user model
-        const decoded = jwt.verify(token, 'your_secret_key');
+        const decoded = jwt.verify(token, 'Thisisveryverysecret');
         // Assign a new field named user into request with decoded information from jwt token
         req.user = decoded;
         // when this func is used somewhere. Next() makes it possible to continue with the function from where this was called
