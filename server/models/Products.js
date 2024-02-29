@@ -27,12 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
      // This creates a table with many to many relation
-    // WE MUST ALSO DO THIS IN Categories.js
-    Products.associate = (models) => {
+     Products.associate = (models) => {
         Products.belongsToMany(models.Categories, { through: 'ProductCategories' });
-    };
-    // This tells sequelize that Products is associated with images table
-    Products.associate = (models) => {
         Products.hasMany(models.Images, { foreignKey: 'ProductId' });
     };
 
