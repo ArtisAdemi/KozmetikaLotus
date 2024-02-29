@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require("cors");
@@ -25,6 +26,9 @@ apiRouter.use("/products", productRouter);
 // CategoryRouter
 const categoryRouter = require('./routes/Categories');
 apiRouter.use("/categories", categoryRouter)
+// Mailer Routes
+const mailerRouter = require("./routes/Mailer");
+apiRouter.use("/mailer", mailerRouter)
 
 // Mount the apiRouter under the /api endpoint
 app.use("/api", apiRouter)
