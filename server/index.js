@@ -8,22 +8,26 @@ const db = require("./models");// Getting models from ./models
 app.use(express.json());
 app.use(cors());
 
-// Mounting Routes
+// Creating a new router for the /api endpoint
+const apiRouter = express.Router();
+
+// Mounting Routes under /api endpoint
 
 // UserRouter
 const userRouter = require('./routes/users')
-app.use("/users", userRouter);
+apiRouter.use("/users", userRouter);
 // Auth Router
 const authRouter = require('./routes/Auth');
-app.use("/auth", authRouter);
+apiRouter.use("/auth", authRouter);
 // Product router
 const productRouter = require('./routes/Products')
-app.use("/products", productRouter);
+apiRouter.use("/products", productRouter);
 // CategoryRouter
 const categoryRouter = require('./routes/Categories');
-app.use("/categories", categoryRouter)
+apiRouter.use("/categories", categoryRouter)
 
-
+// Mount the apiRouter under the /api endpoint
+app.use("/api", apiRouter)
 
 // Creating sequelize sync with db
 db.sequelize.sync().then(() => {
