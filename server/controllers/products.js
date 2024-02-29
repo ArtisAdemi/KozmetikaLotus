@@ -46,7 +46,7 @@ const getProductById = async (req, res) => {
     const productId = req.params.id;
     
     try{
-        const product = Products.findByPk(productId);
+        const product = await Products.findByPk(productId);
         if (product) {
             res.status(200).json(product);
         } else {
