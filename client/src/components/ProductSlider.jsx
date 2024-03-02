@@ -1,19 +1,33 @@
 import {React, useState, useEffect} from 'react';
 import Slider from 'react-slick';
+import ProductService from '../services/Products';
 
 // Import the slick carousel CSS files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ProductService from '../services/Products';
+import './slider.css';
+
+const truncateDescription = (description, maxLength) => {
+  if(description.length <= maxLength) {
+    return description;
+  }
+  const truncated = description.split(' ').slice(0, maxLength).join(' ');
+  return truncated + '...';
+}
 
 const ProductSlider = () => {
+  const [products, setProducts] = useState([])
+  
+
+
   // Settings for the slider
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 650,
     slidesToShow: 4,
     slidesToScroll: 1,
+    lazyLoad: 'ondemand',
     responsive: [
       {
         breakpoint: 1024,
@@ -37,7 +51,6 @@ const ProductSlider = () => {
     // Add any other settings you need
   };
 
-  const [products, setProducts] = useState([])
 
   useEffect(() => {
     fetchProducts();
@@ -48,30 +61,30 @@ const ProductSlider = () => {
       const result = await ProductService.getProducts();
       if (result) {
         setProducts(result);
-        console.log(products, "Products")
       }
     } catch (err) {
       console.error("Error:", err)
     }
   }
 
+
   return (
-    <Slider {...settings}>
-      <div>
-        <h3>1</h3>
+    <div className='w-full flex justify-center items-center'>
+      <div className='w-[80%]'>
+        <Slider {...settings}>
+          {products.map((product, index) => (
+            <div key={index}>
+                <img src={product.image} alt={product.title} />
+              <div>
+                <h3>{product.title}</h3>
+                <p>{truncateDescription(product.description, 10)}</p>
+                <h4>€{product.price}</h4>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-      <div>
-        <h3>2</h3>
-      </div>
-      <div>
-        <h3>3</h3>
-      </div>
-      <div>
-        <h3>
-          4
-        </h3>
-      </div>
-    </Slider>
+    </div>
   );
 };
 
