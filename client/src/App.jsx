@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import { Navbar } from './components';
+import { Navbar, Footer } from './components';
 import { AboutUs, ContactUs, Home, Products } from './pages';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
             <Route path='/contact'exact Component={ContactUs}/>
           </Routes>
       </Router>
+      <Footer></Footer>
     </div>
   );
 }
