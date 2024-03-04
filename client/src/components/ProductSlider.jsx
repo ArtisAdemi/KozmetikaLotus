@@ -74,7 +74,7 @@ const ProductSlider = () => {
         <Slider {...settings}>
           {products.map((product, index) => (
             <div key={index}>
-                <img src={product.image} alt={product.title} />
+                {/* <img src="../lipstick.png" alt={product.title} /> */}
               <div>
                 <h3>{product.title}</h3>
                 <p>{truncateDescription(product.description, 10)}</p>
