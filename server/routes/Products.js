@@ -10,6 +10,9 @@ router.post('/', productsController.registerProduct);
 // Update Product
 router.put('/:id', productsController.updateProduct)
 
+// Get Product by ID
+router.get('/productPerCategory', productsController.getUniqueProductPerCategory)
+
 // Get Products
 router.get("/", productsController.getProducts)
 
