@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <div>Home</div>
-      <ProductSlider />
+      <ProductSlider category={"lipstick"}/>
     </div>
   )
 }

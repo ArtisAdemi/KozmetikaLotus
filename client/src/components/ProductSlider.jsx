@@ -15,7 +15,7 @@ const truncateDescription = (description, maxLength) => {
   return truncated + '...';
 }
 
-const ProductSlider = () => {
+const ProductSlider = ({ category }) => {
   const [products, setProducts] = useState([])
   
 
@@ -56,9 +56,20 @@ const ProductSlider = () => {
     fetchProducts();
   }, [])
   
+  const filterModel = {
+    category: category
+  }
+
   const fetchProducts = async () => {
+    let result;
+  
     try{
-      const result = await ProductService.getProducts();
+
+      if (filterModel.category) {
+         result = await ProductService.getProductsByFilter(filterModel);
+      } else {
+         result = await ProductService.getProducts();
+      }
       if (result) {
         setProducts(result);
       }
