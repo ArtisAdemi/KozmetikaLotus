@@ -4,10 +4,12 @@ import LotusLogo from '../socialsLogo/LotusLogo'
 const Navbar = () => {
   return (
     <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[2px] border-[#ABABAB] p-4'>
-        <div className='w-1/3'>
-            <LotusLogo />
+        <div>
+            <div className='absolute'>
+                <LotusLogo />
+            </div>
         </div>
-        <div className='flex justify-between w-1/3 items-center'>
+        <div className='flex justify-between items-center mr-16'>
             <div className='m-2'>
                 <p><a href="/">Home</a></p>
             </div>
@@ -18,8 +20,8 @@ const Navbar = () => {
                 <p><a href="/about">About Us</a></p>
             </div>
         </div>
-        <div className='navbar-right border-[2px] border-[#0C0C0C] px-5 py-2 items-center'>
-            <button><a href="/contact">Contact Us</a></button>
+        <div className='navbar-right flex border-[2px] border-[#0C0C0C] px-5 items-center justify-center text-center'>
+            <button className='text-center items-center'><a href="/contact" className='text-center items-center'>Contact Us</a></button>
         </div>
     </div>
   )
