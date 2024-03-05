@@ -95,7 +95,26 @@ const Home = () => {
           </div>
         </div>
       </div>
-          <ProductSlider category={"lipstick"}/>
+      {/* About us section */}
+      <div className='flex justify-center px-12 py-16'>
+        <div className='w-[80%] mr-12 max-w-[500px] text-center'>
+          {/* Text Section */}
+          <div>
+            <h1 className='text-3xl font-bold text-center'>Rreth Nesh</h1>
+          </div>
+          <div>
+            <p className='text-center'>Ju faleminderit që vizitoni website-in tonë. Shpresojmë që të gjeni produktet e duhura për të arritur qëllimet tuaja për kujdesin e lëkurës. Ne jemi këtu për të ndihmuar në rrugën tuaj drejt një lëkure të shëndetshme dhe të bukur. Urojme që të keni një eksperiencë të mrekullueshme me produktet e Kozmetika Lotus</p>
+          </div>
+          <div className='mt-4'>
+            <a className='text-center underline font-semibold' href="/about">Lexo me shume</a>
+          </div>
+        {/* Image */}
+        </div>
+          <div className='max-w-[500px]'>
+            <img src={require('../images/HomePage1AboutUs.png')} alt="" />
+          </div>
+      </div>
+          <ProductSlider/>
     </div>
   )
 }
