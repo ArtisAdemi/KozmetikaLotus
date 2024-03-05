@@ -50,6 +50,18 @@ const ProductService = {
             console.error('Error fetching products: ', err);
             return null;
         }
+    },
+
+    // Get 1 product per Category
+    
+    getUniqueCategory: async () => {
+        try{
+            const response = await axios.get(`${API_URL}/productPerCategory`);
+            return response;
+        } catch (err) {
+            console.error('Error fetching products:', err);
+            return null
+        }
     }
 };
 

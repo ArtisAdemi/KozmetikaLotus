@@ -114,7 +114,24 @@ const Home = () => {
             <img src={require('../images/HomePage1AboutUs.png')} alt="" />
           </div>
       </div>
-          <ProductSlider/>
+
+      {/* Kategorite Section */}
+
+      {/* Parent Container with bg color */}
+      <div className='w-full bg-[#E9E9D7] flex justify-center overflow-hidden py-12'>
+        {/* Content Container */}
+        <div className='w-[80%] grid justify-center'>
+          {/* Header */}
+          <div className='items-center text-center'>
+            <h1 className='text-3xl font-semibold text-center'>Kategoritë</h1>
+          </div>
+        </div>
+      </div>
+          {/* Slider */}
+      <div className='bg-[#E9E9D7] pb-20'>
+          <ProductSlider uniqueCategories={true}/>
+      </div>
+      
     </div>
   )
 }

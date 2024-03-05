@@ -15,7 +15,7 @@ const truncateDescription = (description, maxLength) => {
   return truncated + '...';
 }
 
-const ProductSlider = ({ category }) => {
+const ProductSlider = ({ category, uniqueCategories }) => {
   const [products, setProducts] = useState([])
   
 
@@ -64,11 +64,15 @@ const ProductSlider = ({ category }) => {
     let result;
   
     try{
-
-      if (filterModel.category) {
-         result = await ProductService.getProductsByFilter(filterModel);
+      if(uniqueCategories){
+        result = await ProductService.getUniqueCategory();
       } else {
-         result = await ProductService.getProducts();
+        if (filterModel.category) {
+          result = await ProductService.getProductsByFilter(filterModel);
+        }
+        else {
+          result = await ProductService.getProducts();
+        }
       }
       if (result) {
         setProducts(result);
@@ -85,11 +89,11 @@ const ProductSlider = ({ category }) => {
         <Slider {...settings}>
           {products.map((product, index) => (
             <div key={index}>
-                {/* <img src="../lipstick.png" alt={product.title} /> */}
+                <img src={require('../images/Product1Home.png')} alt={product.title} />
               <div>
-                <h3>{product.title}</h3>
-                <p>{truncateDescription(product.description, 10)}</p>
-                <h4>€{product.price}</h4>
+                {/* <h3>{product.title}</h3> */}
+                {/* <p>{truncateDescription(product.description, 10)}</p> */}
+                {/* <h4>€{product.price}</h4> */}
               </div>
             </div>
           ))}
