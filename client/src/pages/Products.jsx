@@ -2,7 +2,11 @@ import React from 'react'
 
 const Products = () => {
   return (
-    <div>Products</div>
+    <div>
+        <div className='flex w-full justify-center'>
+          <Navbar />
+        </div>
+    </div>
   )
 }
 
