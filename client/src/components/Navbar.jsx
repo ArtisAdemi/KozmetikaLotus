@@ -1,5 +1,5 @@
 import React from 'react'
-import LotusLogo from '../socialsLogo/LotusLogo'
+import LotusLogo from '../Icons/LotusLogo'
 
 const Navbar = () => {
   return (

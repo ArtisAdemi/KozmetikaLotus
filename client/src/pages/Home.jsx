@@ -1,7 +1,8 @@
 import React from 'react'
 import { Navbar, ProductSlider } from '../components'
-import Star from '../socialsLogo/Star'
-import Divider from '../socialsLogo/Divider'
+import Star from '../Icons/Star'
+import ArrowLeft from '../Icons/ArrowLeft'
+import Divider from '../Icons/Divider'
 
 const Home = () => {
   return (
@@ -32,16 +33,16 @@ const Home = () => {
                 <Divider />
               </div>
               <div className='w-1/3 flex items-center'>
-                <a href="/">Eksploroni te gjitha Produktet -</a>
+                <a className='font-semibold ml-4 flex' href="/">Eksploroni te gjitha Produktet <ArrowLeft /></a>
               </div>
             </div>
           </div>
         </div>
         {/* Second Part of container with pink bg */}
          {/* Middle section with testimonials and products */}
-      <div className='flex justify-center items-center my-12 px-6 bg-transparent'>
+      <div className='flex justify-center items-center my-12 pb-16 px-6 bg-transparent'>
         {/* Testimonial Section */}
-        <div className='flex flex-col items-center border-2 border-black rounded-lg p-6 m-4 w-1/3 bg-transparent'>
+        <div className='flex flex-col items-center border-2 border-black rounded-lg p-12 m-4 w-1/3 bg-transparent'>
 
           <p className='text-lg font-semibold mb-2'>Your Love For Oh that! Natural</p>
           <p>Oh that! Natural is dedicated to providing a healthy skincare product that is free from artificial, synthetic.</p>
@@ -62,24 +63,35 @@ const Home = () => {
             <Divider /> {/* Your divider component */}
           </div>
           {/* Product Item */}
-          <div className='flex items-center justify-between bg-transparent p-4 rounded-lg shadow mb-3'>
-            <img className='mr-2' src={require('../images/Product1Home.png')} alt='Rosemary Face Grow Serum' /> {/* Adjust the path as necessary */}
+          <div className='flex items-center justify-between bg-transparent p-4 rounded-lg mb-3'>
+            <div>
               <div>
-                <p className='font-semibold'>Rosemary Face Grow Serum</p>
-                <p className='text-sm'>$25.00</p>
+                <img className='w-32 h-16' src={require('../images/Product1Home.png')} alt='Rosemary Face Grow Serum' /> {/* Adjust the path as necessary */}
+                <div>
+                  <p className='font-semibold'>Rosemary Face Grow Serum</p>
+                  <p className='text-sm'>$25.00</p>
+                </div>
               </div>
-            <img className='mr-2' src={require('../images/Product1Home.png')} alt='Rosemary Face Grow Serum' /> {/* Adjust the path as necessary */}
               <div>
-                <p className='font-semibold'>Rosemary Face Grow Serum</p>
-                <p className='text-sm'>$25.00</p>
+                <img className='w-32 h-16' src={require('../images/Product2Home.png')} alt='Rosemary Face Grow Serum' /> {/* Adjust the path as necessary */}
+                <div>
+                  <p className='font-semibold'>Rosemary Face Grow Serum</p>
+                  <p className='text-sm'>$25.00</p>
+                </div>
               </div>
+            </div>
           </div>
-          {/* Repeat for other products */}
-          </div>
+            
+        </div>
 
           {/* Additional Section */}
           <div className='w-1/3 m-4'>
-            {/* Placeholder for additional content, e.g., an image or another list of products */}
+            <div>
+              <h4 className='font-bold text-sm mb-4'>PRODUKTET TONA ME TE SHITURA</h4>
+            </div>
+            <div>
+             <img className='w-64 h-64' src={require('../images/Product3Home.png')} alt='Rosemary Face Grow Serum' /> {/* Adjust the path as necessary */}
+            </div>
           </div>
         </div>
       </div>
