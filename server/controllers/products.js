@@ -168,7 +168,11 @@ const getUniqueProductPerCategory = async (req, res) => {
                 include: [{
                     model: Images,
                     order: [['createdAt', 'DESC']] // Order by creation date
-                }],
+                },
+                {
+                    model: Categories
+                }
+            ],
                 order: [['createdAt', 'DESC']] // Order by creation date
             }]
         });
