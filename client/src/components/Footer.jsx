@@ -1,10 +1,10 @@
 import React from 'react'
-import InstagramIcon from '../socialsLogo/InstagramIcon'
-import FacebookIcon from '../socialsLogo/FacebookIcon'
-import TwitterIcon from '../socialsLogo/TwitterIcon'
-import LocationIcon from '../socialsLogo/LocationIcon'
-import Indicator from '../socialsLogo/Indicator'
-import LotusIcon from '../socialsLogo/LotusIcon'
+import InstagramIcon from '../Icons/InstagramIcon'
+import FacebookIcon from '../Icons/FacebookIcon'
+import TwitterIcon from '../Icons/TwitterIcon'
+import LocationIcon from '../Icons/LocationIcon'
+import Indicator from '../Icons/Indicator'
+import LotusIcon from '../Icons/LotusIcon'
 
 
 
