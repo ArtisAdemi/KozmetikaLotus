@@ -6,7 +6,7 @@ import overlap from "../images/overlap.png"
 const AboutUs = () => {
   return (
     <div className=''>
-      <div className='text-2xl mx-48 my-8 flex'>
+      <div className='text-2xl mx-48 my-4 flex pt-6'>
         <p className='font-semibold'>Rreth nesh</p>
       </div>
 
