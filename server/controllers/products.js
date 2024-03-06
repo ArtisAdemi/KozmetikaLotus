@@ -1,7 +1,9 @@
 // imports
 const db = require('../models');
+const { Sequelize } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
+const Images = db.Images;
 
 // Controller functions
 
@@ -19,7 +21,12 @@ const getProducts = async (req, res) => {
 
         if (category && productName){
             products = await Products.findAll({
-                where: {'$Categories.name$' : category, title: productName},
+                where: {
+                    '$Categories.name$': category,
+                    title: {
+                        [Sequelize.Op.like]: `%${productName}%`
+                    }
+                },
                 include: [{model: Categories}]
             });
         } else if (category) {
@@ -29,7 +36,9 @@ const getProducts = async (req, res) => {
             });
         } else if (productName) {
             products = await Products.findAll({
-                where: { title: productName}
+                where: { title: {
+                    [Sequelize.Op.like]: `%${productName}%`
+                }}
             });
         } else {
             products = await Products.findAll({offset, limit, include: [{ model: Categories }]});
@@ -150,10 +159,46 @@ const deleteProduct = async (req, res) => {
     }
 }
 
+// Get unique product per category with associated image
+const getUniqueProductPerCategory = async (req, res) => {
+    try {
+        const categories = await Categories.findAll({
+            include: [{
+                model: Products,
+                include: [{
+                    model: Images,
+                    order: [['createdAt', 'DESC']] // Order by creation date
+                },
+                {
+                    model: Categories
+                }
+            ],
+                order: [['createdAt', 'DESC']] // Order by creation date
+            }]
+        });
+
+        // Filter out categories without associated products
+        const validCategories = categories.filter(category => category.Products.length > 0);
+
+        // Extract the first product with image for each valid category
+        const uniqueProducts = validCategories.map(category => {
+            const product = category.Products[0]; // Get the first product
+            if (product) {
+                product.Images = product.Images.slice(0, 1); // Get the first image for the product
+            }
+            return product;
+        });
+
+        res.status(200).json(uniqueProducts);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 module.exports = {
     getProducts,
     getProductById,
     registerProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getUniqueProductPerCategory
 }
