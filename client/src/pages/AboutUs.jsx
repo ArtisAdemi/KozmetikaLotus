@@ -75,20 +75,22 @@ We're dedicated to providing you with high-quality, ethically-sourced beauty sol
         <div className='flex justify-center'> 
           <div className='w-[80%] flex gap-10'>
 
-          <div className='-mt-28'>
-            <img src={overlap} alt="blla" className="w-[777px] " />
-          </div>
-          <div className='w-96 h-48'>
-            <h2 className='font-bold text-2xl text-[#292929] mb-5'>Diversity Equity & Inclusion</h2>
-            <p className='text-lg'>We believe that beauty is a form of self-expression and should be inclusive of all cultures and traditions, which is why we offer products that are inspired by diverse beauty rituals from around the world."</p>
-          </div>
-          </div>
+            <div className='-mt-28'>
+              <img src={overlap} alt="blla" className="w-[777px] " />
+            </div>
+            <div className='w-96 h-48'>
+              <h2 className='font-bold text-2xl text-[#292929] mb-5'>Diversity Equity & Inclusion</h2>
+              <p className='text-lg'>We believe that beauty is a form of self-expression and should be inclusive of all cultures and traditions, which is why we offer products that are inspired by diverse beauty rituals from around the world."</p>
+            </div>
+            </div>
+        </div>
+        <div className='w-full align-center flex justify-center'>
+            <div className='w-[80%] flex flex-col mb-5'>
+              <h2 className='text-2xl text-[#292929] font-bold mb-5 mt-7'>Our Commitments</h2>
+              <p className='text-lg text-[#292929]'>We believe that everyone deserves access to safe, effective, and ethical cosmetic products, regardless of their lifestyle or dietary restrictions. Our commitment to these values extends beyond our product offerings to include sustainable and eco-friendly manufacturing processes, ethical sourcing of ingredients, and giving back to the communities we serve. At Beautya , we are proud to be a leader in the ethical and sustainable beauty industry, and we look forward to continuing to innovate and push boundaries in our commitment to providing our customers with the best products and experiences possible</p>
+            </div>
         </div>
 
-        <div className='w-[60%] flex flex-col mb-5'>
-          <h2 className='text-2xl text-[#292929] font-bold mb-5 mt-7'>Our Commitments</h2>
-          <p className='text-lg text-[#292929]'>We believe that everyone deserves access to safe, effective, and ethical cosmetic products, regardless of their lifestyle or dietary restrictions. Our commitment to these values extends beyond our product offerings to include sustainable and eco-friendly manufacturing processes, ethical sourcing of ingredients, and giving back to the communities we serve. At Beautya , we are proud to be a leader in the ethical and sustainable beauty industry, and we look forward to continuing to innovate and push boundaries in our commitment to providing our customers with the best products and experiences possible</p>
-        </div>
 
       </div>
 
