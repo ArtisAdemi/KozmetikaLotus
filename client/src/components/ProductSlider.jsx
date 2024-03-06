@@ -25,7 +25,7 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     dots: true,
     infinite: true,
     speed: 650,
-    slidesToShow: 4,
+    slidesToShow: products.length < 4 ? products.length : 4,
     slidesToScroll: 1,
     lazyLoad: 'ondemand',
     responsive: [
@@ -66,17 +66,27 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     try{
       if(uniqueCategories){
         result = await ProductService.getUniqueCategory();
+        if (result.data) {
+          setProducts(result.data);
+        }
       } else {
         if (filterModel.category) {
           result = await ProductService.getProductsByFilter(filterModel);
+          if (result) {
+            setProducts(result);
+          }
         }
         else {
           result = await ProductService.getProducts();
+          if (result) {
+            setProducts(result);
+          }
         }
       }
-      if (result) {
-        setProducts(result);
-      }
+      // if (result) {
+      //   setProducts(result);
+      // }
+      console.log("Products", products)
     } catch (err) {
       console.error("Error:", err)
     }
@@ -87,16 +97,16 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     <div className='w-full flex justify-center items-center'>
       <div className='w-[80%]'>
         <Slider {...settings}>
-          {products.map((product, index) => (
-            <div key={index}>
-                <img src={require('../images/Product1Home.png')} alt={product.title} />
-              <div>
-                {/* <h3>{product.title}</h3> */}
-                {/* <p>{truncateDescription(product.description, 10)}</p> */}
-                {/* <h4>€{product.price}</h4> */}
-              </div>
+        {products.length > 0 && products.map((product, index) => (
+          <div key={index}>
+            <img src={require('../images/Product1Home.png')} alt={product.title} />
+            <div>
+              {product.title && <h3>{product.title}</h3>}
+              {product.description && <p>{truncateDescription(product.description, 10)}</p>}
+              {product.price && <h4>€{product.price}</h4>}
             </div>
-          ))}
+          </div>
+        ))}
         </Slider>
       </div>
     </div>

@@ -132,6 +132,19 @@ const Home = () => {
           <ProductSlider uniqueCategories={true}/>
       </div>
       
+      {/* Best Seller slider */}
+      <div className='w-full bg-[#FAF9F5] flex justify-center overflow-hidden py-12'>
+        {/* Content Container */}
+        <div className='w-[80%] grid justify-center'>
+          {/* Header */}
+          <div className='items-center text-center'>
+            <h1 className='text-3xl font-semibold text-center'>Produktet me te shitura</h1>
+          </div>
+        </div>
+      </div>
+      <div className='bg-[#FAF9F5] pb-20'>
+        <ProductSlider uniqueCategories={false} category={"lipstick"}/>
+      </div>
     </div>
   )
 }
