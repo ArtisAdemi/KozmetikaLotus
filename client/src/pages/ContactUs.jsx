@@ -1,8 +1,13 @@
 import React from 'react'
+import { Navbar } from '../components'
 
 const ContactUs = () => {
   return (
-    <div>ContactUs</div>
+    <div>
+      <div className='flex w-full justify-center'>
+        <Navbar />
+      </div>
+    </div>
   )
 }
 

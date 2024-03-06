@@ -6,9 +6,6 @@ import { AboutUs, ContactUs, Home, Products } from './pages';
 function App() {
   return (
     <div className='App'>
-      <div className='flex w-full justify-center mt-5'>
-        <Navbar />
-      </div>
       <Router>
           <Routes>
             {/* Add routes here */}

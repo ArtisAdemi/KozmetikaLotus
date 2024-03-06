@@ -173,8 +173,11 @@ const getUniqueProductPerCategory = async (req, res) => {
             }]
         });
 
-        // Extract the first product with image for each category
-        const uniqueProducts = categories.map(category => {
+        // Filter out categories without associated products
+        const validCategories = categories.filter(category => category.Products.length > 0);
+
+        // Extract the first product with image for each valid category
+        const uniqueProducts = validCategories.map(category => {
             const product = category.Products[0]; // Get the first product
             if (product) {
                 product.Images = product.Images.slice(0, 1); // Get the first image for the product
@@ -187,7 +190,6 @@ const getUniqueProductPerCategory = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
-
 module.exports = {
     getProducts,
     getProductById,
