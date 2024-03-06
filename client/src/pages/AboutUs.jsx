@@ -1,4 +1,5 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
 import about1 from "../images/about1.png"
 import carissa from "../images/carissa.png"
 import overlap from "../images/overlap.png"
