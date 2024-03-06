@@ -4,6 +4,8 @@ import FacebookIcon from '../socialsLogo/FacebookIcon'
 import TwitterIcon from '../socialsLogo/TwitterIcon'
 import LocationIcon from '../socialsLogo/LocationIcon'
 import Indicator from '../socialsLogo/Indicator'
+import LotusIcon from '../socialsLogo/LotusIcon'
+
 
 
 const Footer = () => {
@@ -11,7 +13,7 @@ const Footer = () => {
     <div className="bg-[#3D021E] text-white">
         <div className='ml-9 pt-4'>
             <div className='text-3xl font-bold'>
-                LOGO
+            <LotusIcon/>
             </div>
         </div>
     <div className="flex justify-between p-5">

@@ -1,10 +1,11 @@
 import React from 'react'
+import LotusIcon from '../socialsLogo/LotusIcon'
 
 const Navbar = () => {
   return (
     <div className='navbar-container flex justify-between bg-[#faf9f5] w-[80%] border-b-[2px] border-[#ABABAB] p-4'>
         <div className='text-3xl font-bold font-[Poppins]'>
-            LOGO
+        <LotusIcon className=''/>
         </div>
         <div className='flex justify-between'>
             <div className='m-2'>
