@@ -3,6 +3,8 @@ import { Navbar } from '../components'
 import {useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
+import ProductList from '../components/ProductList';
+
 
 const Products = () => {
   // Getting category from url
@@ -36,6 +38,9 @@ const Products = () => {
               <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text"  placeholder='Kerko...'/>
             </div>
           </div>
+        </div>
+        <div>
+          <ProductList />
         </div>
     </div>
   )
