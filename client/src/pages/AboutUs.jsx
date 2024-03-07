@@ -6,10 +6,10 @@ import overlap from "../images/overlap.png"
 
 const AboutUs = () => {
   return (
-    <div className=''>
+    <div>
       <div className='flex w-full justify-center'>
           <Navbar />
-        </div>
+      </div>
       <div className='text-2xl mx-48 my-4 flex pt-6'>
         <p className='font-semibold text-3xl'>Rreth nesh</p>
       </div>

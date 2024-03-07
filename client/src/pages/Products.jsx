@@ -40,7 +40,7 @@ const Products = () => {
           </div>
         </div>
         <div>
-          <ProductList />
+          <ProductList category={categoryName}/>
         </div>
     </div>
   )
