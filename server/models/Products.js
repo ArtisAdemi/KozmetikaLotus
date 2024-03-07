@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     // Creating Sequelize DB model
     const Products = sequelize.define("Products", {
         title: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         description:{

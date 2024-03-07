@@ -25,7 +25,7 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     dots: true,
     infinite: true,
     speed: 650,
-    slidesToShow: products.length < 4 ? products.length : 4,
+    slidesToShow: products.length > 0 ? Math.min(products.length, 4) : 1,
     slidesToScroll: 1,
     lazyLoad: 'ondemand',
     responsive: [
@@ -83,10 +83,6 @@ const ProductSlider = ({ category, uniqueCategories }) => {
           }
         }
       }
-      // if (result) {
-      //   setProducts(result);
-      // }
-      console.log("Products", products)
     } catch (err) {
       console.error("Error:", err)
     }
