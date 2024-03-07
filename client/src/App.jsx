@@ -10,7 +10,7 @@ function App() {
           <Routes>
             {/* Add routes here */}
             <Route path='/' exact Component={Home} />
-            <Route path='/products'exact Component={Products}/>
+            <Route path='/products/:categoryName'exact Component={Products}/>
             <Route path='/about'exact Component={AboutUs}/>
             <Route path='/contact'exact Component={ContactUs}/>
           </Routes>
