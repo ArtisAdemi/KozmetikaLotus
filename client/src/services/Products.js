@@ -32,20 +32,26 @@ const ProductService = {
     //     name: 'example'
     // }
 
-    getProductsByFilter: async(filterModel) => {
+    getProductsByFilter: async(filterModel, page, limit) => {
         let endpoint = `${API_URL}?`;
-        try{
-           let params = {};
-        if (filterModel.category) {
-            params['category'] = filterModel.category;
-        }
-        if (filterModel.name) {
-            params['productName'] = filterModel.name;
-        }
-        endpoint += buildUrl(params);
-        
-        const response = await axios.get(endpoint)
-        return response.data;
+        try {
+            let params = {};
+            if (filterModel.category) {
+                params['category'] = filterModel.category;
+            }
+            if (filterModel.name) {
+                params['productName'] = filterModel.name;
+            }
+            if (filterModel.page) {
+                params['page'] = filterModel.page;
+            }
+            if (filterModel.limit) {
+                params['limit'] = filterModel.limit;
+            }
+            endpoint += buildUrl(params);
+    
+            const response = await axios.get(endpoint);
+            return response.data;
         } catch (err) {
             console.error('Error fetching products: ', err);
             return null;
