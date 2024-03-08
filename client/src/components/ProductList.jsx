@@ -38,7 +38,7 @@ const ProductList = (category) => {
     <div className='w-full pb-10 flex justify-center'>
         <div>
 
-            <div className='grid w-[80%] grid-cols-4 gap-5'>
+            <div className='grid w-full grid-cols-4 gap-5'>
             {products.length > 0 && products.map((product, index) => (
                 <ProductListItem key={index} title={product.title} description={product.description} price={product.price} category={category}/>
                 ))}
