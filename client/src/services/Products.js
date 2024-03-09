@@ -30,9 +30,11 @@ const ProductService = {
     // const filterModel = {
     //     category: 'example',
     //     name: 'example'
+    //     page: 1,
+    //     limit: 12,
     // }
 
-    getProductsByFilter: async(filterModel, page, limit) => {
+    getProductsByFilter: async(filterModel) => {
         let endpoint = `${API_URL}?`;
         try {
             let params = {};
