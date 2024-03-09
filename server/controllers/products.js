@@ -1,6 +1,6 @@
 // imports
 const db = require('../models');
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
 const Images = db.Images;
@@ -9,44 +9,53 @@ const Images = db.Images;
 
 // Get products
 const getProducts = async (req, res) => {
-    // pagination
     const page = parseInt(req.query.page) || 1; // Default page is 1
-    const limit = parseInt(req.query.limit) || 10; //Default limit is 10
+    const limit = parseInt(req.query.limit) || 12; // Default limit is 12
     const offset = (page - 1) * limit;
-    const category = req.query.category; // Category will be sent by query
-    const productName = req.query.productName; // Product name will be sent by query
+    const category = req.query.category;
+    const productName = req.query.productName;
 
-    try{
-        let products;
+    let whereCondition = {};
+    let includeCondition = [];
 
-        if (category && productName){
-            products = await Products.findAll({
-                where: {
-                    '$Categories.name$': category,
-                    title: {
-                        [Sequelize.Op.like]: `%${productName}%`
-                    }
-                },
-                include: [{model: Categories}]
-            });
-        } else if (category) {
-            products = await Products.findAll({
-                where: { '$Categories.name$': category },
-                include: [{ model: Categories }]
-            });
-        } else if (productName) {
-            products = await Products.findAll({
-                where: { title: {
-                    [Sequelize.Op.like]: `%${productName}%`
-                }}
-            });
-        } else {
-            products = await Products.findAll({offset, limit, include: [{ model: Categories }]});
-        }
+    if (productName) {
+        whereCondition.title = { [Op.like]: `%${productName}%` };
+    }
 
-        res.status(200).json(products)
+    if (category) {
+        includeCondition.push({
+            model: Categories,
+            where: { name: category },
+            through: { attributes: [] }, // Hide the join table attributes
+        });
+    } else {
+        includeCondition.push({
+            model: Categories,
+            through: { attributes: [] }, // Optionally hide the join table attributes if not needed
+        });
+    }
+
+    try {
+        // Use findAndCountAll to get both count and rows
+        const { count, rows } = await Products.findAndCountAll({
+            where: whereCondition,
+            include: includeCondition,
+            offset: offset,
+            limit: limit,
+            distinct: true, // This ensures count is accurate when using include
+        });
+
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(count / limit);
+
+        res.status(200).json({
+            products: rows,
+            totalProducts: count,
+            totalPages: totalPages,
+            currentPage: page
+        });
     } catch (err) {
-        res.status(500).json({ error: err.message});
+        res.status(500).json({ error: err.message });
     }
 }
 

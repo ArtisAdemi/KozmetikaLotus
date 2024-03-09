@@ -4,3 +4,7 @@
 body {
   background: #faf9f5;
 }
+
+input::placeholder{
+  color:black;
+}

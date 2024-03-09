@@ -2,7 +2,7 @@ export default function buildUrl(parameters) {
     var qs = "";
     for (var key in parameters) {
       var value = parameters[key];
-      if (value != null && value != '') {
+      if (value !== null && value !== '') {
         qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
       }
     }
