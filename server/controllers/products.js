@@ -36,14 +36,24 @@ const getProducts = async (req, res) => {
     }
 
     try {
-        const products = await Products.findAll({
+        // Use findAndCountAll to get both count and rows
+        const { count, rows } = await Products.findAndCountAll({
             where: whereCondition,
             include: includeCondition,
             offset: offset,
             limit: limit,
+            distinct: true, // This ensures count is accurate when using include
         });
 
-        res.status(200).json(products);
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(count / limit);
+
+        res.status(200).json({
+            products: rows,
+            totalProducts: count,
+            totalPages: totalPages,
+            currentPage: page
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

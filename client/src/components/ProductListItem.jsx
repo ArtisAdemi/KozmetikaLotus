@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProductListItem = ({ imageUrl, title, description, price, category }) => {
     return (
-      <div className="max-w-[300px] w-auto mx-auto bg-white shadow-lg">
+      <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg">
         <div className="flex justify-center items-center w-full">
           <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt="asd" />
         </div>
