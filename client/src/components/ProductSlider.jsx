@@ -73,7 +73,7 @@ const ProductSlider = ({ category, uniqueCategories }) => {
         if (filterModel.category) {
           result = await ProductService.getProductsByFilter(filterModel);
           if (result) {
-            setProducts(result);
+            setProducts(result.products);
           }
         }
         else {

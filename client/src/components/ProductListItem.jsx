@@ -1,8 +1,10 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const ProductListItem = ({ imageUrl, title, description, price, category }) => {
+const ProductListItem = ({ imageUrl, title, description, price, category, id }) => {
+  const navigate = useNavigate();
     return (
-      <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg">
+      <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg" onClick={() => navigate(`/products/${category}/${id}`)}>
         <div className="flex justify-center items-center w-full">
           <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt="asd" />
         </div>
