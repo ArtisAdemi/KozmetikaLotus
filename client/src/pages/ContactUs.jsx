@@ -31,7 +31,6 @@ const ContactUs = () => {
       await MailerService.sendEmail(userData);
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Error sending email. Please try again.');
     }
   };
 

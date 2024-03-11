@@ -17,7 +17,7 @@ const sendContactEmail = (userData) => {
     const { name, email, phone, message } = userData;
 
     const mailOptions = {
-        from: email, // Use the email from the request as the sender
+        from: process.env.EMAIL, 
         to: process.env.EMAIL, // Send email to the address saved in process.env.EMAIL
         subject: "New Contact Form Submission",
         html: `
