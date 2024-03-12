@@ -46,7 +46,7 @@ const ProductList = ({ category }) => {
             <div>
                 <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
-                    <ProductListItem key={index} title={product.title} description={product.description} price={product.price} id={product.id} category={category}/>
+                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category}/>
                 ))}
                 </div> 
                 {totalPages !== 1 && (

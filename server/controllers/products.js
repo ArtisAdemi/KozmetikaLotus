@@ -77,12 +77,13 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const {title, description, brand, quantity, price, discount, categoryNames} = req.body;
+    const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
     try{
         // Create new product using variables from body
         const newProduct = await Products.create({
             title: title,
-            description: description,
+            shortDescription: shortDescription,
+            longDescription: longDescription,
             brand: brand,
             quantity: quantity,
             price: price,

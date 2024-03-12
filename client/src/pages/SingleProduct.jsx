@@ -56,7 +56,7 @@ const SingleProduct = () => {
         </div>
           {product && (
             <div>
-              <ProductDetails title={product.title} description={product.description} category={product.category} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.category} price={product.price} id={product.id}/>
             </div>
           )}
     </div>

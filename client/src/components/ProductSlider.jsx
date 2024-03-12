@@ -98,7 +98,7 @@ const ProductSlider = ({ category, uniqueCategories }) => {
             <img src={require('../images/Product1Home.png')} alt={product.title} />
             <div>
               {uniqueCategories ? <h3>{product.Categories[0].name}</h3> : <h3>{product.title}</h3>}
-              {uniqueCategories ? null : <p>{truncateDescription(product.description, 10)}</p>}
+              {uniqueCategories ? null : <p>{truncateDescription(product.shortDescription, 10)}</p>}
               {uniqueCategories ? null : <h4>€{product.price}</h4>}
             </div>
           </div>

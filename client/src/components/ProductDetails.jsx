@@ -6,7 +6,7 @@ import Product2Home from '../images/Product2Home.png'
 import Product3Home from '../images/Product3Home.png'
 
 
-const ProductDetails = ({imageUrl, title, category, description, id, price}) => {
+const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price}) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const ProductDetails = ({imageUrl, title, category, description, id, price}) => 
                <h2 className='text-[#A10550] text-2xl font-bold'>{title}</h2>
               </div>
               <div className='mb-4'>
-                <p className='text-sm'>{description}</p>
+                <p className='text-sm'>{shortDescription}</p>
               </div>
               <div className='w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
               <p className='w-full text-end'>
