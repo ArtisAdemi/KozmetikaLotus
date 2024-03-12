@@ -49,7 +49,9 @@ const ProductList = ({ category }) => {
                     <ProductListItem key={index} title={product.title} description={product.description} price={product.price} id={product.id} category={category}/>
                 ))}
                 </div> 
-                <div className='w-full flex justify-center'>
+                {totalPages !== 1 && (
+
+                    <div className='w-full flex justify-center'>
                     {/* Pagination component to handle page changes */} 
                     <div className='m-3 text-[#A10550] mt-5 font-semibold text-xl align-text-bottom px-3 py-1'>
                         {page}
@@ -61,6 +63,7 @@ const ProductList = ({ category }) => {
                         <button onClick={() => handlePageChange(page + 1)} disabled={page >= totalPages} >Next</button>
                     </div>
                 </div>
+                    )}
             </div>
         </div>
     );
