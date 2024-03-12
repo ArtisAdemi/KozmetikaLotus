@@ -8,8 +8,7 @@ import ProductService from '../services/Products'
 
 
 const SingleProduct = () => {
-  const { categoryName } = useParams();
-  const { productName } = useParams();
+  const { categoryName, productName } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -55,9 +54,11 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-        <div>
-          <ProductDetails title={product.title} description={product.description} category={product.category} price={product.price}/>
-        </div>
+          {product && (
+            <div>
+              <ProductDetails title={product.title} description={product.description} category={product.category} price={product.price} id={product.id}/>
+            </div>
+          )}
     </div>
   )
 }

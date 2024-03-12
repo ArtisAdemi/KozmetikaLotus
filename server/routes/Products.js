@@ -22,4 +22,7 @@ router.get('/:id', productsController.getProductById)
 // Delete Product
 router.delete('/:id', productsController.deleteProduct)
 
+// Get product images
+router.get('/:id/images', productsController.getProductImages)
+
 module.exports = router;

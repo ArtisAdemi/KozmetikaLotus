@@ -203,11 +203,27 @@ const getUniqueProductPerCategory = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+// Get all images for a product
+const getProductImages = async (req, res) => {
+    const productId = req.params.id;
+    
+    try {
+        const productImages = await Images.findAll({
+            where: { ProductId: productId }
+        });
+        res.status(200).json(productImages);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getProducts,
     getProductById,
     registerProduct,
     updateProduct,
     deleteProduct,
-    getUniqueProductPerCategory
+    getUniqueProductPerCategory,
+    getProductImages
 }

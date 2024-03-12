@@ -70,7 +70,19 @@ const ProductService = {
             console.error('Error fetching products:', err);
             return null
         }
+    },
+
+    // Product images
+    getProductImages: async (productId) => {
+        try{
+            const res = await axios.get(`${API_URL}/${productId}/images`);
+            return res.data;
+        } catch (err) {
+            console.error('Error fetching images', err);
+            return [];
+        }
     }
+
 };
 
 export default ProductService;
