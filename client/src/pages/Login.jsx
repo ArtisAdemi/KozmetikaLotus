@@ -1,9 +1,13 @@
 import contact from "../images/ContactUs.png";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UserService from "../services/Users";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
-
+    const navigate = useNavigate();
+    const [error, setError] = useState("")
     const validationSchema = yup.object({
         email: yup.string().email('Invalid email format').required('Email is required'),
         password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
@@ -15,9 +19,22 @@ const Login = () => {
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
+        onSubmit:async (values) => {
             // Handle form submission here
-            console.log(values);
+            let userData = {
+                email: values.email,
+                password: values.password,
+            }
+            try {
+                let res = await UserService.loginUser(userData);
+                if (!res.message) {
+                    navigate("/admin");
+                }
+            } catch (err) {
+                setError(err);
+                alert(error)
+                console.error("Error logging in: ", err);
+            }
         },
     });
 
@@ -43,7 +60,7 @@ const Login = () => {
                             {formik.errors.password && formik.touched.password && 
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.password}</h2>}
                             
-                            <button className='border-[#A10550] border-2 p-3 w-[30%] mx-auto text-[#A10550] shadow-xl'>Login</button>
+                            <button type="submit" className='border-[#A10550] border-2 p-3 w-[30%] mx-auto text-[#A10550] shadow-xl'>Login</button>
 
                         </form>
 

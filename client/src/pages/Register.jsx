@@ -1,8 +1,11 @@
 import contact from "../images/ContactUs.png";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UserService from '../services/Users'
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
 
     const validationSchema = yup.object({
         email: yup.string().email('Invalid email format').required('Email is required'),
@@ -20,8 +23,22 @@ const Register = () => {
             confirmPassword: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            // Handle form submission here
+        onSubmit:async (values) => {
+            let userData = {
+                email: values.email,
+                username: values.username,
+                role: values.role,
+                password: values.password
+            }
+
+            try{
+                let res = await UserService.registerUser(userData);
+                if (res) {
+                   navigate("/login");
+                }
+            } catch (err) {
+                console.error("Error registering user: ", err)
+            }
             
         },
     });

@@ -1,9 +1,11 @@
+import axios from "axios";
+
 const USERS_API_URL = 'http://localhost:3001/api/users';
-const AUTH_API_URL = 'http://localhost:3001/api/auth/';
+const AUTH_API_URL = 'http://localhost:3001/api/auth';
 const UserService = {
     getUsers: async () => {
         try {
-            const response = await axios.get(API_URL);
+            const response = await axios.get(USERS_API_URL);
             return response.data;
         } catch (err) {
             console.error("Error fetching users", err);
@@ -13,7 +15,7 @@ const UserService = {
 
     getUserById: async (id) => {
         try {
-            const response = await axios.get(`${API_URL}/${id}`);
+            const response = await axios.get(`${USERS_API_URL}/${id}`);
             return response.data;
         } catch (err) {
             console.error("Error fetching user by ID", err);
@@ -42,5 +44,25 @@ const UserService = {
             console.error("Error logging in", err);
             throw err;
         }
+    },
+
+    validateToken: async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error("No token provided");
+            }
+            const response = await axios.get(`${AUTH_API_URL}/validateToken`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (err) {
+            console.error("Error validating token", err);
+            throw err;
+        }
     }
 }
+
+export default UserService;
