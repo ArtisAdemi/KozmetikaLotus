@@ -43,7 +43,7 @@ const Login = () => {
                             {formik.errors.password && formik.touched.password && 
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.password}</h2>}
                             
-                            <button className='border-black border-2 p-3 w-[30%] mx-auto text-[#0C0C0C] shadow-xl'>Login</button>
+                            <button className='border-[#A10550] border-2 p-3 w-[30%] mx-auto text-[#A10550] shadow-xl'>Login</button>
 
                         </form>
 

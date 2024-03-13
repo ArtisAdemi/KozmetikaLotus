@@ -23,7 +23,7 @@ const Register = () => {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             // Handle form submission here
-            console.log(values);
+            
         },
     });
 
@@ -59,7 +59,7 @@ const Register = () => {
                             {formik.errors.confirmPassword && formik.touched.confirmPassword && 
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.confirmPassword}</h2>}
             
-                            <button type="submit" className='border-black border-2 p-3 w-[30%] mx-auto text-[#0C0C0C] shadow-xl'>Register</button>
+                            <button type="submit" className='border-[#A10550] border-2 p-3 w-[30%] mx-auto text-[#A10550] shadow-xl'>Register</button>
 
                         </form>
 
