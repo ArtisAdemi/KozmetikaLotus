@@ -82,7 +82,7 @@ const Navbar = () => {
                 <p><a href="/about">About Us</a></p>
             </div>
         </div>
-        <div className='navbar-right border-[2px] border-[#A10550] px-5 items-center justify-center text-center hidden md:flex'>
+        <div className='navbar-right border-[2px] border-[#A10550] px-5 items-center justify-center text-center hidden md:flex hover:cursor-pointer' >
             <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#A10550]'>Contact Us</a></button>
         </div>
 
