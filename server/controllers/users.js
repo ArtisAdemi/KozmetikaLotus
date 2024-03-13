@@ -80,7 +80,6 @@ const loginUser = async (req, res) => {
         res.status(500).json({error: err.message});
     }
 }
-
 // export controller functions
 module.exports = {
     getUsers,

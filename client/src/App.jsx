@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Navbar, Footer } from './components';
 import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct } from './pages';
+import AdminPannel from './pages/AdminPannel';
 
 
 
@@ -18,6 +19,7 @@ function App() {
             <Route path='/contact'exact Component={ContactUs}/>
             <Route path='/login'exact Component={Login}/>
             <Route path='/register'exact Component={Register}/>
+            <Route path='/admin'exact Component={AdminPannel}/>
           </Routes>
       </Router>
       <Footer></Footer>
