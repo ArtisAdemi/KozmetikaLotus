@@ -16,7 +16,7 @@ const Register = () => {
         initialValues: {
             email: '',
             username: '',
-            role: '',
+            role: 'user',
             password: '',
             confirmPassword: '',
         },
@@ -48,11 +48,6 @@ const Register = () => {
                             type="text" name="username" placeholder="Username" onChange={formik.handleChange} value={formik.values.username} />
                             {formik.errors.username && formik.touched.username && 
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.username}</h2>}
-
-                            <input className='rounded-md p-4 placeholder-gray-400 w-[60%] mx-auto'
-                            type="text" name="role" placeholder="Role" onChange={formik.handleChange} value={formik.values.role} />
-                            {formik.errors.role && formik.touched.role && 
-                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.role}</h2>}
 
                             <input className='rounded-md p-4 placeholder-gray-400 w-[60%] mx-auto' 
                             type="password" name="password" placeholder="Password" onChange={formik.handleChange} value={formik.values.password} />
