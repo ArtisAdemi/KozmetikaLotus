@@ -7,7 +7,6 @@ const Register = () => {
     const validationSchema = yup.object({
         email: yup.string().email('Invalid email format').required('Email is required'),
         username: yup.string().required('Username is required'),
-        role: yup.string().required('Role is required'),
         password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
         confirmPassword: yup.string().min(8, 'Confirm Password must be at least 8 characters').oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
     });
