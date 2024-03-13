@@ -49,14 +49,11 @@ const SingleProduct = () => {
                 <span>{product ? product.title : 'loading'}</span>
               </div>
             </div>
-            <div>
-              <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text"  placeholder='Kerko...'/>
-            </div>
           </div>
         </div>
           {product && (
             <div>
-              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.category} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.Categories[0].name} price={product.price} id={product.id}/>
             </div>
           )}
     </div>

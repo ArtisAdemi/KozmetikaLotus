@@ -4,6 +4,11 @@ import ProductImageSlider from './ProductImageSlider';
 import Product1Home from '../images/Product1Home.png'
 import Product2Home from '../images/Product2Home.png'
 import Product3Home from '../images/Product3Home.png'
+import CardGiftcard from '../Icons/CardGiftcard';
+import Discount from '../Icons/Discount';
+import QAndA from '../Icons/Q&A';
+import ProductSlider from './ProductSlider';
+
 
 
 const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price}) => {
@@ -11,7 +16,6 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
 
   useEffect(() => {
     const fetchImages = async () => {
-      console.log("ID", id)
         const fetchedImages = await ProductService.getProductImages(id);
         setImages(fetchedImages);
     };
@@ -33,7 +37,7 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
             <div className='items-center flex justify-center'>
               <img src={Product3Home} alt="img" className='object-cover w-full max-h-[400px]'/>
             </div>
-            <div className='w-[50%]'>
+            <div className='w-[70%]'>
               <div className='mb-3'>
                <h2 className='text-[#A10550] text-2xl font-bold'>{title}</h2>
               </div>
@@ -48,6 +52,26 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
               <div className='navbar-right mt-3 border-[2px] border-[#A10550] px-5 items-center justify-center text-center hidden md:flex'>
                 <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#A10550]'>Contact Us</a></button>
               </div>
+              <div className='text-xs mt-6 bg-[#FBEFF2] p-8 text-[#79043C] font-sans font-semibold'>
+                <div className='flex mb-3'>
+                  <div>
+                    <CardGiftcard />
+                  </div>
+                  <p className='ml-3 mt-1'>Transporti Falas Per Porosite Mbi 50$</p>
+                </div>
+                <div className='flex mb-3'>
+                  <div>
+                    <Discount />
+                  </div>
+                  <p>+10 Vite Eksperience</p>
+                </div>
+                <div className='flex mb-3'>
+                  <div>
+                    <QAndA />
+                  </div>
+                  <p>Faleminderit Qe Na Zgjodhet</p>
+                </div>
+              </div>
             </div>
           </div>
             <div className='w-full'>
@@ -55,6 +79,20 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
             </div>
         </div>
        </div>
+        <div className='py-12 w-full flex justify-center pb-64'>
+          <div className='w-[80%] bg-[#FFFFFF] border border-1 py-5 px-6'>
+            <h1 className='text-[#A10550] font-semibold'>Detajet e Produktit</h1>
+            <p className='mt-2'>{longDescription}</p>
+          </div>
+        </div>
+        <div className='bg-[#FBEFF2] w-full flex justify-center'>
+          <div className='w-[80%] text-center p-6'>
+            <h1 className='font-bold'>You May Also Like</h1>
+            <div className='mt-10 pb-10'>
+              <ProductSlider category={category}/>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }
