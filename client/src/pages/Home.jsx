@@ -133,7 +133,7 @@ const Home = () => {
       </div>
       
       {/* Best Seller slider */}
-      <div className='w-full bg-[#FAF9F5] flex justify-center overflow-hidden py-12'>
+      <div className='w-full bg-[#FAF9F5] justify-center overflow-hidden py-12'>
         {/* Content Container */}
         <div className='w-[80%] grid justify-center'>
           {/* Header */}
@@ -141,9 +141,9 @@ const Home = () => {
             <h1 className='text-3xl font-semibold text-center'>Produktet me te shitura</h1>
           </div>
         </div>
+      <div className='bg-[#FAF9F5] pb-20 mt-10 w-full'>
+        <ProductSlider category={"lipstick"}/>
       </div>
-      <div className='bg-[#FAF9F5] pb-20'>
-        <ProductSlider uniqueCategories={false} category={"lipstick"}/>
       </div>
     </div>
   )

@@ -64,7 +64,9 @@ const getProductById = async (req, res) => {
     const productId = req.params.id;
     
     try{
-        const product = await Products.findByPk(productId);
+        const product = await Products.findByPk(productId, {
+            include: Categories
+        });
         if (product) {
             res.status(200).json(product);
         } else {
@@ -77,12 +79,13 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const {title, description, brand, quantity, price, discount, categoryNames} = req.body;
+    const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
     try{
         // Create new product using variables from body
         const newProduct = await Products.create({
             title: title,
-            description: description,
+            shortDescription: shortDescription,
+            longDescription: longDescription,
             brand: brand,
             quantity: quantity,
             price: price,
@@ -203,11 +206,27 @@ const getUniqueProductPerCategory = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+// Get all images for a product
+const getProductImages = async (req, res) => {
+    const productId = req.params.id;
+    
+    try {
+        const productImages = await Images.findAll({
+            where: { ProductId: productId }
+        });
+        res.status(200).json(productImages);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getProducts,
     getProductById,
     registerProduct,
     updateProduct,
     deleteProduct,
-    getUniqueProductPerCategory
+    getUniqueProductPerCategory,
+    getProductImages
 }

@@ -2,6 +2,15 @@ import axios from 'axios';
 import buildUrl from '../middleware/BuildParam';
 const API_URL = 'http://localhost:3001/api/products';
 
+// Create an axios instance for authenticated requests
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:3001/api',
+    // Dynamically set the Authorization header
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+});
+
 const ProductService = {
     getProducts: async () => {
         try{
@@ -70,7 +79,30 @@ const ProductService = {
             console.error('Error fetching products:', err);
             return null
         }
-    }
+    },
+
+    // Product images
+    getProductImages: async (productId) => {
+        try{
+            const res = await axios.get(`${API_URL}/${productId}/images`);
+            return res.data;
+        } catch (err) {
+            console.error('Error fetching images', err);
+            return [];
+        }
+    },
+    
+    registerProduct: async (productData) => {
+        // Use axiosInstance for authenticated requests
+        try {
+            const response = await axiosInstance.post(`${API_URL}`, productData);
+            return response.data;
+        } catch (err) {
+            console.error('Error registering product:', err);
+            return null;
+        }
+    },
+
 };
 
 export default ProductService;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductListItem from './ProductListItem';
 import ProductService from '../services/Products';
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = ({ category }) => {
     const [products, setProducts] = useState([]);
@@ -8,6 +9,7 @@ const ProductList = ({ category }) => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); // Track total number of pages
     const limit = 12; // Assuming each page shows 12 products
+    const navigate = useNavigate();
 
     useEffect(() => {
        fetchProducts();
@@ -38,15 +40,18 @@ const ProductList = ({ category }) => {
         setPage(newPage);
     };
 
+        
     return (
         <div className='w-full pb-10 flex justify-center'>
             <div>
-                <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+                <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
-                    <ProductListItem key={index} title={product.title} description={product.description} price={product.price} category={category}/>
+                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category}/>
                 ))}
                 </div> 
-                <div className='w-full flex justify-center'>
+                {totalPages !== 1 && (
+
+                    <div className='w-full flex justify-center'>
                     {/* Pagination component to handle page changes */} 
                     <div className='m-3 text-[#A10550] mt-5 font-semibold text-xl align-text-bottom px-3 py-1'>
                         {page}
@@ -58,6 +63,7 @@ const ProductList = ({ category }) => {
                         <button onClick={() => handlePageChange(page + 1)} disabled={page >= totalPages} >Next</button>
                     </div>
                 </div>
+                    )}
             </div>
         </div>
     );

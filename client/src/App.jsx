@@ -1,7 +1,9 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Navbar, Footer } from './components';
-import { AboutUs, ContactUs, Home, Products, Login, Register } from './pages';
+import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct } from './pages';
+
+
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
             {/* Add routes here */}
             <Route path='/' exact Component={Home} />
             <Route path='/products/:categoryName'exact Component={Products}/>
+            <Route path='/products/:categoryName/:productName'exact Component={SingleProduct}/>
             <Route path='/about'exact Component={AboutUs}/>
             <Route path='/contact'exact Component={ContactUs}/>
             <Route path='/login'exact Component={Login}/>

@@ -5,8 +5,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        description:{
+        shortDescription:{
             type: DataTypes.STRING,
+            allowNull: true,
+        },
+        longDescription: {
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         brand:{

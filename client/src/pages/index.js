@@ -6,4 +6,4 @@ export { default as ContactUs } from './ContactUs';
 export { default as AboutUs } from './AboutUs';
 export { default as Login } from './Login';
 export { default as Register } from './Register';
-
+export { default as SingleProduct} from './SingleProduct'
