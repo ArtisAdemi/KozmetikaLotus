@@ -1,4 +1,4 @@
-const {jwt} = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 // This function could be used later on when admin will be able to post products
 const validateToken = (req, res, next) => {
