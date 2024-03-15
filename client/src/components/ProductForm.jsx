@@ -23,7 +23,6 @@ const ProductFormModal = ({ closeModal }) => {
     const fetchCategories = async () => {
       const result = await CategoryService.getCategories();
       if (result) {
-        console.log(result);
         setCategories(result);
       } else {
         console.error('Unexpected response structure:', result);
@@ -48,7 +47,6 @@ const ProductFormModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     registerProduct();
     closeModal();
   };

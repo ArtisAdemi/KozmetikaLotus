@@ -15,7 +15,6 @@ const CategoriesInput = ({ categoriesFromBackend, onUpdate }) => {
       const updatedSelectedCategories = prevSelected.includes(categoryName)
         ? prevSelected.filter(name => name !== categoryName)
         : [...prevSelected, categoryName];
-      console.log(`Updating selected categories with: ${categoryName}, new state:`, updatedSelectedCategories);
       onUpdate(updatedSelectedCategories); // This looks correct
       return updatedSelectedCategories;
     });
@@ -47,7 +46,7 @@ const CategoriesInput = ({ categoriesFromBackend, onUpdate }) => {
           <label htmlFor={`category-${index}`}>{category}</label>
         </div>
       ))}
-      <form className="flex mt-2" onSubmit={addCategory}>
+      <div className="flex mt-2">
         <input
           type="text"
           placeholder="Add new category"
@@ -56,7 +55,7 @@ const CategoriesInput = ({ categoriesFromBackend, onUpdate }) => {
           className="flex-1"
         />
         <button type="button" onClick={addCategory}>Add</button>
-      </form>
+      </div>
     </div>
   );
 };
