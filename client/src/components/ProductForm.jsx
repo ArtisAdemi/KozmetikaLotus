@@ -1,112 +1,75 @@
-import React, { useState } from 'react';
-import ProductService from '../services/Products';
+import React, { useEffect, useState } from 'react';
+import CategoryService from '../services/Categories';
+import CategoriesInput from './CategoriesSelect';
 
-const ProductForm = () => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [brand, setBrand] = useState('');
-    const [quantity, setQuantity] = useState(0);
-    const [price, setPrice] = useState(0);
-    const [discount, setDiscount] = useState(0);
-    const [categoryNames, setCategoryNames] = useState([]);
-    const [images, setImages] = useState([]);
+const ProductFormModal = ({ closeModal }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    shortDescription: '',
+    longDescription: '',
+    price: '',
+    categoryNames: [],
+    images: [],
+  });
+  const [categories, setCategories] = useState([]);
+  const [categoryNames, setCategoryNames] = useState([]);
 
-    const handleAddCategory = () => {
-        setCategoryNames([...categoryNames, '']);
+  const handleCategoriesUpdate = (selectedCategories) => {
+  setCategoryNames(selectedCategories);
+  };
+  
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const result = await CategoryService.getCategories();
+      if (result) {
+        console.log(result);
+        setCategories(result);
+      } else {
+        console.error('Unexpected response structure:', result);
+        setCategories([]); // Fallback to ensure state remains valid
+    }
     };
+    fetchCategories();
+  }, []);
 
-    const handleCategoryChange = (index, value) => {
-        const updatedCategories = [...categoryNames];
-        updatedCategories[index] = value;
-        setCategoryNames(updatedCategories);
-    };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleAddImage = () => {
-        setImages([...images, { url: '', data: '' }]);
-    };
+  const handleCategoryChange = (newValue, actionMeta) => {
+    setFormData({ ...formData, categoryNames: newValue });
+  };
 
-    const handleImageChange = (index, event) => {
-        const updatedImages = [...images];
-        const file = event.target.files[0];
-    
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                updatedImages[index] = { ...updatedImages[index], url: reader.result, data: file };
-                setImages(updatedImages);
-            };
-            reader.readAsDataURL(file); // Read the file as a data URL
-        }
-    };
+  const handleImageChange = (e) => {
+    setFormData({ ...formData, images: [...e.target.files] });
+  };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const newProduct = await ProductService.registerProduct({
-                title,
-                description,
-                brand,
-                quantity,
-                price,
-                discount,
-                categoryNames,
-                images
-            });
-            console.log('Product registered:', newProduct);
-            setTitle('');
-            setDescription('');
-            setBrand('');
-            setQuantity(0);
-            setPrice(0);
-            setDiscount(0);
-            setCategoryNames([]);
-            setImages([]);
-        } catch (error) {
-            console.error('Error registering product:', error);
-        }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    closeModal();
+  };
 
-    return (
-        <form onSubmit={handleSubmit} className="product-form">
-            <label>Title:</label>
-            <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-
-            <label>Description:</label>
-            <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-
-            <label>Brand:</label>
-            <input type="text" placeholder="Brand" value={brand} onChange={(e) => setBrand(e.target.value)} />
-
-            <label>Quantity:</label>
-            <input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-
-            <label>Price:</label>
-            <input type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
-
-            <label>Discount:</label>
-            <input type="number" placeholder="Discount" value={discount} onChange={(e) => setDiscount(e.target.value)} />
-
-            {categoryNames.map((category, index) => (
-                <div key={index}>
-                    <label>Category:</label>
-                    <input type="text" placeholder="Category" value={category} onChange={(e) => handleCategoryChange(index, e.target.value)} />
-                </div>
-            ))}
-            <button type="button" onClick={handleAddCategory}>Add Category</button>
-
-            {images.map((image, index) => (
-                <div key={index}>
-                    <label>Image URL:</label>
-                    <input type="text" name="url" placeholder="Image URL" value={image.url} onChange={(e) => handleImageChange(index, e)} />
-                    <label>Image Data:</label>
-                    <input type="file" name="data" onChange={(e) => handleImageChange(index, e)} />
-                </div>
-            ))}
-            <button type="button" onClick={handleAddImage}>Add Image</button>
-
-            <button type="submit">Register Product</button>
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
+        <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" />
+          <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full"></textarea>
+          <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full"></textarea>
+          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" />
+          <CategoriesInput categoriesFromBackend={categories.map(category => category.name)} onUpdate={handleCategoriesUpdate}/>
+          <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
+          <div className="flex justify-end space-x-2">
+            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
+            <button type="submit" className="btn btn-primary">Add Product</button>
+          </div>
         </form>
-    );
+      </div>
+    </div>
+  );
 };
 
-export default ProductForm;
+export default ProductFormModal;
