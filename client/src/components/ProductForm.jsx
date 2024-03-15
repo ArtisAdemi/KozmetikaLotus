@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CategoryService from '../services/Categories';
 import CategoriesInput from './CategoriesSelect';
+import ProductService from '../services/Products';
 
 const ProductFormModal = ({ closeModal }) => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ const ProductFormModal = ({ closeModal }) => {
   const [categoryNames, setCategoryNames] = useState([]);
 
   const handleCategoriesUpdate = (selectedCategories) => {
-  setCategoryNames(selectedCategories);
+    setFormData({ ...formData, categoryNames: selectedCategories });
   };
   
   useEffect(() => {
@@ -48,8 +49,26 @@ const ProductFormModal = ({ closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    registerProduct();
     closeModal();
   };
+
+  const newProduct = {};
+
+  const registerProduct = async () => {
+    let res;
+    try{
+      newProduct.title = formData.title;
+      newProduct.shortDescription = formData.shortDescription;
+      newProduct.longDescription = formData.longDescription;
+      newProduct.price = formData.price;
+      newProduct.categoryNames = formData.categoryNames;
+
+      res = await ProductService.registerProduct(newProduct);
+    } catch (err) {
+      console.error("Error registering new product", err)
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

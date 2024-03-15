@@ -6,13 +6,19 @@ const CategoriesInput = ({ categoriesFromBackend, onUpdate }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
 
   useEffect(() => {
+    // Assuming categoriesFromBackend is an array of category names
     setCategories(categoriesFromBackend);
   }, [categoriesFromBackend]);
 
-  const handleCategoryChange = (e) => {
-    const selected = Array.from(e.target.selectedOptions, option => option.value);
-    setSelectedCategories(selected);
-    onUpdate(selected); // Notify the parent component about the update
+  const handleCheckboxChange = (categoryName) => {
+    setSelectedCategories(prevSelected => {
+      const updatedSelectedCategories = prevSelected.includes(categoryName)
+        ? prevSelected.filter(name => name !== categoryName)
+        : [...prevSelected, categoryName];
+      console.log(`Updating selected categories with: ${categoryName}, new state:`, updatedSelectedCategories);
+      onUpdate(updatedSelectedCategories); // This looks correct
+      return updatedSelectedCategories;
+    });
   };
 
   const handleNewCategoryNameChange = (e) => {
@@ -22,38 +28,34 @@ const CategoriesInput = ({ categoriesFromBackend, onUpdate }) => {
   const addCategory = (e) => {
     e.preventDefault();
     if (newCategoryName && !categories.includes(newCategoryName)) {
-      const updatedCategories = [...categories, newCategoryName];
-      setCategories(updatedCategories);
+      setCategories(prevCategories => [...prevCategories, newCategoryName]);
       setNewCategoryName('');
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addCategory(e);
     }
   };
 
   return (
     <div>
-      <select multiple value={selectedCategories} onChange={handleCategoryChange} className="w-full">
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-      <form onSubmit={addCategory} className="flex mt-2">
+      {categories.map((category, index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            id={`category-${index}`}
+            value={category}
+            onChange={() => handleCheckboxChange(category)}
+            checked={selectedCategories.includes(category)}
+          />
+          <label htmlFor={`category-${index}`}>{category}</label>
+        </div>
+      ))}
+      <form className="flex mt-2" onSubmit={addCategory}>
         <input
           type="text"
           placeholder="Add new category"
           value={newCategoryName}
           onChange={handleNewCategoryNameChange}
-          onKeyPress={handleKeyPress} // Handle Enter key press
           className="flex-1"
         />
-        <button type="submit" onClick={addCategory}>Add</button>
+        <button type="button" onClick={addCategory}>Add</button>
       </form>
     </div>
   );
