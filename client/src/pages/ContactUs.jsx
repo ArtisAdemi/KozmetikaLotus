@@ -48,7 +48,7 @@ const ContactUs = () => {
 
             <div className='contact-container w-full flex justify-center my-12'>
                 <div className='contact-content w-[80%] shadow-2xl justify-center flex' style={{ height: '800px' }}>
-                    <div className='w-[100%] flex flex-col bg-[#FBEFF2] '>
+                    <div className='w-[100%] flex bg-[#FBEFF2] '>
                         <form onSubmit={formik.handleSubmit} className='w-[100%] flex flex-col gap-10 justify-center'>
                             <h1 className='text-[#A10550] text-3xl text-center'>Contact Us</h1>
 
