@@ -3,14 +3,14 @@ import CategoryService from '../services/Categories';
 import CategoriesInput from './CategoriesSelect';
 import ProductService from '../services/Products';
 
-const ProductFormModal = ({ closeModal }) => {
+const ProductFormModal = ({ closeModal, product }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    shortDescription: '',
-    longDescription: '',
-    price: '',
-    categoryNames: [],
-    images: [],
+    title: product?.title || '',
+    shortDescription: product?.shortDescription || '',
+    longDescription: product?.longDescription || '',
+    price: product?.price || '',
+    categoryNames: product?.Categories?.map(category => category.name) || [], // Assuming Categories is an array of category objects
+    images: [], // You'll need to handle pre-existing images separately
   });
   const [categories, setCategories] = useState([]);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -57,11 +57,34 @@ const ProductFormModal = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerProduct();
+    if( product ) {
+        await updateProduct();
+    } else{
+        await registerProduct();
+    }
     closeModal();
   };
 
   const newProduct = {};
+
+  const updateProduct = async () => {
+    try {
+        // Ensure you have a product ID to work with
+        if (!product?.id) {
+            throw new Error("Product ID is undefined");
+        }
+        const updatedProduct = {
+            ...formData,
+            // Convert price to a number, if necessary
+            price: parseFloat(formData.price),
+        };
+
+        const res = await ProductService.updateProduct(product.id, updatedProduct);
+        // Additional actions on successful update
+    } catch (err) {
+        console.error("Error updating product", err);
+    }
+};
 
   const registerProduct = async () => {
     let res;
@@ -83,10 +106,10 @@ const ProductFormModal = ({ closeModal }) => {
     <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
       <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
-      <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" />
-          <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full"></textarea>
-          <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full"></textarea>
-          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" />
+      <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" value={formData.title} />
+          <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full" value={formData.shortDescription}></textarea>
+          <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full" value={formData.longDescription}></textarea>
+          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" value={formData.price} />
           {categories.map((category, index) => (
             <div key={index}>
               <input

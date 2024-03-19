@@ -5,11 +5,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import { useParams } from 'react-router-dom'
 import ProductService from '../services/Products'
+import ProductFormModal from '../components/ProductForm'
 
 
 const SingleProduct = () => {
   const { categoryName, productName } = useParams();
   const [product, setProduct] = useState(null);
+  const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => {
     fetchProductById(productName);
@@ -25,6 +27,13 @@ const SingleProduct = () => {
     }
     return result;
   }
+
+  // Handler for Edit button, toggles the edit state
+  const handleEditProduct = () => {
+    setIsEditing(true);
+  };
+
+
   return (
     <div>
         <div className='w-full flex justify-center'>
@@ -37,14 +46,20 @@ const SingleProduct = () => {
                 <FontAwesomeIcon icon={faChevronRight} />
               </div>
               <div className='mt-1 ml-2'>
-                <span>{categoryName}</span>
-              </div>
-              <div className='mt-1 ml-2'>
-                <FontAwesomeIcon icon={faChevronRight} />
-              </div>
-              <div className='mt-1 ml-2'>
                 <span>{product ? product.title : 'loading'}</span>
               </div>
+            </div>
+            <div className='flex'>
+                <div>
+                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleEditProduct}>
+                        Edit Product
+                    </button>
+                </div>
+                <div>
+                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold'>
+                        Delete Product
+                    </button>
+                </div>
             </div>
           </div>
         </div>
@@ -53,6 +68,8 @@ const SingleProduct = () => {
               <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.Categories[0].name} price={product.price} id={product.id}/>
             </div>
           )}
+
+          {isEditing && <ProductFormModal closeModal={() => setIsEditing(false)} product={product}/>}
     </div>
   )
 }

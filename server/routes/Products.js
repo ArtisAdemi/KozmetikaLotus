@@ -26,4 +26,7 @@ router.delete('/:id', productsController.deleteProduct)
 // Get product images
 router.get('/:id/images', productsController.getProductImages)
 
+// Update product
+router.put('/:id', validateToken, productsController.updateProduct)
+
 module.exports = router;

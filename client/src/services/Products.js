@@ -4,8 +4,6 @@ const API_URL = 'http://localhost:3001/api/products';
 
 // Create an axios instance for authenticated requests
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3001/api',
-    // Dynamically set the Authorization header
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
@@ -102,6 +100,16 @@ const ProductService = {
             return null;
         }
     },
+
+    updateProduct: async (productId, productData) => {
+        try {
+            const response = await axiosInstance.put(`${API_URL}/${productId}`, productData);
+            return response.data;
+        } catch (err) {
+            console.error('Error updating product:', err);
+            return null;
+        }
+    }
 
 };
 
