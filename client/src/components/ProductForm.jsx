@@ -13,11 +13,7 @@ const ProductFormModal = ({ closeModal }) => {
     images: [],
   });
   const [categories, setCategories] = useState([]);
-  const [categoryNames, setCategoryNames] = useState([]);
-
-  const handleCategoriesUpdate = (selectedCategories) => {
-    setFormData({ ...formData, categoryNames: selectedCategories });
-  };
+  const [newCategoryName, setNewCategoryName] = useState('');
   
   useEffect(() => {
     const fetchCategories = async () => {
@@ -37,17 +33,31 @@ const ProductFormModal = ({ closeModal }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCategoryChange = (newValue, actionMeta) => {
-    setFormData({ ...formData, categoryNames: newValue });
+  const handleCategoryChange = (e) => {
+    const { value, checked } = e.target;
+    const newCategoryNames = checked
+      ? [...formData.categoryNames, value]
+      : formData.categoryNames.filter(name => name !== value);
+    setFormData({ ...formData, categoryNames: newCategoryNames });
+  };
+
+  const addCategory = (e) => {
+    e.preventDefault();
+    if (newCategoryName.trim() && !categories.some(category => category.name === newCategoryName.trim())) {
+      const updatedCategories = [...categories, { name: newCategoryName.trim() }];
+      setCategories(updatedCategories);
+      setFormData({ ...formData, categoryNames: [...formData.categoryNames, newCategoryName.trim()] });
+      setNewCategoryName('');
+    }
   };
 
   const handleImageChange = (e) => {
     setFormData({ ...formData, images: [...e.target.files] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    registerProduct();
+    await registerProduct();
     closeModal();
   };
 
@@ -70,22 +80,44 @@ const ProductFormModal = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
-        <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" />
+    <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
+      <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
+      <form onSubmit={handleSubmit} className="space-y-3">
+      <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" />
           <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full"></textarea>
           <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full"></textarea>
           <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" />
-          <CategoriesInput categoriesFromBackend={categories.map(category => category.name)} onUpdate={handleCategoriesUpdate}/>
+          {categories.map((category, index) => (
+            <div key={index}>
+              <input
+                type="checkbox"
+                id={`category-${index}`}
+                value={category.name}
+                checked={formData.categoryNames.includes(category.name)}
+                onChange={handleCategoryChange}
+              />
+              <label htmlFor={`category-${index}`}>{category.name}</label>
+            </div>
+          ))}
+          <div className="flex mt-2">
+            <input
+              type="text"
+              placeholder="Add new category"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="flex-1"
+            />
+            <button type="button" onClick={addCategory}>Add</button>
+          </div>
           <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
           <div className="flex justify-end space-x-2">
             <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
             <button type="submit" className="btn btn-primary">Add Product</button>
           </div>
-        </form>
-      </div>
+        {/* More input fields and submission button */}
+      </form>
     </div>
+  </div>
   );
 };
 

@@ -11,7 +11,7 @@ import ProductSlider from './ProductSlider';
 
 
 
-const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price}) => {
+const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {

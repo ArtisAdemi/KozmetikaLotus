@@ -56,7 +56,7 @@ const AdminPannel = () => {
           </div>
         </div>
         <div>
-          <ProductList/>
+          <ProductList isAdmin={true}/>
         </div>
         {isModalOpen && <ProductFormModal closeModal={() => setIsModalOpen(false)} />}
     </div>

@@ -3,7 +3,7 @@ import ProductListItem from './ProductListItem';
 import ProductService from '../services/Products';
 import { useNavigate } from 'react-router-dom';
 
-const ProductList = ({ category }) => {
+const ProductList = ({ category, isAdmin }) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Track total number of products
     const [page, setPage] = useState(1);
@@ -46,7 +46,7 @@ const ProductList = ({ category }) => {
             <div>
                 <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
-                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category}/>
+                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category} isAdmin={isAdmin}/>
                 ))}
                 </div> 
                 {totalPages !== 1 && (

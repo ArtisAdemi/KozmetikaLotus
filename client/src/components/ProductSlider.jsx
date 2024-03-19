@@ -24,7 +24,7 @@ const ProductSlider = ({ category, uniqueCategories }) => {
   // Settings for the slider
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: products.length > 4 ? true: false,
     speed: 650,
     vertical: false,
     horizontal: true,
