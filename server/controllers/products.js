@@ -114,7 +114,7 @@ const registerProduct = async (req, res) => {
 // Update Product 
 const updateProduct = async(req, res) => {
     const productId = req.params.id;
-    const { title, description, brand, quantity, price, discount, categoryNames } = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames } = req.body;
     
     try{
         // Find Product by id
@@ -127,7 +127,8 @@ const updateProduct = async(req, res) => {
         // Update the product details
         await product.update({
             title: title,
-            description: description,
+            shortDescription: shortDescription,
+            longDescription: longDescription,
             brand: brand,
             quantity: quantity,
             price: price,

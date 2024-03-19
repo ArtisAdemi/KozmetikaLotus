@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Navbar, Footer } from './components';
-import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct } from './pages';
-import AdminPannel from './pages/AdminPannel';
+import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails } from './pages';
+
 
 
 
@@ -20,6 +20,7 @@ function App() {
             <Route path='/login'exact Component={Login}/>
             <Route path='/register'exact Component={Register}/>
             <Route path='/admin'exact Component={AdminPannel}/>
+            <Route path='/admin/:productName'exact Component={AdminProductDetails}/>
           </Routes>
       </Router>
       <Footer></Footer>

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/products');
+const {validateToken} = require('../middleware/AuthMiddleware')
 
 // Routes
 
 // Register Product
-router.post('/', productsController.registerProduct);
+router.post('/', validateToken,  productsController.registerProduct);
 
 // Update Product
 router.put('/:id', productsController.updateProduct)
@@ -24,5 +25,11 @@ router.delete('/:id', productsController.deleteProduct)
 
 // Get product images
 router.get('/:id/images', productsController.getProductImages)
+
+// Update product
+router.put('/:id', validateToken, productsController.updateProduct)
+
+// Delete product
+router.delete('/:id', validateToken, productsController.deleteProduct)
 
 module.exports = router;
