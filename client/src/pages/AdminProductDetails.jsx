@@ -6,12 +6,14 @@ import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import { useParams } from 'react-router-dom'
 import ProductService from '../services/Products'
 import ProductFormModal from '../components/ProductForm'
+import { useNavigate } from 'react-router-dom'
 
 
 const SingleProduct = () => {
-  const { categoryName, productName } = useParams();
+  const { productName } = useParams();
   const [product, setProduct] = useState(null);
   const [isEditing, setIsEditing] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProductById(productName);
@@ -33,6 +35,27 @@ const SingleProduct = () => {
     setIsEditing(true);
   };
 
+  const handleDeleteProduct = async () => {
+    // Show a confirmation dialog to the user
+  const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+
+  // If the user clicks "OK", proceed with the deletion
+  if (isConfirmed) {
+    try {
+      // Assuming ProductService.deleteProduct is an async function
+      // and productName is the ID or unique identifier for the product
+      const res = await ProductService.deleteProduct(productName);
+      if (res) {
+        navigate(`/admin`)
+      }
+    } catch (err) {
+      console.error("Error deleting product in AdminProductDetails", err);
+    }
+  } else {
+    // If the user clicks "Cancel", you can optionally handle this case
+    console.log("Product deletion was canceled.");
+  }
+  }
 
   return (
     <div>
@@ -56,7 +79,7 @@ const SingleProduct = () => {
                     </button>
                 </div>
                 <div>
-                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold'>
+                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleDeleteProduct}>
                         Delete Product
                     </button>
                 </div>

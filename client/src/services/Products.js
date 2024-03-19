@@ -109,6 +109,16 @@ const ProductService = {
             console.error('Error updating product:', err);
             return null;
         }
+    },
+
+    deleteProduct: async (productId) => {
+        try{
+            const response = await axiosInstance.delete(`${API_URL}/${productId}`)
+            return response;
+        } catch (err){
+            console.error('Error deleting product:', err);
+            return null
+        }
     }
 
 };
