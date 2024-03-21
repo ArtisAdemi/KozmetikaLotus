@@ -10,6 +10,7 @@ import ProductFormModal from '../components/ProductForm';
 const AdminPannel = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productName, setProductName] = useState("");
   
   const checkAdminRole = async () => {
         try {
@@ -27,7 +28,11 @@ const AdminPannel = () => {
             }
         }
     };
+  
 
+  const handleInputChange = (e) => {
+    setProductName(e.target.value);
+  }
   useEffect(() => {
     checkAdminRole();
   }, [navigate]);
@@ -51,12 +56,12 @@ const AdminPannel = () => {
                 >
                     Add New Product
                 </button>
-                <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text"  placeholder='Kerko...'/>
+                <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} onChange={handleInputChange} type="text"  placeholder='Kerko...'/>
             </div>
           </div>
         </div>
         <div>
-          <ProductList isAdmin={true}/>
+          <ProductList isAdmin={true} productName={productName}/>
         </div>
         {isModalOpen && <ProductFormModal closeModal={() => setIsModalOpen(false)} />}
     </div>
