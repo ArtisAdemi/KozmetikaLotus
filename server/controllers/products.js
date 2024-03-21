@@ -19,7 +19,7 @@ const getProducts = async (req, res) => {
     let includeCondition = [];
 
     if (productName) {
-        whereCondition.title = { [Op.like]: `%${productName}%` };
+        whereCondition.title = { [Op.iLike]: `%${productName}%` };
     }
 
     if (category) {

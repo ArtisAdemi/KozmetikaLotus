@@ -3,7 +3,7 @@ import ProductListItem from './ProductListItem';
 import ProductService from '../services/Products';
 import { useNavigate } from 'react-router-dom';
 
-const ProductList = ({ category, isAdmin }) => {
+const ProductList = ({ category, productName, isAdmin }) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Track total number of products
     const [page, setPage] = useState(1);
@@ -13,13 +13,13 @@ const ProductList = ({ category, isAdmin }) => {
 
     useEffect(() => {
        fetchProducts();
-    }, [page, category]);
+    }, [page, category, productName]);
 
     const fetchProducts = async () => {
         try {
             const filterModel = {
                 category: category !== 'all' ? category : null,
-                name: null,
+                name: productName ? productName : null,
                 page: page,
                 limit: limit
             };
@@ -49,7 +49,7 @@ const ProductList = ({ category, isAdmin }) => {
                     <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category} isAdmin={isAdmin}/>
                 ))}
                 </div> 
-                {totalPages !== 1 && (
+                {totalPages > 1 && (
 
                     <div className='w-full flex justify-center'>
                     {/* Pagination component to handle page changes */} 

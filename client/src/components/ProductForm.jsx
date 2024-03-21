@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import CategoryService from '../services/Categories';
-import CategoriesInput from './CategoriesSelect';
 import ProductService from '../services/Products';
 
 const ProductFormModal = ({ closeModal, product }) => {

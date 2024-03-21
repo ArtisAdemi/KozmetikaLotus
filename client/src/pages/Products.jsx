@@ -10,11 +10,17 @@ const Products = () => {
   // Getting category from url
   const [category, setCategory] = useState("");
   const { categoryName } = useParams();
+  const [productName, setProductName] = useState("");
 
   useEffect(() => {
     // updating category
     setCategory(categoryName);
   }, [categoryName]);
+
+
+  const handleInputChange = (e) => {
+    setProductName(e.target.value);
+  }
 
   return (
     <div>
@@ -35,12 +41,12 @@ const Products = () => {
               </div>
             </div>
             <div>
-              <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text"  placeholder='Kerko...'/>
+              <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
             </div>
           </div>
         </div>
         <div>
-          <ProductList category={categoryName}/>
+          <ProductList category={categoryName} productName={productName}/>
         </div>
     </div>
   )
