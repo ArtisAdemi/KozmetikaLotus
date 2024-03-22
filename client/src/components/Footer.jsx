@@ -36,7 +36,7 @@ const Footer = () => {
         </div>
         <div className="space-y-4 max-w-[600px] p-4">
             <h2 className="font-bold text-lg">About Us</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel rerum quaerat iure doloribus officiis itaque natus maiores, eius aliquid quod. Et sunt nisi, numquam officiis quia, in animi vero ipsum, quod mollitia doloremque. Dolorem provident, fugiat numquam quae voluptatibus esse saepe sunt blanditiis in maiores, voluptate doloremque est temporibus tempora!</p>
+            <p>Ne besojmë në rëndësinë e kujdesit të lëkurës prandaj ofrojmë produkte të specializuara për të mbajtur lëkurën të shëndetshme dhe të freskët.</p>
         </div>
     </div>
     <div className="bg-[#280114] flex justify-between items-center p-5 w-full">
