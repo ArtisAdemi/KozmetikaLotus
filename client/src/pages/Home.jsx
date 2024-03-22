@@ -18,31 +18,36 @@ const Home = () => {
             <img src={require('../images/HomePage1.png')} alt="IMAGE 1" />
           </div>
           <div className='flex w-full justify-center'>
-            <div className='flex justify-center w-[80%]'>
-              <div className='flex w-1/3'>
+            <div className='md:flex justify-center w-[80%]'>
+              <div className='flex items-center md:w-1/2'>
                 <div>
                   <Star />
                 </div>
                 <div>
-                  <p className='w-[60%]'>
+                  <p className='md:w-[60%] mt-5'>
                     Gjeni në internet produkte për kujdesin natyral të lëkurës, për trupin, për kujdesin e flokëve dhe kozmetikë.
                   </p>
                 </div>
               </div>
-              <div className='w-1/3 flex items-center'>
-                <Divider />
-              </div>
-              <div className='w-1/3 flex items-center'>
-                <a className='font-semibold ml-4 flex' href="/">Eksploroni te gjitha Produktet <ArrowLeft /></a>
+              <div className='flex items-center mt-5'>
+                <div className='flex w-1/2'>
+                  <Divider />
+                </div>
+                <div className='flex w-1/2'>
+                  <a className='font-semibold ml-4 flex items-center' href="/">Eksploroni te gjitha Produktet <ArrowLeft /></a>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
         {/* Second Part of container with pink bg */}
          {/* Middle section with testimonials and products */}
-      <div className='flex justify-center items-center my-12 pb-16 px-6 bg-transparent'>
+      <div className='flex justify-center w-full items-center my-12 pb-16 px-6 bg-transparent'>
+        <div className='test w-[80%] justify-center md:flex '>
+
         {/* Testimonial Section */}
-        <div className='flex flex-col items-center border-2 border-black rounded-lg p-12 m-4 w-1/3 bg-transparent'>
+        <div className='flex flex-col items-center border-2 border-black rounded-lg p-12 w-[30%] m-4 bg-transparent hidden md:block'>
 
           <p className='text-lg font-semibold mb-2'>Your Love For Oh that! Natural</p>
           <p>Oh that! Natural is dedicated to providing a healthy skincare product that is free from artificial, synthetic.</p>
@@ -57,7 +62,7 @@ const Home = () => {
         </div>
 
         {/* Products Section */}
-        <div className='flex flex-col w-1/3 m-4'>
+        <div className='flex flex-col m-4'>
           <div className='flex justify-between items-center mb-4'>
             <h2 className='text-xl font-semibold'>Produktet e reja</h2>
             <Divider /> {/* Your divider component */}
@@ -85,7 +90,7 @@ const Home = () => {
         </div>
 
           {/* Additional Section */}
-          <div className='w-1/3 m-4'>
+          <div className='flex flex-col m-4'>
             <div>
               <h4 className='font-bold text-sm mb-4'>PRODUKTET TONA ME TE SHITURA</h4>
             </div>
@@ -94,9 +99,10 @@ const Home = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
       {/* About us section */}
-      <div className='flex justify-center px-12 py-16'>
+      <div className='md:flex justify-center px-12 py-16'>
         <div className='w-[80%] mr-12 max-w-[500px] text-center'>
           {/* Text Section */}
           <div>
