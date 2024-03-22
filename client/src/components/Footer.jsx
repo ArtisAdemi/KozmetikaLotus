@@ -12,12 +12,12 @@ import CategoryService from '../services/Categories';
 
 const Footer = () => {
     const [categories, setCategories] = useState([]);
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     const redirect = (name) => {
         name = name.toString().toLowerCase().replace(/\s+/g, '');
-        //navigate(`/products/${name}`)
+        navigate(`/products/${name}`)
     }
 
     useEffect(() => {

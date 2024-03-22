@@ -22,8 +22,8 @@ function App() {
             <Route path='/admin'exact Component={AdminPannel}/>
             <Route path='/admin/:productName'exact Component={AdminProductDetails}/>
           </Routes>
+        <Footer></Footer>
       </Router>
-      <Footer></Footer>
     </div>
   );
 }
