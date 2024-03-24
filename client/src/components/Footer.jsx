@@ -63,10 +63,13 @@ const Footer = () => {
                 <p><a href="/women-make-up">Women Make Up</a></p>
                 <p><a href="/women-skincare">Women Skincare</a></p>
                 <p><a href="/gifts-sets">Gifts & Sets</a></p> */}
-                <h2 className=' cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
-                    {categories.map((category, index) => (
-                        <h2 className='font-bold text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
-                        ))}
+                <h2 className='text-lg font-bold mb-3'>Categories</h2>
+                <div className='w-full grid grid-cols-3 md:grid-cols-2 gap-3'>
+                    <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
+                        {categories.map((category, index) => (
+                           <h2 className=' text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                           ))}
+                </div>
             </div>
         </div>
         <div className="space-y-4 max-w-[600px] p-4 hidden md:block">
