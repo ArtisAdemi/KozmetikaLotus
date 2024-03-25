@@ -80,15 +80,15 @@ const Footer = () => {
     <div className="bg-[#280114] md:flex justify-between items-center p-5 w-full">
         <div className='flex justify-center w-[50%]'>
             <div className='md:flex justify-around]'>
-                <div className='flex'>
-                    <div className='hidden md:block'>
-
-                        <LocationIcon /> 
-                    </div>
+                <div className='flex items-center'>
+                        <LocationIcon/>                    
                     <p className='mr-4'>Rruga..., Ferizaj </p>
                 </div>
-                <Indicator/>
-                <p className='md:ml-4'> 044-233-233</p>
+                <div className='hidden md:block'>
+
+                    <Indicator/>
+                </div>
+                <p className='md:ml-4 ml-2 mt-2 md:mt-0'> 044-233-233</p>
             </div>
         </div>
         <div className='flex md:mr-6 w-[45%] justify-center'>
