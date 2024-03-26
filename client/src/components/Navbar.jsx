@@ -21,6 +21,7 @@ const Navbar = () => {
     const redirect = (name) => {
         name = name.toString().toLowerCase().replace(/\s+/g, '');
         navigate(`/products/${name}`);
+        handleNav(); // addition to remove navbar after navigating to categories..
     }
 
 
@@ -96,16 +97,31 @@ console.log(nav);
             {nav ? <AiOutlineClose size={25}/> : <AiOutlineMenu size={25}/>}    
         </div>
         
-        <div className={nav ? 'fixed left-0 top-0 w-[60%] block md:hidden border-r border-r-slate-600 h-full bg-gray-500 ease-in-out duration-500' : 'fixed left-[-100%]'}>
-            <div className='mt-10'>
-                <LotusLogo />
+        <div className={nav ? 'fixed left-0 top-0 w-[100%] block md:hidden border-r border-r-slate-600 h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
+            <div className='flex items-center border-b border-[#DFDFDF]'>
+                <div className='' onClick={handleNav}>
+                    <AiOutlineClose size={25}/>
+                </div>
+                <div className='flex justify-center items-center mx-auto'>
+                    <LotusLogo />
+                </div>
             </div>
-            <ul className='p-4'>
-                <li className='p-4 border-b border-gray-400'><a href="/">Home</a></li>
-                <li className='p-4 border-b border-gray-400'><a href="/products/all">Products</a></li>
-                <li className='p-4 border-b border-gray-400'><a href="/about">About Us</a></li>
-                <li className='p-4'><a href="/contact">Contact Us</a></li>
-            </ul>
+            <div>
+                <ul className='p-4'>
+                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/">Home</a></li>
+                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/about">About Us</a></li>
+                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div className='categories mt-3 ml-3'>
+                <h1 className='text-[#3D021E] font-semibold p-4 w-[95%] border-b border-[#DFDFDF]'>Categories</h1>
+                <div>
+                <h2 className='text-[#0C0C0C] font-semibold cursor-pointer w-[95%] p-4 border-b border-[#DFDFDF]' onClick={() => redirect("all")}>All Categories</h2>
+                    {categories.map((category, index) => (
+                        <h2 className='text-[#0C0C0C] font-semibold w-[95%] cursor-pointer p-4 border-b border-[#DFDFDF]' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                        ))}
+                </div>
+            </div>
         </div>
 
     </div>
