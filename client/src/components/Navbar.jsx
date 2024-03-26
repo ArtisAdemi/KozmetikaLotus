@@ -2,11 +2,17 @@ import {React, useState, useEffect} from 'react';
 import LotusLogo from '../Icons/LotusLogo'
 import CategoryService from '../services/Categories';
 import {useNavigate} from 'react-router-dom';
+import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
 
 const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const [modal, setModal] = useState(false);
+    const [nav, setNav] = useState(false);
     const navigate = useNavigate();
+
+    const handleNav = () => {
+        setNav(!nav);
+    };
 
     const toggleCategoriesModal = () => {
         setModal(!modal);
@@ -14,7 +20,7 @@ const Navbar = () => {
    
     const redirect = (name) => {
         name = name.toString().toLowerCase().replace(/\s+/g, '');
-        navigate(`/products/${name}`)
+        navigate(`/products/${name}`);
     }
 
 
@@ -36,7 +42,7 @@ const Navbar = () => {
           console.error("Error:", err)
         }
       }
-
+console.log(nav);
 
   return (
     <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[2px] border-[#ABABAB] p-4 pb-12'>
@@ -45,7 +51,7 @@ const Navbar = () => {
                 <LotusLogo />
             </div>
         </div>
-        <div className='justify-between items-center mr-16 hidden md:flex'>
+        <div className='justify-between items-center hidden md:flex'> 
             <div className='m-2'>
                 <p><a href="/">Home</a></p>
             </div>
@@ -84,6 +90,22 @@ const Navbar = () => {
         </div>
         <div className='navbar-right border-[2px] border-[#A10550] px-5 items-center justify-center text-center hidden md:flex hover:cursor-pointer' >
             <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#A10550]'>Contact Us</a></button>
+        </div>
+        
+        <div onClick={handleNav} className='block md:hidden'>
+            {nav ? <AiOutlineClose size={25}/> : <AiOutlineMenu size={25}/>}    
+        </div>
+        
+        <div className={nav ? 'fixed left-0 top-0 w-[60%] block md:hidden border-r border-r-slate-600 h-full bg-gray-500 ease-in-out duration-500' : 'fixed left-[-100%]'}>
+            <div className='mt-10'>
+                <LotusLogo />
+            </div>
+            <ul className='p-4'>
+                <li className='p-4 border-b border-gray-400'><a href="/">Home</a></li>
+                <li className='p-4 border-b border-gray-400'><a href="/products/all">Products</a></li>
+                <li className='p-4 border-b border-gray-400'><a href="/about">About Us</a></li>
+                <li className='p-4'><a href="/contact">Contact Us</a></li>
+            </ul>
         </div>
 
     </div>
