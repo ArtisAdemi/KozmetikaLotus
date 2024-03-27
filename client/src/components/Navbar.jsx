@@ -93,13 +93,13 @@ const Navbar = () => {
             <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#A10550]'>Contact Us</a></button>
         </div>
         
-        <div onClick={handleNav} className='block md:hidden'>
+        <div onClick={handleNav} className='block md:hidden cursor-pointer'>
             {nav ? <AiOutlineClose size={25} color='#A10550'/> : <AiOutlineMenu size={25} color='#A10550'/>}    
         </div>
         
         <div className={nav ? 'fixed left-0 top-0 w-[100%] block md:hidden border-r h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
             <div className='flex items-center border-b border-[#DFDFDF]'>
-                <div className='' onClick={handleNav}>
+                <div className='cursor-pointer' onClick={handleNav}>
                     <AiOutlineClose size={25} color='#A10550'/>
                 </div>
                 <div className='flex justify-center items-center mx-auto'>
