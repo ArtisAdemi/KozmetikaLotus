@@ -43,7 +43,7 @@ const Navbar = () => {
           console.error("Error:", err)
         }
       }
-console.log(nav);
+
 
   return (
     <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[2px] border-[#ABABAB] p-4 pb-12'>
