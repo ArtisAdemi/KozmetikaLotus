@@ -46,14 +46,14 @@ const Navbar = () => {
 
 
   return (
-    <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[2px] border-[#ABABAB] p-4 pb-12'>
+    <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[1px] border-[#DFDFDF] p-4 pb-8'>
         <div>
             <div className='absolute top-1'>
                 <LotusLogo />
             </div>
         </div>
         <div className='justify-between items-center hidden md:flex'> 
-            <div className='m-2'>
+            <div className='m-2 '>
                 <p><a href="/">Home</a></p>
             </div>
             <div className='m-2 relative'
@@ -89,7 +89,7 @@ const Navbar = () => {
                 <p><a href="/about">About Us</a></p>
             </div>
         </div>
-        <div className='navbar-right border-[2px] border-[#A10550] px-5 items-center justify-center text-center hidden md:flex hover:cursor-pointer' >
+        <div className='navbar-right border-[2px] border-[#A10550] px-10 items-center justify-center text-center hidden md:flex hover:cursor-pointer' >
             <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#A10550]'>Contact Us</a></button>
         </div>
         
