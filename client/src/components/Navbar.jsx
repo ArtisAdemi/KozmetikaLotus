@@ -71,12 +71,12 @@ const Navbar = () => {
                             <div className='w-[90%] justify-center'>
                                 <div className='test flex justify-center py-4 px-5 flex-col items-center'>
                                 <div className='mt-5 text-start items-start align-middle w-full pb-4'>
-                                    <h2 className='text-[#3D021E] text-lg font-semibold'>Categories</h2>
+                                    <h2 className='text-[#A10550] text-lg font-semibold'>Categories</h2>
                                 </div>
                                     <div className='modal-content w-full grid grid-cols-2 gap-8 items-center'>
-                                        <h2 className='text-[#111B29] font-semibold cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
+                                        <h2 className='text-[#A10550] font-semibold cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
                                         {categories.map((category, index) => (
-                                            <h2 className='text-[#111B29] font-semibold cursor-pointer text-md' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                                            <h2 className='text-[#A10550] font-semibold cursor-pointer text-md' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
                                             ))}
                                     </div>
                                 </div>
@@ -94,13 +94,13 @@ const Navbar = () => {
         </div>
         
         <div onClick={handleNav} className='block md:hidden'>
-            {nav ? <AiOutlineClose size={25}/> : <AiOutlineMenu size={25}/>}    
+            {nav ? <AiOutlineClose size={25} color='#A10550'/> : <AiOutlineMenu size={25} color='#A10550'/>}    
         </div>
         
-        <div className={nav ? 'fixed left-0 top-0 w-[100%] block md:hidden border-r border-r-slate-600 h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
+        <div className={nav ? 'fixed left-0 top-0 w-[100%] block md:hidden border-r h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
             <div className='flex items-center border-b border-[#DFDFDF]'>
                 <div className='' onClick={handleNav}>
-                    <AiOutlineClose size={25}/>
+                    <AiOutlineClose size={25} color='#A10550'/>
                 </div>
                 <div className='flex justify-center items-center mx-auto'>
                     <LotusLogo />
@@ -108,17 +108,17 @@ const Navbar = () => {
             </div>
             <div>
                 <ul className='p-4'>
-                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/">Home</a></li>
-                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/about">About Us</a></li>
-                    <li className='p-4 font-semibold text-[#0C0C0C] border-b border-[#DFDFDF]'><a href="/contact">Contact Us</a></li>
+                    <li className='p-4 font-semibold text-[#A10550] border-b border-[#DFDFDF]'><a href="/">Home</a></li>
+                    <li className='p-4 font-semibold text-[#A10550] border-b border-[#DFDFDF]'><a href="/about">About Us</a></li>
+                    <li className='p-4 font-semibold text-[#A10550] border-b border-[#DFDFDF]'><a href="/contact">Contact Us</a></li>
                 </ul>
             </div>
             <div className='categories mt-3 ml-3'>
-                <h1 className='text-[#3D021E] font-semibold p-4 w-[95%] border-b border-[#DFDFDF]'>Categories</h1>
+                <h1 className='text-[#A10550] text-sm font-semibold p-4 w-[95%] border-b border-[#DFDFDF]'>Categories</h1>
                 <div>
-                <h2 className='text-[#0C0C0C] font-semibold cursor-pointer w-[95%] p-4 border-b border-[#DFDFDF]' onClick={() => redirect("all")}>All Categories</h2>
+                <h2 className='text-[#A10550] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]' onClick={() => redirect("all")}>All Categories</h2>
                     {categories.map((category, index) => (
-                        <h2 className='text-[#0C0C0C] font-semibold w-[95%] cursor-pointer p-4 border-b border-[#DFDFDF]' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                        <h2 className='text-[#A10550] ml-2 font-semibold w-[94%] cursor-pointer p-4 border-b border-[#DFDFDF]' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
                         ))}
                 </div>
             </div>
