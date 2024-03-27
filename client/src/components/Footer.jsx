@@ -40,7 +40,7 @@ const Footer = () => {
       }
 
   return (
-    <div className="bg-[#3D021E] text-white">
+    <div className="bg-[#F36EAE] text-white">
         <div className=' pt-4'>
             <div className=' text-3xl font-bold'>
             <LotusIcon/>
@@ -77,18 +77,18 @@ const Footer = () => {
             <p>Ne besojmë në rëndësinë e kujdesit të lëkurës prandaj ofrojmë produkte të specializuara për të mbajtur lëkurën të shëndetshme dhe të freskët.</p>
         </div>
     </div>
-    <div className="bg-[#280114] md:flex justify-between items-center p-5 w-full">
+    <div className="bg-[#FCE1E7] md:flex justify-between items-center p-5 w-full">
         <div className='flex justify-center w-[50%]'>
             <div className='md:flex justify-around]'>
                 <div className='flex items-center'>
                         <LocationIcon/>                    
-                    <p className='mr-4'>Rruga..., Ferizaj </p>
+                    <p className='mr-4 text-[#F36EAE] font-semibold'>Rruga..., Ferizaj </p>
                 </div>
                 <div className='hidden md:block'>
 
                     <Indicator/>
                 </div>
-                <p className='md:ml-4 ml-2 mt-2 md:mt-0'> 044-233-233</p>
+                <p className='md:ml-4 ml-2 mt-2 md:mt-0 text-[#F36EAE] font-semibold'> 044-233-233</p>
             </div>
         </div>
         <div className='flex md:mr-6 w-[45%] justify-center'>
@@ -99,7 +99,7 @@ const Footer = () => {
             </div>
         </div>
     </div>
-    <div className='bg-[#14010A] text-center'>
+    <div className='bg-[#F36EAE] text-center'>
             <span>© 2024 ProSolutions. All Rights Reserved.</span>
     </div>
 </div>
