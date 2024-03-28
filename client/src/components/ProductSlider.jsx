@@ -102,10 +102,10 @@ const ProductSlider = ({ category, uniqueCategories }) => {
           </div>
           <div className="p-4">
             {uniqueCategories ? <h3 className="text-start text-xl text-[#A10550] font-bold">{product.Categories[0].name}</h3> : <h3 className="text-start text-xl text-[#A10550] font-bold">{product.title}</h3>}
-            {uniqueCategories ? null : <p className="mt-1 text-start text-gray-600 text-sm">{truncateDescription(product.shortDescription, 10)}</p>}
+            {uniqueCategories ? null : <p className="mt-1 text-start text-[#A10550] text-sm">{truncateDescription(product.shortDescription, 10)}</p>}
             <div className="flex justify-start items-start mt-4">
-              <span className="text-xl text-gray-700 font-bold">
-              {uniqueCategories ? null : <span className="text-xl text-gray-700 font-bold">€{product.price}</span>}</span>
+              <span className="text-xl text-[#A10550] font-bold">
+              {uniqueCategories ? null : <span className="text-xl text-[#A10550] font-bold">€{product.price}</span>}</span>
             </div>
           </div>
         </div>

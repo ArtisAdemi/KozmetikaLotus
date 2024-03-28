@@ -40,7 +40,7 @@ const Footer = () => {
       }
 
   return (
-    <div className="bg-[#3D021E] text-white">
+    <div className="bg-[#F36EAE] text-white">
         <div className=' pt-4'>
             <div className=' text-3xl font-bold'>
             <LotusIcon/>
@@ -63,10 +63,13 @@ const Footer = () => {
                 <p><a href="/women-make-up">Women Make Up</a></p>
                 <p><a href="/women-skincare">Women Skincare</a></p>
                 <p><a href="/gifts-sets">Gifts & Sets</a></p> */}
-                <h2 className=' cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
-                    {categories.map((category, index) => (
-                        <h2 className='font-bold text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
-                        ))}
+                <h2 className='text-lg font-bold mb-3'>Categories</h2>
+                <div className='w-full grid grid-cols-3 md:grid-cols-2 gap-3'>
+                    <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
+                        {categories.map((category, index) => (
+                           <h2 className=' text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                           ))}
+                </div>
             </div>
         </div>
         <div className="space-y-4 max-w-[600px] p-4 hidden md:block">
@@ -74,18 +77,18 @@ const Footer = () => {
             <p>Ne besojmë në rëndësinë e kujdesit të lëkurës prandaj ofrojmë produkte të specializuara për të mbajtur lëkurën të shëndetshme dhe të freskët.</p>
         </div>
     </div>
-    <div className="bg-[#280114] md:flex justify-between items-center p-5 w-full">
+    <div className="bg-[#FCE1E7] md:flex justify-between items-center p-5 w-full">
         <div className='flex justify-center w-[50%]'>
             <div className='md:flex justify-around]'>
-                <div className='flex'>
-                    <div className='hidden md:block'>
-
-                        <LocationIcon /> 
-                    </div>
-                    <p className='mr-4'>Rruga..., Ferizaj </p>
+                <div className='flex items-center'>
+                        <LocationIcon/>                    
+                    <p className='mr-4 text-[#F36EAE] font-semibold'>Rruga..., Ferizaj </p>
                 </div>
-                <Indicator/>
-                <p className='md:ml-4'> 044-233-233</p>
+                <div className='hidden md:block'>
+
+                    <Indicator/>
+                </div>
+                <p className='md:ml-4 ml-2 mt-2 md:mt-0 text-[#F36EAE] font-semibold'> 044-233-233</p>
             </div>
         </div>
         <div className='flex md:mr-6 w-[45%] justify-center'>
@@ -96,7 +99,7 @@ const Footer = () => {
             </div>
         </div>
     </div>
-    <div className='bg-[#14010A] text-center'>
+    <div className='bg-[#F36EAE] text-center'>
             <span>© 2024 ProSolutions. All Rights Reserved.</span>
     </div>
 </div>

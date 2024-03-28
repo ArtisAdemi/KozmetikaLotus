@@ -10,9 +10,9 @@ const ProductListItem = ({ imageUrl, title, shortDescription, longDescription, p
         </div>
         <div className="p-4">
           <h2 className="text-start text-xl text-[#A10550] font-bold">{title}</h2>
-          <p className="mt-1 text-start text-gray-600 text-sm">{shortDescription}</p>
+          <p className="mt-1 text-start text-[#A10550] text-sm">{shortDescription}</p>
           <div className="flex justify-start items-start mt-4">
-            <span className="text-xl text-gray-700 font-bold">€
+            <span className="text-xl text-[#A10550] font-bold">€
 {price}</span>
           </div>
         </div>
