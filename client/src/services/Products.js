@@ -24,7 +24,6 @@ const ProductService = {
     getProductById: async(id) => {
         try{
             const response = await axios.get(`${API_URL}/${id}`)
-            console.log("Product Res", response.data)
             return response.data
         } catch (err){
             console.error('Error fetching products:', err);
@@ -93,10 +92,9 @@ const ProductService = {
     
     registerProduct: async (productData, images) => {
     const formData = new FormData();
-    
+    console.log("productData",productData)
     // Append product data fields to formData, excluding categoryNames
     Object.keys(productData).forEach(key => {
-        if (key !== 'categoryNames') { // Exclude categoryNames from this loop
             if (Array.isArray(productData[key])) {
                 // If the value is an array, append each item individually
                 productData[key].forEach(item => {
@@ -106,14 +104,7 @@ const ProductService = {
                 // For non-array values, append them as before
                 formData.append(key, productData[key]);
             }
-        }
     });
-
-    // Now, handle categoryNames separately in the desired format
-    if (productData.categoryNames) {
-        // Assuming you want to append it as a stringified object
-        formData.append('categoryNames', JSON.stringify(productData.categoryNames));
-    }
     
     // Append images to formData
     images.forEach(image => {

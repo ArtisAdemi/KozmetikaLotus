@@ -57,7 +57,6 @@ const ProductFormModal = ({ closeModal, product }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { images, ...productData } = formData;
-    productData.categoryNames = JSON.stringify(productData.categoryNames);
 
     if( product ) {
         await updateProduct();
