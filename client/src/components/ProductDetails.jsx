@@ -11,22 +11,25 @@ import ProductSlider from './ProductSlider';
 
 
 
-const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price, isAdmin}) => {
+const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
-
+  let imagePath = '';
   useEffect(() => {
     const fetchImages = async () => {
         const fetchedImages = await ProductService.getProductImages(id);
         setImages(fetchedImages);
-    };
-    fetchImages();
-  }, [id]);
-
-  const staticImages = [
-    { url: Product1Home },
-    { url: Product2Home },
-    { url: Product3Home },
-  ];
+      };
+      fetchImages();
+    }, [id]);
+    
+    const staticImages = [
+      { url: Product1Home },
+      { url: Product2Home },
+      { url: Product3Home },
+    ];
+    
+    imagePath = images.length > 0 ? `/uploads/${images[0].fileName}` : '';
+  
 
   return (
     <div>
@@ -35,7 +38,7 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
 
           <div className='grid grid-cols-2 pb-10 gap-10'>
             <div className='items-center flex justify-center'>
-              <img src={Product3Home} alt="img" className='object-cover w-full max-h-[400px]'/>
+              <img src={process.env.PUBLIC_URL + imagePath} alt="img" className='object-cover w-full max-h-[400px]'/>
             </div>
             <div className='w-[70%]'>
               <div className='mb-3'>
