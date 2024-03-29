@@ -1,5 +1,5 @@
 import axios from 'axios';
-import buildUrl from '../middleware/BuildParam';
+import buildUrl from '../helpers/BuildParam';
 const API_URL = 'http://localhost:3001/api/categories';
 
 const CategoryService = {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import buildUrl from '../middleware/BuildParam';
+import buildUrl from '../helpers/BuildParam';
 const API_URL = 'http://localhost:3001/api/products';
 
 // Create an axios instance for authenticated requests
@@ -24,6 +24,7 @@ const ProductService = {
     getProductById: async(id) => {
         try{
             const response = await axios.get(`${API_URL}/${id}`)
+            console.log("Product Res", response.data)
             return response.data
         } catch (err){
             console.error('Error fetching products:', err);
@@ -90,16 +91,47 @@ const ProductService = {
         }
     },
     
-    registerProduct: async (productData) => {
-        // Use axiosInstance for authenticated requests
-        try {
-            const response = await axiosInstance.post(`${API_URL}`, productData);
-            return response.data;
-        } catch (err) {
-            console.error('Error registering product:', err);
-            return null;
+    registerProduct: async (productData, images) => {
+    const formData = new FormData();
+    
+    // Append product data fields to formData, excluding categoryNames
+    Object.keys(productData).forEach(key => {
+        if (key !== 'categoryNames') { // Exclude categoryNames from this loop
+            if (Array.isArray(productData[key])) {
+                // If the value is an array, append each item individually
+                productData[key].forEach(item => {
+                    formData.append(`${key}[]`, item);
+                });
+            } else {
+                // For non-array values, append them as before
+                formData.append(key, productData[key]);
+            }
         }
-    },
+    });
+
+    // Now, handle categoryNames separately in the desired format
+    if (productData.categoryNames) {
+        // Assuming you want to append it as a stringified object
+        formData.append('categoryNames', JSON.stringify(productData.categoryNames));
+    }
+    
+    // Append images to formData
+    images.forEach(image => {
+        formData.append('uploadedFiles', image);
+    });
+    
+    try {
+        const response = await axiosInstance.post(`${API_URL}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (err) {
+        console.error('Error registering product:', err);
+        return null;
+    }
+},
 
     updateProduct: async (productId, productData) => {
         try {

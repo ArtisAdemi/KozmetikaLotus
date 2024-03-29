@@ -51,54 +51,38 @@ const ProductFormModal = ({ closeModal, product }) => {
   };
 
   const handleImageChange = (e) => {
-    setFormData({ ...formData, images: [...e.target.files] });
+    setFormData({ ...formData, images: Array.from(e.target.files) });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { images, ...productData } = formData;
+    productData.categoryNames = JSON.stringify(productData.categoryNames);
+
     if( product ) {
         await updateProduct();
     } else{
-        await registerProduct();
+        await ProductService.registerProduct(productData, images);
     }
     closeModal();
   };
 
-  const newProduct = {};
 
   const updateProduct = async () => {
     try {
-        // Ensure you have a product ID to work with
         if (!product?.id) {
             throw new Error("Product ID is undefined");
         }
         const updatedProduct = {
             ...formData,
-            // Convert price to a number, if necessary
             price: parseFloat(formData.price),
         };
 
         const res = await ProductService.updateProduct(product.id, updatedProduct);
-        // Additional actions on successful update
     } catch (err) {
         console.error("Error updating product", err);
     }
 };
-
-  const registerProduct = async () => {
-    let res;
-    try{
-      newProduct.title = formData.title;
-      newProduct.shortDescription = formData.shortDescription;
-      newProduct.longDescription = formData.longDescription;
-      newProduct.price = formData.price;
-      newProduct.categoryNames = formData.categoryNames;
-
-      res = await ProductService.registerProduct(newProduct);
-    } catch (err) {
-      console.error("Error registering new product", err)
-    }
-  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
