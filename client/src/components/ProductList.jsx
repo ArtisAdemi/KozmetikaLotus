@@ -53,13 +53,13 @@ const ProductList = ({ category, productName, isAdmin }) => {
 
                     <div className='w-full flex justify-center'>
                     {/* Pagination component to handle page changes */} 
-                    <div className='m-3 text-[#A10550] mt-5 font-semibold text-xl align-text-bottom px-3 py-1'>
+                    <div className='m-3 text-[#292929] mt-5 font-semibold text-xl align-text-bottom px-3 py-1'>
                         {page}
                     </div>
-                    <div className='m-3 shadow-md px-3 py-1 rounded-md text-[#A10550] items-baseline text-lg font-semibold' style={{display: page === 1 ? 'none' : 'block'}}>
+                    <div className='m-3 shadow-md px-3 py-1 rounded-md text-[#292929] items-baseline text-lg font-semibold' style={{display: page === 1 ? 'none' : 'block'}}>
                         <button onClick={() => handlePageChange(page - 1)} disabled={page === 1} className='align-text-bottom'>Previous</button>
                     </div>
-                    <div className='m-3 shadow-md px-3 py-1 rounded-md text-[#A10550] align-text-bottom text-lg font-semibold' style={{display: page >= totalPages ? 'none' : 'block'}}>
+                    <div className='m-3 shadow-md px-3 py-1 rounded-md text-[#292929] align-text-bottom text-lg font-semibold' style={{display: page >= totalPages ? 'none' : 'block'}}>
                         <button onClick={() => handlePageChange(page + 1)} disabled={page >= totalPages} >Next</button>
                     </div>
                 </div>

@@ -9,10 +9,10 @@ const ProductListItem = ({ imageUrl, title, shortDescription, longDescription, p
           <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt="asd" />
         </div>
         <div className="p-4">
-          <h2 className="text-start text-xl text-[#A10550] font-bold">{title}</h2>
-          <p className="mt-1 text-start text-[#A10550] text-sm">{shortDescription}</p>
+          <h2 className="text-start text-xl text-[#292929] font-bold">{title}</h2>
+          <p className="mt-1 text-start text-[#292929] text-sm">{shortDescription}</p>
           <div className="flex justify-start items-start mt-4">
-            <span className="text-xl text-[#A10550] font-bold">€
+            <span className="text-xl text-[#292929] font-bold">€
 {price}</span>
           </div>
         </div>

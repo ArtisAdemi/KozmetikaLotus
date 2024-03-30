@@ -31,12 +31,12 @@ const Products = () => {
           <div className='w-[80%] flex justify-between p-10'>
             <div className='flex'>
               <div>
-                <h2 className='text-2xl font-bold text-[#A10550]'>Produktet</h2>
+                <h2 className='text-2xl font-bold text-[#292929]'>Produktet</h2>
               </div>
               <div className='mt-1 ml-2'>
-                <FontAwesomeIcon icon={faChevronRight} color='#A10550'/>
+                <FontAwesomeIcon icon={faChevronRight} color='#292929'/>
               </div>
-              <div className='mt-1 ml-2 text-[#A10550]'>
+              <div className='mt-1 ml-2 text-[#292929]'>
                 <span>{category}</span>
               </div>
             </div>
