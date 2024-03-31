@@ -87,7 +87,7 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
         </div>
         <div className='bg-[#C6D0BC] w-full flex justify-center'>
           <div className='w-[80%] text-center p-6'>
-            <h1 className='font-bold'>You May Also Like</h1>
+            <h1 className='font-bold text-xl'>You May Also Like</h1>
             <div className='mt-10 pb-10'>
               <ProductSlider category={category}/>
             </div>
