@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/products');
-const {validateToken} = require('../middleware/AuthMiddleware')
+const {validateToken} = require('../middleware/AuthMiddleware');
+const fileUpload = require("../helpers/fileUpload");
 
 // Routes
 
 // Register Product
-router.post('/', validateToken,  productsController.registerProduct);
+router.post('/', validateToken, fileUpload, productsController.registerProduct);
 
 // Update Product
 router.put('/:id', productsController.updateProduct)

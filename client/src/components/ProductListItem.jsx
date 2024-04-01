@@ -27,7 +27,8 @@ const ProductListItem = ({title, shortDescription, price, category, id, isAdmin 
           <p className="mt-1 text-start text-[#A10550] text-sm">{shortDescription}</p>
           <div className="flex justify-start items-start mt-4">
             <span className="text-xl text-[#A10550] font-bold">€
-{price}</span>
+              {price}
+            </span>
           </div>
         </div>
       </div>
