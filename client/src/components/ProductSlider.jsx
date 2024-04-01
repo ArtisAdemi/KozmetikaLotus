@@ -101,11 +101,11 @@ const ProductSlider = ({ category, uniqueCategories }) => {
             <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt={product.title} />
           </div>
           <div className="p-4">
-            {uniqueCategories ? <h3 className="text-start text-xl text-[#A10550] font-bold">{product.Categories[0].name}</h3> : <h3 className="text-start text-xl text-[#A10550] font-bold">{product.title}</h3>}
-            {uniqueCategories ? null : <p className="mt-1 text-start text-[#A10550] text-sm">{truncateDescription(product.shortDescription, 10)}</p>}
+            {uniqueCategories ? <h3 className="text-start text-xl text-[#292929] font-bold">{product.Categories[0].name}</h3> : <h3 className="text-start text-xl text-[#292929] font-bold">{product.title}</h3>}
+            {uniqueCategories ? null : <p className="mt-1 text-start text-[#292929] text-sm">{truncateDescription(product.shortDescription, 10)}</p>}
             <div className="flex justify-start items-start mt-4">
-              <span className="text-xl text-[#A10550] font-bold">
-              {uniqueCategories ? null : <span className="text-xl text-[#A10550] font-bold">€{product.price}</span>}</span>
+              <span className="text-xl text-[#292929] font-bold">
+              {uniqueCategories ? null : <span className="text-xl text-[#292929] font-bold">€{product.price}</span>}</span>
             </div>
           </div>
         </div>

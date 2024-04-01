@@ -75,7 +75,7 @@ const Register = () => {
                             {formik.errors.confirmPassword && formik.touched.confirmPassword && 
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.confirmPassword}</h2>}
             
-                            <button type="submit" className='border-[#A10550] border-2 p-3 md:p-4 w-[60%] mx-auto text-[#A10550] shadow-xl'>Register</button>
+                            <button type="submit" className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[60%] mx-auto text-[#FFFFFF] shadow-xl hover:opacity-80'>Register</button>
 
                         </form>
 
