@@ -33,23 +33,33 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
        <div className='w-full bg-red flex justify-center'>
         <div className='block w-[80%]'>
 
-          <div className='grid grid-cols-2 pb-10 gap-10'>
-            <div className='items-center flex justify-center'>
+          <div className='flex flex-col md:flex-row pb-10 md:gap-10'> 
+               <h2 className='block md:hidden text-[#292929#292929] text-2xl font-bold mb-3'>{title}</h2>  
+               <p className='block md:hidden text-sm mb-3'>{shortDescription}</p>
+            <div className='items-center flex md:w-[60%] justify-center'>
               <img src={Product3Home} alt="img" className='object-cover w-full max-h-[400px]'/>
             </div>
-            <div className='w-[70%]'>
-              <div className='mb-3'>
+            <div className='block md:hidden w-[90%] mx-auto mt-3'>
+              <ProductImageSlider images={staticImages}/>
+            </div>
+            <div className='block md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+              <p className='w-full font-bold text-xl mt-5 mb-10 bg-[#ffecf0] rounded-lg py-3 px-5'>
+                €{price}
+              </p>
+            </div>
+            <div className='w-full md:w-[40%]'>
+              <div className='hidden md:block mb-3'>
                <h2 className='text-[#292929#292929] text-2xl font-bold'>{title}</h2>
               </div>
-              <div className='mb-4'>
+              <div className='hidden md:block mb-4'>
                 <p className='text-sm'>{shortDescription}</p>
               </div>
-              <div className='w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
-              <p className='w-full text-end'>
+              <div className='hidden md:block w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+              <p className='w-full font-bold text-xl'>
                 €{price}
               </p>
               </div>
-              <div className='navbar-right mt-3 border-[2px] border-[#292929] px-5 items-center justify-center text-center hidden md:flex'>
+              <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
                 <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Contact Us</a></button>
               </div>
               <div className='text-xs mt-6 bg-[#A3A7FC] p-8 text-[#FFFFFF] font-sans font-semibold'>
@@ -74,12 +84,12 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
               </div>
             </div>
           </div>
-            <div className='w-full'>
+            <div className='hidden md:block w-full'>
               <ProductImageSlider images={staticImages}/>
             </div>
         </div>
        </div>
-        <div className='py-12 w-full flex justify-center pb-64'>
+        <div className='py-6 w-full flex justify-center pb-64'>
           <div className='w-[80%] bg-[#FFFFFF] border border-1 py-5 px-6'>
             <h1 className='text-[#292929] font-semibold'>Detajet e Produktit</h1>
             <p className='mt-2'>{longDescription}</p>

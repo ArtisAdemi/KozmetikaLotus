@@ -28,8 +28,8 @@ const Products = () => {
           <Navbar />
         </div>
         <div className='w-full flex justify-center'>
-          <div className='w-[80%] md:flex justify-between p-10'>
-            <div className='flex'>
+          <div className='w-[80%] md:flex justify-between p-10 ml-[-35px]'>
+            <div className='flex '>
               <div>
                 <h2 className='text-2xl font-bold text-[#292929]'>Produktet</h2>
               </div>
