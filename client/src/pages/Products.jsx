@@ -28,20 +28,20 @@ const Products = () => {
           <Navbar />
         </div>
         <div className='w-full flex justify-center'>
-          <div className='w-[80%] flex justify-between p-10'>
-            <div className='flex'>
+          <div className='w-[80%] md:flex justify-between p-10 ml-[-35px]'>
+            <div className='flex '>
               <div>
-                <h2 className='text-2xl font-bold text-[#A10550]'>Produktet</h2>
+                <h2 className='text-2xl font-bold text-[#292929]'>Produktet</h2>
               </div>
               <div className='mt-1 ml-2'>
-                <FontAwesomeIcon icon={faChevronRight} color='#A10550'/>
+                <FontAwesomeIcon icon={faChevronRight} color='#292929'/>
               </div>
-              <div className='mt-1 ml-2 text-[#A10550]'>
+              <div className='mt-1 ml-2 text-[#292929]'>
                 <span>{category}</span>
               </div>
             </div>
             <div>
-              <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
+              <input className='border border-1 w-[180px] md:w-[250px] border-[#0C0C0C4F] rounded-md p-1 px-6 ' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
             </div>
           </div>
         </div>
