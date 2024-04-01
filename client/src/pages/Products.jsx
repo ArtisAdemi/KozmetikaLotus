@@ -28,7 +28,7 @@ const Products = () => {
           <Navbar />
         </div>
         <div className='w-full flex justify-center'>
-          <div className='w-[80%] flex justify-between p-10'>
+          <div className='w-[80%] md:flex justify-between p-10'>
             <div className='flex'>
               <div>
                 <h2 className='text-2xl font-bold text-[#292929]'>Produktet</h2>
@@ -41,7 +41,7 @@ const Products = () => {
               </div>
             </div>
             <div>
-              <input className='border border-1 border-[#0C0C0C4F] p-1 px-6' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
+              <input className='border border-1 w-[180px] md:w-[250px] border-[#0C0C0C4F] rounded-md p-1 px-6 ' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
             </div>
           </div>
         </div>
