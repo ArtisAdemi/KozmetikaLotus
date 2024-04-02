@@ -96,9 +96,9 @@ const Navbar = () => {
                 <p><a href="/contact">Contact Us</a></p>
             </div>
         </div>
-        <div className='w-[100px] hidden md:flex justify-between hover:cursor-pointer items-center' >
-            <IoCartOutline size={25}/>
-            <FaRegUser size={20}/>
+        <div className='w-[100px] hidden md:flex justify-between items-center' >
+            <IoCartOutline size={25} className='hover:cursor-pointer '/>
+            <FaRegUser size={20} className='hover:cursor-pointer '/>
         </div>
         
         <div onClick={handleNav} className='block md:hidden cursor-pointer'>
