@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Images = sequelize.define("Images", {
-        image_url: {
+        fileName: {
             type: DataTypes.STRING,
             allowNull: false,
         },

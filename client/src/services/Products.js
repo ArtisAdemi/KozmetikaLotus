@@ -1,5 +1,5 @@
 import axios from 'axios';
-import buildUrl from '../middleware/BuildParam';
+import buildUrl from '../helpers/BuildParam';
 const API_URL = 'http://localhost:3001/api/products';
 
 // Create an axios instance for authenticated requests
@@ -90,16 +90,39 @@ const ProductService = {
         }
     },
     
-    registerProduct: async (productData) => {
-        // Use axiosInstance for authenticated requests
-        try {
-            const response = await axiosInstance.post(`${API_URL}`, productData);
-            return response.data;
-        } catch (err) {
-            console.error('Error registering product:', err);
-            return null;
-        }
-    },
+    registerProduct: async (productData, images) => {
+    const formData = new FormData();
+    console.log("productData",productData)
+    // Append product data fields to formData, excluding categoryNames
+    Object.keys(productData).forEach(key => {
+            if (Array.isArray(productData[key])) {
+                // If the value is an array, append each item individually
+                productData[key].forEach(item => {
+                    formData.append(`${key}[]`, item);
+                });
+            } else {
+                // For non-array values, append them as before
+                formData.append(key, productData[key]);
+            }
+    });
+    
+    // Append images to formData
+    images.forEach(image => {
+        formData.append('uploadedFiles', image);
+    });
+    
+    try {
+        const response = await axiosInstance.post(`${API_URL}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (err) {
+        console.error('Error registering product:', err);
+        return null;
+    }
+},
 
     updateProduct: async (productId, productData) => {
         try {
