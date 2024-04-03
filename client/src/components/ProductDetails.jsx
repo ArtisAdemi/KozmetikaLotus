@@ -13,11 +13,15 @@ import ProductSlider from './ProductSlider';
 
 const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
-  let imagePath = '';
+  const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     const fetchImages = async () => {
         const fetchedImages = await ProductService.getProductImages(id);
         setImages(fetchedImages);
+        // Set the first image as the selected image by default
+         if (fetchedImages.length > 0) {
+          setSelectedImage(`/uploads/${fetchedImages[0].fileName}`);
+        }
       };
       fetchImages();
     }, [id]);
@@ -27,8 +31,12 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
       { url: Product2Home },
       { url: Product3Home },
     ];
+
+      // Function to handle image selection
+    const handleImageSelect = (imagePath) => {
+      setSelectedImage(imagePath);
+    };
     
-    imagePath = images.length > 0 ? `/uploads/${images[0].fileName}` : '';
   
 
   return (
@@ -39,10 +47,14 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
                <h2 className='block md:hidden text-[#292929#292929] text-2xl font-bold mb-3'>{title}</h2>  
                <p className='block md:hidden text-sm mb-3'>{shortDescription}</p>
             <div className='items-center flex md:w-[60%] justify-center'>
-              <img src={process.env.PUBLIC_URL + imagePath} alt="img" className='object-cover w-full max-h-[400px]'/>
+              <img src={process.env.PUBLIC_URL + selectedImage} alt="img" className='object-contain w-full max-h-[400px]'/>
             </div>
             <div className='block md:hidden w-[90%] mx-auto mt-3'>
-              <ProductImageSlider images={staticImages}/>
+                <div className='flex flex-wrap justify-center gap-2 mt-4'>
+                {images.map((image, index) => (
+                  <img key={index} src={`/uploads/${image.fileName}`} alt={`img-${index}`} className='w-24 h-24 object-cover cursor-pointer' onClick={() => handleImageSelect(`/uploads/${image.fileName}`)} />
+                ))}
+              </div>
             </div>
             <div className='block md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
               <p className='w-full font-bold text-xl mt-5 mb-10 bg-[#ffecf0] rounded-lg py-3 px-5'>
@@ -87,7 +99,11 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
             </div>
           </div>
             <div className='hidden md:block w-full'>
-              <ProductImageSlider images={staticImages}/>
+              <div className='flex flex-wrap justify-center gap-2 mt-4 w-[60%]'>
+                  {images.map((image, index) => (
+                    <img key={index} src={`/uploads/${image.fileName}`} alt={`img-${index}`} className='w-24 h-24 object-cover cursor-pointer' onClick={() => handleImageSelect(`/uploads/${image.fileName}`)} />
+                  ))}
+                </div>
             </div>
         </div>
        </div>

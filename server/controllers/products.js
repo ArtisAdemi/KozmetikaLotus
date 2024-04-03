@@ -4,6 +4,8 @@ const { Sequelize, Op } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
 const Images = db.Images;
+const fs = require('fs');
+const path = require('path');
 
 // Controller functions
 
@@ -171,24 +173,42 @@ const updateProduct = async(req, res) => {
 
 // Delete Product
 const deleteProduct = async (req, res) => {
-    // get product id 
     const productId = req.params.id;
 
     try {
         // Get product from database 
         const product = await Products.findByPk(productId);
 
-        if(!product) { //if no product
-            res.status(404).json({message: "Product not found"});
+        if (!product) { //if no product
+            return res.status(404).json({ message: "Product not found" });
         }
 
-        //delete product
+        // Find all images associated with the product
+        const images = await Images.findAll({
+            where: { ProductId: productId }
+        });
+
+        // Delete each image file from the filesystem
+        images.forEach(image => {
+            const imagePath = path.join(__dirname, '..', '..', 'client', 'public', 'uploads', image.fileName);
+            fs.unlink(imagePath, (err) => {
+                if (err) console.error(`Failed to delete image file: ${imagePath}`, err);
+            });
+        });
+
+        // Delete all image records from the database
+        await Images.destroy({
+            where: { ProductId: productId }
+        });
+
+        // Delete product
         await product.destroy();
         res.status(200).json({message: "Product deleted successfully"});
     } catch (err) {
-        res.status(500).json({error: err.message})
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-}
+};
 
 // Get unique product per category with associated image
 const getUniqueProductPerCategory = async (req, res) => {
