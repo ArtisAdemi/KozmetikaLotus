@@ -4,6 +4,8 @@ const { Sequelize, Op } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
 const Images = db.Images;
+const fs = require('fs');
+const path = require('path');
 
 // Controller functions
 
@@ -80,17 +82,27 @@ const getProductById = async (req, res) => {
 // Register Product
 const registerProduct = async (req, res) => {
     const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
-    try{
+    
+    try {
         // Create new product using variables from body
         const newProduct = await Products.create({
-            title: title,
-            shortDescription: shortDescription,
-            longDescription: longDescription,
-            brand: brand,
-            quantity: quantity,
-            price: price,
-            discount: discount,
+            title,
+            shortDescription,
+            longDescription,
+            brand,
+            quantity,
+            price,
+            discount,
         });
+
+        // If images have been uploaded, save their paths in the Images table
+        if (req.uploadedFiles && req.uploadedFiles.length > 0) {
+            const imageRecords = req.uploadedFiles.map(file => ({
+                fileName: file.filename, // Assuming the file name is stored in filename property
+                ProductId: newProduct.id // Associate each image with the newly created product
+            }));
+            await Images.bulkCreate(imageRecords);
+        }
 
         // Check if categoryNames have been provided
         if (categoryNames && categoryNames.length > 0) {
@@ -116,24 +128,32 @@ const updateProduct = async(req, res) => {
     const productId = req.params.id;
     const { title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames } = req.body;
     
-    try{
+    try {
         // Find Product by id
         const product = await Products.findByPk(productId);
-
         if (!product) {
             return res.status(404).json({message: "Product not found"});
         }
 
         // Update the product details
         await product.update({
-            title: title,
-            shortDescription: shortDescription,
-            longDescription: longDescription,
-            brand: brand,
-            quantity: quantity,
-            price: price,
-            discount: discount,
-        })
+            title,
+            shortDescription,
+            longDescription,
+            brand,
+            quantity,
+            price,
+            discount,
+        });
+
+        // If images have been uploaded, save their paths in the Images table
+        if (req.uploadedFiles && req.uploadedFiles.length > 0) {
+            const imageRecords = req.uploadedFiles.map(file => ({
+                fileName: file.filename, // Assuming the file name is stored in filename property
+                ProductId: product.id // Associate each image with the updated product
+            }));
+            await Images.bulkCreate(imageRecords);
+        }
 
         // Update the categories associated with the product
         if (categoryNames && categoryNames.length > 0) {
@@ -153,24 +173,42 @@ const updateProduct = async(req, res) => {
 
 // Delete Product
 const deleteProduct = async (req, res) => {
-    // get product id 
     const productId = req.params.id;
 
     try {
         // Get product from database 
         const product = await Products.findByPk(productId);
 
-        if(!product) { //if no product
-            res.status(404).json({message: "Product not found"});
+        if (!product) { //if no product
+            return res.status(404).json({ message: "Product not found" });
         }
 
-        //delete product
+        // Find all images associated with the product
+        const images = await Images.findAll({
+            where: { ProductId: productId }
+        });
+
+        // Delete each image file from the filesystem
+        images.forEach(image => {
+            const imagePath = path.join(__dirname, '..', '..', 'client', 'public', 'uploads', image.fileName);
+            fs.unlink(imagePath, (err) => {
+                if (err) console.error(`Failed to delete image file: ${imagePath}`, err);
+            });
+        });
+
+        // Delete all image records from the database
+        await Images.destroy({
+            where: { ProductId: productId }
+        });
+
+        // Delete product
         await product.destroy();
         res.status(200).json({message: "Product deleted successfully"});
     } catch (err) {
-        res.status(500).json({error: err.message})
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
-}
+};
 
 // Get unique product per category with associated image
 const getUniqueProductPerCategory = async (req, res) => {
@@ -208,19 +246,25 @@ const getUniqueProductPerCategory = async (req, res) => {
     }
 }
 
-// Get all images for a product
 const getProductImages = async (req, res) => {
-    const productId = req.params.id;
-    
+    const { id } = req.params; // Extract productId from URL parameters
+    if (id === null) {
+        res.status(500).json({message: "No id has been provided"})
+    }
     try {
-        const productImages = await Images.findAll({
-            where: { ProductId: productId }
+        const images = await Images.findAll({
+            where: { ProductId: id }
         });
-        res.status(200).json(productImages);
+
+        if (images.length > 0) {
+            res.status(200).json(images);
+        } else {
+            res.status(404).json({ message: "No images found for this product." });
+        }
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-}
+};
 
 module.exports = {
     getProducts,

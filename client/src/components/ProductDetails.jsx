@@ -11,36 +11,50 @@ import ProductSlider from './ProductSlider';
 
 
 
-const ProductDetails = ({imageUrl, title, category, shortDescription, longDescription, id, price, isAdmin}) => {
+const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
-
+  const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     const fetchImages = async () => {
         const fetchedImages = await ProductService.getProductImages(id);
         setImages(fetchedImages);
-    };
-    fetchImages();
-  }, [id]);
+        // Set the first image as the selected image by default
+         if (fetchedImages.length > 0) {
+          setSelectedImage(`/uploads/${fetchedImages[0].fileName}`);
+        }
+      };
+      fetchImages();
+    }, [id]);
+    
+    const staticImages = [
+      { url: Product1Home },
+      { url: Product2Home },
+      { url: Product3Home },
+    ];
 
-  const staticImages = [
-    { url: Product1Home },
-    { url: Product2Home },
-    { url: Product3Home },
-  ];
+      // Function to handle image selection
+    const handleImageSelect = (imagePath) => {
+      setSelectedImage(imagePath);
+    };
+    
+  
 
   return (
     <div>
        <div className='w-full bg-red flex justify-center'>
         <div className='block w-[80%]'>
-
           <div className='flex flex-col md:flex-row pb-10 md:gap-10'> 
                <h2 className='block md:hidden text-[#292929#292929] text-2xl font-bold mb-3'>{title}</h2>  
                <p className='block md:hidden text-sm mb-3'>{shortDescription}</p>
             <div className='items-center flex md:w-[60%] justify-center'>
-              <img src={Product3Home} alt="img" className='object-cover w-full max-h-[400px]'/>
+              <img src={process.env.PUBLIC_URL + selectedImage} alt="img" className='object-contain w-full max-h-[400px]'/>
             </div>
             <div className='block md:hidden w-[90%] mx-auto mt-3'>
-              <ProductImageSlider images={staticImages}/>
+                <div className='flex flex-wrap justify-center gap-2 mt-4'>
+                {images.map((image, index) => (
+                  <img key={index} src={`/uploads/${image.fileName}`} alt={`img-${index}`} className='w-24 h-24 object-cover cursor-pointer' onClick={() => handleImageSelect(`/uploads/${image.fileName}`)} />
+                ))}
+              </div>
             </div>
             <div className='block md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
               <p className='w-full font-bold text-xl mt-5 mb-10 bg-[#ffecf0] rounded-lg py-3 px-5'>
@@ -85,7 +99,11 @@ const ProductDetails = ({imageUrl, title, category, shortDescription, longDescri
             </div>
           </div>
             <div className='hidden md:block w-full'>
-              <ProductImageSlider images={staticImages}/>
+              <div className='flex flex-wrap justify-center gap-2 mt-4 w-[60%]'>
+                  {images.map((image, index) => (
+                    <img key={index} src={`/uploads/${image.fileName}`} alt={`img-${index}`} className='w-24 h-24 object-cover cursor-pointer' onClick={() => handleImageSelect(`/uploads/${image.fileName}`)} />
+                  ))}
+                </div>
             </div>
         </div>
        </div>
