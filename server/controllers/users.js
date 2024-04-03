@@ -34,7 +34,7 @@ const getUserById = async (req, res) => {
 // Register User
 
 const registerUser = async (req, res) => {
-    const { email, username, role, password} = req.body;
+    const { email, firstName, lastName, phoneNumber, role, password, discount} = req.body;
     try{
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,9 +42,12 @@ const registerUser = async (req, res) => {
         // Create a new user in database
         const newUser = await Users.create({
             email: email,
-            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
             role: role,
             password: hashedPassword,
+            discount: discount
         });
         res.status(201).json(newUser);
     } catch (err) {

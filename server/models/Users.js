@@ -5,7 +5,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        username: {
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        phoneNumber: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -16,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        discount: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            defaultValue: 0.0
         }
     });
 
