@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
+import Logout from "../helpers/Logout"
 
 
 
@@ -12,6 +13,7 @@ const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const [modal, setModal] = useState(false);
     const [nav, setNav] = useState(false);
+    const { logout } = Logout();
     const navigate = useNavigate();
 
     const handleNav = () => {
@@ -95,6 +97,9 @@ const Navbar = () => {
             <div className='m-2'>
                 <p><a href="/contact">Contact Us</a></p>
             </div>
+            <div className='m-2'>
+                <p><a href="/" onClick={logout}>Log Out</a></p>
+            </div>
         </div>
         <div className='w-[100px] hidden md:flex justify-between items-center' >
             <IoCartOutline size={25} className='hover:cursor-pointer '/>
@@ -119,6 +124,7 @@ const Navbar = () => {
                     <li className='p-4 font-semibold text-[#292929] border-b border-[#DFDFDF]'><a href="/">Home</a></li>
                     <li className='p-4 font-semibold text-[#292929] border-b border-[#DFDFDF]'><a href="/about">About Us</a></li>
                     <li className='p-4 font-semibold text-[#292929] border-b border-[#DFDFDF]'><a href="/contact">Contact Us</a></li>
+                    <li className='p-4 font-semibold text-[#292929] border-b border-[#DFDFDF]' onClick={logout}><a href="/contact">Log out</a></li>
                 </ul>
             </div>
             <div className='categories mt-3 ml-3'>

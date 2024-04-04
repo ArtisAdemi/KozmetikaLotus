@@ -29,8 +29,8 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     vertical: false,
     horizontal: true,
     arrows: false,
-    autoplay:true,
-    autoplaySpeed: 1500,
+    // autoplay:true,
+    // autoplaySpeed: 1500,
     slidesToShow: products.length > 0 ? Math.min(products.length, 4) : 1,
     slidesToScroll: 1,
     lazyLoad: 'ondemand',
@@ -101,7 +101,9 @@ const ProductSlider = ({ category, uniqueCategories }) => {
         {products.length > 0 && products.map((product, index) => (
           <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg" key={index}>
           <div className="flex justify-center items-center w-full">
-            <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt={product.title} />
+          {product.Images && product.Images.length > 0 && (
+                  <img className="object-cover w-full min-h-[375px]" src={`/uploads/${product.Images[0].fileName}`} alt={product.title} />
+                )}
           </div>
           <div className="p-4">
             {uniqueCategories ? <h3 className="text-start text-xl text-[#292929] font-bold">{product.Categories[0].name}</h3> : <h3 className="text-start text-xl text-[#292929] font-bold">{product.title}</h3>}
