@@ -32,7 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    
+    Users.associate = (models) => {
+        Users.belongsToMany(models.Products, { through: 'Wishlist' });
+    };
 
     return Users;
 }

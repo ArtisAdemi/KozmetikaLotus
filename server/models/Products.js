@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
      // This creates a table with many to many relation
      Products.associate = (models) => {
         Products.belongsToMany(models.Categories, { through: 'ProductCategories' });
+        Products.belongsToMany(models.Users, { through: 'Wishlist' });
         Products.hasMany(models.Images, { foreignKey: 'ProductId' });
     };
 
