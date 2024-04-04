@@ -30,6 +30,10 @@ const getProducts = async (req, res) => {
             where: { name: category },
             through: { attributes: [] }, // Hide the join table attributes
         });
+        includeCondition.push({
+            model: Images,
+            // through: { attributes: [] },
+        })
     } else {
         includeCondition.push({
             model: Categories,
