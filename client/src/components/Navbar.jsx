@@ -3,6 +3,10 @@ import LotusLogo from '../Icons/LotusLogo'
 import CategoryService from '../services/Categories';
 import {useNavigate} from 'react-router-dom';
 import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
+import { IoCartOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
+
+
 
 const Navbar = () => {
     const [categories, setCategories] = useState([]);
@@ -53,7 +57,7 @@ const Navbar = () => {
             </div>
         </div>
         <div className='justify-between items-center hidden md:flex'> 
-            <div className='m-2 '>
+            <div className='m-2 ml-32'>
                 <p><a href="/">Home</a></p>
             </div>
             <div className='m-2 relative'
@@ -88,9 +92,13 @@ const Navbar = () => {
             <div className='m-2'>
                 <p><a href="/about">About Us</a></p>
             </div>
+            <div className='m-2'>
+                <p><a href="/contact">Contact Us</a></p>
+            </div>
         </div>
-        <div className='navbar-right border-[2px] border-[#292929] px-10 items-center justify-center text-center hidden md:flex hover:cursor-pointer' >
-            <button className='text-center items-center'><a href="/contact" className='text-center items-center text-[#292929]'>Contact Us</a></button>
+        <div className='w-[100px] hidden md:flex justify-between items-center' >
+            <IoCartOutline size={25} className='hover:cursor-pointer '/>
+            <FaRegUser size={20} className='hover:cursor-pointer '/>
         </div>
         
         <div onClick={handleNav} className='block md:hidden cursor-pointer'>

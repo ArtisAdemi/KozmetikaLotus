@@ -50,17 +50,17 @@ const Footer = () => {
         <div className="space-y-4 p-4">
             <div>
                 <h2 className="font-bold text-lg">How Can We Help?</h2>
-                <p><a href="/">Home</a></p>
-                <p><a href="/about">About Us</a></p>
-                <p><a href="/categories">Categories</a></p>
-                <p><a href="/contact">Contact Us</a></p>
+                <p className='my-3'><a href="/">Home</a></p>
+                <p className='mb-3'><a href="/about">About Us</a></p>
+                <p className='mb-3'><a href="/categories">Categories</a></p>
+                <p className=''><a href="/contact">Contact Us</a></p>
                 
             </div>
         </div>
         <div className="space-y-4 p-4">
             <div>
                 <h2 className='text-lg font-bold mb-3'>Categories</h2>
-                <div className='w-full grid grid-cols-3 md:grid-cols-2 gap-3'>
+                <div className='w-full grid grid-cols-3 md:grid-cols-2 gap-x-12 gap-y-3'>
                     <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
                         {categories.map((category, index) => (
                            <h2 className=' text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>

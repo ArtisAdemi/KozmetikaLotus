@@ -8,11 +8,17 @@ import CardGiftcard from '../Icons/CardGiftcard';
 import Discount from '../Icons/Discount';
 import QAndA from '../Icons/Q&A';
 import ProductSlider from './ProductSlider';
-
+import { FaRegHeart } from "react-icons/fa";
 
 
 const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  }
+
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     const fetchImages = async () => {
@@ -68,13 +74,12 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
               <div className='hidden md:block mb-4'>
                 <p className='text-sm'>{shortDescription}</p>
               </div>
-              <div className='hidden md:block w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
-              <p className='w-full font-bold text-xl'>
-                €{price}
-              </p>
+              <div className='hidden md:flex w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+                <p className='w-full font-bold text-xl'>€{price}</p>
+                <FaRegHeart size={25} color={isLiked ? 'red' : 'black'} onClick={handleLike} />  
               </div>
               <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
-                <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Contact Us</a></button>
+                <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Add To Cart</a></button>
               </div>
               <div className='text-xs mt-6 bg-[#A3A7FC] p-8 text-[#FFFFFF] font-sans font-semibold'>
                 <div className='flex mb-3'>
