@@ -14,7 +14,8 @@ const getWishlist = async (req, res) => {
         const user = await Users.findByPk(userId, {
             include: [{
                 model: Products,
-                through: 'Wishlist' // Define the many-to-many relationship through the Wishlist table
+                through: 'Wishlist', // Define the many-to-many relationship through the Wishlist table
+                include: Categories
             }]
         });
 
@@ -51,7 +52,30 @@ const addToWishlist = async (req, res) => {
     }
 }
 
+const removeFromWishlist = async (req, res) => {
+    const userId = req.params.userId;
+    const { productId } = req.body;
+
+    try {
+        // Find the user and product by their IDs
+        const user = await Users.findByPk(userId);
+        const product = await Products.findByPk(productId);
+
+        if (!user || !product) {
+            return res.status(404).json({ message: "User or product not found" });
+        }
+
+        // Remove the product from the user's wishlist
+        await user.removeProduct(product);
+
+        res.status(200).json({ message: "Product removed from wishlist successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getWishlist,
-    addToWishlist
+    addToWishlist,
+    removeFromWishlist
 }

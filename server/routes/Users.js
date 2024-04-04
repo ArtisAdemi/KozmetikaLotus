@@ -20,6 +20,8 @@ router.get("/:userId/wishlist",authMiddleware.validateToken, wishlistController.
 // Add to wishlist
 router.post("/:userId/wishlist",authMiddleware.validateToken, wishlistController.addToWishlist)
 
+// Remove from wishlist
+router.delete("/:userId/wishlist",authMiddleware.validateToken, wishlistController.removeFromWishlist)
 
 
 
