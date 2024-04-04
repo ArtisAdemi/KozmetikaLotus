@@ -32,7 +32,7 @@ const getProducts = async (req, res) => {
         });
         includeCondition.push({
             model: Images,
-            // through: { attributes: [] },
+            // through: { attributes: ["fileName"] },
         })
     } else {
         includeCondition.push({
