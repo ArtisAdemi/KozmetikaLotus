@@ -9,7 +9,11 @@ const Register = () => {
 
     const validationSchema = yup.object({
         email: yup.string().email('Invalid email format').required('Email is required'),
-        username: yup.string().required('Username is required'),
+        firstName: yup.string().required('First Name is required'),
+        lastName: yup.string().required('Last Name is required'),
+        phoneNumber: yup.string()
+        .matches(/^[0-9]/, 'Phone number must contain only numbers')
+        .required('Phone Number is required'),
         password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
         confirmPassword: yup.string().min(8, 'Confirm Password must be at least 8 characters').oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
     });
@@ -17,7 +21,9 @@ const Register = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
-            username: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: 0,
             role: 'user',
             password: '',
             confirmPassword: '',
@@ -26,7 +32,9 @@ const Register = () => {
         onSubmit:async (values) => {
             let userData = {
                 email: values.email,
-                username: values.username,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                phoneNumber: values.phoneNumber,
                 role: values.role,
                 password: values.password
             }
@@ -61,9 +69,19 @@ const Register = () => {
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.email}</h2>}
 
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
-                            type="text" name="username" placeholder="Username" onChange={formik.handleChange} value={formik.values.username} />
-                            {formik.errors.username && formik.touched.username && 
-                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.username}</h2>}
+                            type="text" name="firstName" placeholder="First Name" onChange={formik.handleChange} value={formik.values.firstName} />
+                            {formik.errors.firstName && formik.touched.firstName && 
+                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.firstName}</h2>}
+
+                            <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
+                            type="text" name="lastName" placeholder="Last Name" onChange={formik.handleChange} value={formik.values.lastName} />
+                            {formik.errors.lastName && formik.touched.lastName && 
+                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.lastName}</h2>}
+
+                            <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
+                            type="tel" name="phoneNumber" placeholder="Phone Number" onChange={formik.handleChange} value={formik.values.phoneNumber} />
+                            {formik.errors.phoneNumber && formik.touched.phoneNumber && 
+                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.phoneNumber}</h2>}
 
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto' 
                             type="password" name="password" placeholder="Password" onChange={formik.handleChange} value={formik.values.password} />
