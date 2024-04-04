@@ -13,6 +13,7 @@ const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const [modal, setModal] = useState(false);
     const [nav, setNav] = useState(false);
+    const [profileModal, setProfileModal] = useState(false);
     const { logout } = Logout();
     const navigate = useNavigate();
 
@@ -103,7 +104,32 @@ const Navbar = () => {
         </div>
         <div className='w-[100px] hidden md:flex justify-between items-center' >
             <IoCartOutline size={25} className='hover:cursor-pointer '/>
-            <FaRegUser size={20} className='hover:cursor-pointer '/>
+            <div className='m-2 relative'
+                 onMouseEnter={() => setProfileModal(true)} // Open modal on hover
+                 onMouseLeave={() => setProfileModal(false)} // Close modal when not hovering
+            >
+                <FaRegUser size={20} className='hover:cursor-pointer'/>
+                {profileModal &&
+                    <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[600px] px-8'
+                    onMouseEnter={() => setProfileModal(true)} // Open modal on hover
+                    onMouseLeave={() => setProfileModal(false)} // Close modal when not hovering
+                    style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }} // Center modal directly below the Products text
+                    >
+                        <div className='w-full flex justify-center'>
+                            <div className='w-[90%] justify-center'>
+                                <div className='test flex justify-center py-4 px-5 flex-col items-center'>
+                                <div className='mt-5 text-start items-start align-middle w-full pb-4'>
+                                    <h2 className='text-[#101817] text-xl font-semibold'>My Profile</h2>
+                                    <h2 className='text-[#101817] text-xl font-semibold'>Account Information</h2>
+                                    <h2 className='text-[#101817] text-xl font-semibold'>My Wishlist</h2>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
         </div>
         
         <div onClick={handleNav} className='block md:hidden cursor-pointer'>
