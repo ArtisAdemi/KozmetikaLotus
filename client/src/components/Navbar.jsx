@@ -123,7 +123,11 @@ const Navbar = () => {
                             <div className='w-[90%] justify-center'>
                                 <div className='test flex justify-center py-4 px-5 flex-col items-center'>
                                 <div className='mt-5 text-start items-start align-middle w-full pb-4'>
-                                    <h2 className='text-[#101817] text-xl font-semibold mb-6'>My Profile</h2>                       
+                                    <h2 className='text-[#101817] text-xl font-semibold mb-6'>My Profile</h2>    
+                                    <div className='profile flex items-center p-3 mb-2 border-b border-[#DFDFDF]'>
+                                        <FaRegUserCircle size={20}/>
+                                        <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '> <a href="/login">Log In</a></h2>
+                                    </div>                   
                                     <div onClick={navProfile} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
                                         <FaRegUserCircle size={20}/>
                                         <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>
@@ -174,7 +178,7 @@ const Navbar = () => {
             </div>
             <div className='profile mt-10 ml-3'>
                 <h1 className='text-[#292929] text-sm font-semibold p-4 w-[95%] border-b border-[#DFDFDF]'>Profile</h1>
-                <ul className='p-4'>
+                <ul className='p-4'>               
                     <div onClick={navProfile} className='profile flex items-center p-3 mb-2 border-b border-[#DFDFDF]'>
                         <FaRegUserCircle size={20}/>
                         <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>

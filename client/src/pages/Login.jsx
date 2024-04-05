@@ -4,6 +4,7 @@ import * as yup from "yup";
 import UserService from "../services/Users";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Navbar } from "../components";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -41,6 +42,9 @@ const Login = () => {
 
     return (
         <div>
+            <div className='flex w-full justify-center'>
+                <Navbar />
+            </div>
             <div className='contact-container flex justify-center w-full my-12'>
                 <div className='contact-content w-[80%] shadow-2xl justify-center md:flex md:h-[800px]'>
                     
@@ -62,6 +66,7 @@ const Login = () => {
                             
                             <button type="submit" className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md hover:opacity-80 border-2 p-3 md:p-4 w-[60%] mx-auto text-[#FFFFFF] shadow-xl'>Login</button>
 
+                        <h2 className="mx-auto">Don't have an account ? <a className="text-[#A3A7FC]" href="/register">Register</a></h2>
                         </form>
 
                     </div>
