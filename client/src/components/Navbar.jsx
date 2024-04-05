@@ -6,7 +6,7 @@ import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegUser, FaRegUserCircle, FaRegHeart } from "react-icons/fa";
 import Logout from "../helpers/Logout"
-
+import UserService from '../services/Users';
 
 
 const Navbar = () => {
@@ -14,6 +14,7 @@ const Navbar = () => {
     const [modal, setModal] = useState(false);
     const [nav, setNav] = useState(false);
     const [profileModal, setProfileModal] = useState(false);
+    const [currentUser, setCurrentUser] = useState(undefined);
     const { logout } = Logout();
     const navigate = useNavigate();
 
@@ -40,6 +41,11 @@ const Navbar = () => {
 
 
     useEffect(() => {
+        const user = UserService.validateIsLoggedIn();
+        if(user){
+            setCurrentUser(user);
+        }
+
         fetchCategories();
       }, [])
 
@@ -123,20 +129,26 @@ const Navbar = () => {
                             <div className='w-[90%] justify-center'>
                                 <div className='test flex justify-center py-4 px-5 flex-col items-center'>
                                 <div className='mt-5 text-start items-start align-middle w-full pb-4'>
-                                    <h2 className='text-[#101817] text-xl font-semibold mb-6'>My Profile</h2>    
-                                    <div className='profile flex items-center p-3 mb-2 border-b border-[#DFDFDF]'>
-                                        <FaRegUserCircle size={20}/>
-                                        <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '> <a href="/login">Log In</a></h2>
-                                    </div>                   
-                                    <div onClick={navProfile} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
-                                        <FaRegUserCircle size={20}/>
-                                        <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>
+                                    {currentUser ? (
+                                    <div>
+
+                                        <h2 className='text-[#101817] text-xl font-semibold mb-6'>My Profile</h2>                     
+                                        <div onClick={navProfile} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                            <FaRegUserCircle size={20}/>
+                                            <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>
+                                        </div>
+                                        <div onClick={navWishList} className='wishlist flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                            <FaRegHeart size={20}/>
+                                            <h2 className=' ml-3 text-[#101817] w-[100%] text-md font-semibold '>My Wishlist</h2>
+                                        </div>
+                                        <p className='text-red-700'><a href="/" onClick={logout}>Log Out</a></p> 
                                     </div>
-                                    <div onClick={navWishList} className='wishlist flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
-                                        <FaRegHeart size={20}/>
-                                        <h2 className=' ml-3 text-[#101817] w-[100%] text-md font-semibold '>My Wishlist</h2>
-                                    </div>
-                                    <p className='text-red-700'><a href="/" onClick={logout}>Log Out</a></p>
+                                    ) : (
+                                        <div onClick={() => navigate('/login')} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                            <FaRegUserCircle size={20}/>
+                                            <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Log In</h2>
+                                        </div>                                          
+                                    )}
                                 </div>
                                 </div>
                             </div>

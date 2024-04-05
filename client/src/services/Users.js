@@ -62,6 +62,10 @@ const UserService = {
             console.error("Error validating token", err);
             throw err;
         }
+    },
+
+    validateIsLoggedIn: () => {
+        return localStorage.getItem('token')
     }
 }
 
