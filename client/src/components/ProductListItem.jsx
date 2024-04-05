@@ -1,5 +1,5 @@
-import { FaRegHeart } from "react-icons/fa";
 import React, { useEffect, useState } from 'react'
+import { FaRegHeart } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import ProductService from '../services/Products';
 
