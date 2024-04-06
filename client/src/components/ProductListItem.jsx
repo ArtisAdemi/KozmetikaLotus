@@ -2,6 +2,7 @@ import { FaRegHeart } from "react-icons/fa";
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ProductService from '../services/Products';
+import LikeProduct from "./LikeProduct";
 
 const ProductListItem = ({title, shortDescription, price, category, id, isAdmin }) => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const ProductListItem = ({title, shortDescription, price, category, id, isAdmin 
           <div className="flex justify-between items-center mt-4">
             <span className="text-xl text-[#292929] font-bold">€{price}</span>
             {/* This works, it changes the outline of the heart icon to red */}
-            <FaRegHeart size={25} color={isLiked ? 'red' : 'black'} onClick={handleLike} />  
+            <LikeProduct productId={id} />
           </div>
         </div>
       </div>
