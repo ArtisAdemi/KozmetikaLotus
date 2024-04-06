@@ -1,7 +1,46 @@
-import React from 'react'
-import { Navbar } from '../components'
+import React, { useEffect, useState } from 'react'
+import { Navbar, WishlistItem } from '../components';
+import AuthService from '../services/AuthService';
+import WishlistService from '../services/Wishlist';
 
 const Wishlist = () => {
+  const [products, setProducts] = useState([]);
+  const [user, setUser] = useState({});
+
+
+  
+  const getUserData = async () => {
+    let res;
+    try{
+      res = await AuthService.decodeUser();
+      setUser(res.data);
+      return res.data.id
+    } catch (err) {
+      console.error(err)
+      return null;
+    }
+  }
+
+  const getUsersWishlist = async (userId) => {
+    let res;
+    try{
+      res = await WishlistService.getUsersWishlist(userId);
+      setProducts(res);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  
+  const loadData = async () => {
+    const userId = await getUserData();
+    if (userId) {
+      getUsersWishlist(userId);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, []);
   return (
     <div className='bg-[#FEFDFC]'>
         <div className='flex w-full justify-center'>
@@ -9,7 +48,14 @@ const Wishlist = () => {
         </div>
         <div className='pt-6 w-full flex justify-center'>
             <div className='w-[80%]'>
-                <h2 className='font-semibold text-xl py-2'>Wishlist</h2>
+                <h4 className='font-semibold text-xl py-2'>Wishlist</h4>
+                <div className='mt-10 md:grid md:grid-cols-2'>
+                  {/* Wishlist item */}
+                  {products.length > 0 && products.map((product, index) => (
+                    <WishlistItem key={index} product={product}/>
+                  ))}
+                  {/* Wishlist item end */}
+                </div>
             </div>
         </div>
     </div>

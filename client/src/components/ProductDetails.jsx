@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import ProductService from '../services/Products';
-import ProductImageSlider from './ProductImageSlider';
 import Product1Home from '../images/Product1Home.png'
 import Product2Home from '../images/Product2Home.png'
 import Product3Home from '../images/Product3Home.png'

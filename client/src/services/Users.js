@@ -71,16 +71,16 @@ const UserService = {
         }
     },
 
-    getUsersWishlist: async (userId) => {
-        let endpoint = `${USERS_API_URL}/${userId}/wishlist`
-        try{
-            const result = await axiosInstance.get(endpoint);
-            return result.data;
-        } catch (err) {
-            console.error("Error getting wishlist", err);
-            throw err;
-        }
-    },
+    // getUsersWishlist: async (userId) => {
+    //     let endpoint = `${USERS_API_URL}/${userId}/wishlist`
+    //     try{
+    //         const result = await axiosInstance.get(endpoint);
+    //         return result.data;
+    //     } catch (err) {
+    //         console.error("Error getting wishlist", err);
+    //         throw err;
+    //     }
+    // },
 }
 
 export default UserService;

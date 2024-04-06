@@ -15,7 +15,7 @@ const getWishlist = async (req, res) => {
             include: [{
                 model: Products,
                 through: 'Wishlist', // Define the many-to-many relationship through the Wishlist table
-                include: Categories
+                include: [Categories, Images],
             }]
         });
 
