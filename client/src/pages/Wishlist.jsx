@@ -42,20 +42,22 @@ const Wishlist = () => {
     loadData();
   }, []);
   return (
-    <div className='bg-[#FEFDFC]'>
+    <div className='bg-[#FAF9F5]'>
         <div className='flex w-full justify-center'>
           <Navbar />
         </div>
-        <div className='pt-6 w-full flex justify-center'>
+        <div className='pt-6 w-full flex justify-center pb-24'>
             <div className='w-[80%]'>
                 <h4 className='font-semibold text-xl py-2'>Wishlist</h4>
-                <div className='mt-10 md:grid md:grid-cols-2'>
-                  {/* Wishlist item */}
-                  {products.length > 0 && products.map((product, index) => (
-                    <WishlistItem key={index} product={product}/>
-                  ))}
-                  {/* Wishlist item end */}
-                </div>
+                <div className='md:w-[70%]'>
+                  <div className='mt-10 md:flex md:flex-cols md:flex-wrap'>
+                    {/* Wishlist item */}
+                    {products.length > 0 && products.map((product, index) => (
+                      <WishlistItem key={index} product={product}/>
+                      ))}
+                    {/* Wishlist item end */}
+                  </div>
+                 </div>
             </div>
         </div>
     </div>
