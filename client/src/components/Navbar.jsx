@@ -49,6 +49,15 @@ const Navbar = () => {
         fetchCategories();
       }, [])
 
+      useEffect(() => {
+        // When the navbar is open, prevent scrolling on the body
+        if (nav) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'visible';
+        }
+    }, [nav]);
+
 
       const fetchCategories = async () => {
         let result;
@@ -163,7 +172,7 @@ const Navbar = () => {
             {nav ? <AiOutlineClose size={25} color='#292929'/> : <AiOutlineMenu size={25} color='#292929'/>}    
         </div>
         
-        <div className={nav ? 'fixed left-0 top-0 w-[100%] block md:hidden border-r h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
+        <div className={nav ? 'z-50 fixed overflow-auto  left-0 top-0 w-[100%] block md:hidden border-r h-full bg-[#FFFFFF] ease-in-out duration-500' : 'fixed left-[-100%]'}>
             <div className='flex items-center border-b border-[#DFDFDF]'>
                 <div className='cursor-pointer' onClick={handleNav}>
                     <AiOutlineClose size={25} color='#292929'/>
@@ -179,7 +188,7 @@ const Navbar = () => {
                     <li className='p-4 font-semibold text-[#292929] border-b border-[#DFDFDF]'><a href="/contact">Contact Us</a></li>
                 </ul>
             </div>
-            <div className='categories mt-3 ml-3'>
+            <div className='categories mt-3 ml-3 overflow-auto'>
                 <h1 className='text-[#292929] text-sm font-semibold p-4 w-[95%] border-b border-[#DFDFDF]'>Categories</h1>
                 <div>
                 <h2 className='text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]' onClick={() => redirect("all")}>All Categories</h2>
