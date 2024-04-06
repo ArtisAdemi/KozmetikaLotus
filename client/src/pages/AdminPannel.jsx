@@ -51,7 +51,7 @@ const AdminPannel = () => {
             </div>
             <div>
                 <button 
-                className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' 
+                className='mr-3 border border-[#0C0C0C] bg-[#0C0C0C] text-[#FFF] p-1 px-6 font-semibold' 
                 onClick={() => setIsModalOpen(true)}
                 >
                     Add New Product

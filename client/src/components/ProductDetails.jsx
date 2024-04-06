@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import ProductService from '../services/Products';
-import ProductImageSlider from './ProductImageSlider';
 import Product1Home from '../images/Product1Home.png'
 import Product2Home from '../images/Product2Home.png'
 import Product3Home from '../images/Product3Home.png'
@@ -8,16 +7,12 @@ import CardGiftcard from '../Icons/CardGiftcard';
 import Discount from '../Icons/Discount';
 import QAndA from '../Icons/Q&A';
 import ProductSlider from './ProductSlider';
-import { FaRegHeart } from "react-icons/fa";
+import LikeProduct from './LikeProduct';
 
 
 const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  }
+ 
 
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
@@ -76,7 +71,7 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
               </div>
               <div className='hidden md:flex w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
                 <p className='w-full font-bold text-xl'>€{price}</p>
-                <FaRegHeart size={25} color={isLiked ? 'red' : 'black'} onClick={handleLike} />  
+                <LikeProduct productId={id}/>  
               </div>
               <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
                 <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Add To Cart</a></button>

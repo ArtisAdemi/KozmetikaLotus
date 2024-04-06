@@ -17,6 +17,7 @@ const Navbar = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const { logout } = Logout();
     const navigate = useNavigate();
+    const [profileDropdown, setProfileDropdown] = useState(false);
 
     const handleNav = () => {
         setNav(!nav);

@@ -9,3 +9,4 @@ export { default as Register } from './Register';
 export { default as SingleProduct} from './SingleProduct';
 export {default as AdminPannel} from './AdminPannel';
 export {default as AdminProductDetails} from './AdminProductDetails';
+export { default as Wishlist } from './Wishlist';
