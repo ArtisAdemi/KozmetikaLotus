@@ -15,6 +15,7 @@ const Navbar = () => {
     const [nav, setNav] = useState(false);
     const { logout } = Logout();
     const navigate = useNavigate();
+    const [profileDropdown, setProfileDropdown] = useState(false);
 
     const handleNav = () => {
         setNav(!nav);
@@ -103,7 +104,35 @@ const Navbar = () => {
         </div>
         <div className='w-[100px] hidden md:flex justify-between items-center' >
             <IoCartOutline size={25} className='hover:cursor-pointer '/>
-            <FaRegUser size={20} className='hover:cursor-pointer '/>
+            <div className='m-2 relative'
+                 onMouseEnter={() => setProfileDropdown(true)} // Open modal on hover
+                 onMouseLeave={() => setProfileDropdown(false)} // Close modal when not hovering
+            >
+            <FaRegUser size={20} className='hover:cursor-pointer' onClick={() => setProfileDropdown(!profileDropdown)}/>
+            {profileDropdown &&
+                    <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] px-2 py-1 w-[200px]'
+                    onMouseEnter={() => setProfileDropdown(true)} // Open modal on hover
+                    onMouseLeave={() => setProfileDropdown(false)} // Close modal when not hovering
+                    style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }} // Center modal directly below the Products text
+                    >
+                        <div className='w-full justify-center'>
+                            <div className='w-[90%] justify-center'>
+                                <div className='test flex justify-center py-1 px-2 flex-col items-center w-full pb-2'>
+                                <div className='mt-5 text-start items-center align-middle w-full  pb-3'>
+                                    <a href='/profile' className='text-[#3D021E] text-sm items-center align-middle cursor-pointer'>My Profile</a>
+                                </div>
+                                <div className='modal-content w-full grid items-center text-sm  pb-3'>
+                                    <a href="/wishlist">My Wishlist</a>
+                                </div>
+                                <div className='modal-content w-full grid items-center text-sm  pb-3'>
+                                    <a href="/" onClick={logout}>Log Out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                }
+            </div>
         </div>
         
         <div onClick={handleNav} className='block md:hidden cursor-pointer'>
