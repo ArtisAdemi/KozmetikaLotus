@@ -17,11 +17,13 @@ router.get('/:id', userController.getUserById);
 // Get user's wishlist
 router.get("/:userId/wishlist",authMiddleware.validateToken, wishlistController.getWishlist)
 
+router.get("/:userId/wishlist/:productId",authMiddleware.validateToken, wishlistController.checkIfProductIsInWishlist)
+
 // Add to wishlist
 router.post("/:userId/wishlist",authMiddleware.validateToken, wishlistController.addToWishlist)
 
 // Remove from wishlist
-router.delete("/:userId/wishlist",authMiddleware.validateToken, wishlistController.removeFromWishlist)
+router.delete("/:userId/wishlist/:productId",authMiddleware.validateToken, wishlistController.removeFromWishlist)
 
 
 

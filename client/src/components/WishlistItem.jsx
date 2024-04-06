@@ -5,7 +5,7 @@ const WishlistItem = (product) => {
   const productImg = product.product.Images[0].fileName;
   return (
     <div className='md:flex md:px-3 md:py-2'>
-        <div><img src={`/uploads/${productImg}`} alt="ASD" /></div>
+        <div><img src={`/uploads/${productImg}`} className='md:w-[160px] md:h-[130px] object-contain' alt="ASD" /></div>
         <div className='md:flex md:flex-col md:justify-between md:ml-10'>
         <div>
             <h2 className='text-sm font-semibold'>{title}</h2>
