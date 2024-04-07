@@ -149,33 +149,33 @@ const Navbar = () => {
             >
                 <FaRegUser size={20} className='hover:cursor-pointer'/>
                 {profileModal &&
-                    <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[450px] px-8'
+                    <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[300px] px-4'
                     onMouseEnter={() => setProfileModal(true)} // Open modal on hover
                     onMouseLeave={() => setProfileModal(false)} // Close modal when not hovering
                     style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }} // Center modal directly below the Profile Icon
                     >
                         <div className='w-full flex justify-center'>
                             <div className='w-[90%] justify-center'>
-                                <div className='test flex justify-center py-4 px-5 flex-col items-center'>
-                                <div className='mt-5 text-start items-start align-middle w-full pb-4'>
+                                <div className='test flex justify-center flex-col items-center'>
+                                <div className='mt-4 text-start items-start align-middle w-full pb-4'>
                                     {currentUser  ? (
                                     <div>
 
-                                        <h2 className='text-[#101817] text-xl font-semibold mb-6'>My Profile</h2>                     
-                                        <div onClick={navProfile} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                        <h2 className='text-[#101817] text-lg font-semibold mb-1'>My Profile</h2>                     
+                                        <div onClick={navProfile} className='profile flex items-center border rounded-lg p-2 mb-1 cursor-pointer border-[#A2A2A2]'>
                                             <FaRegUserCircle size={20}/>
-                                            <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>
+                                            <h2 className='ml-3 text-[#101817] w-[100%] text-sm font-semibold '>Account Information</h2>
                                         </div>
-                                        <div onClick={navWishList} className='wishlist flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                        <div onClick={navWishList} className='wishlist flex items-center border rounded-lg p-2 mb-1 cursor-pointer border-[#A2A2A2]'>
                                             <FaRegHeart size={20}/>
-                                            <h2 className=' ml-3 text-[#101817] w-[100%] text-md font-semibold'>My Wishlist</h2>
+                                            <h2 className=' ml-3 text-[#101817] w-[100%] text-sm font-semibold'>My Wishlist</h2>
                                         </div>
-                                        <p className='text-red-700'><a href="/" onClick={logout}>Log Out</a></p> 
+                                        <p className='text-red-700 text-sm ml-1'><a href="/" onClick={logout}>Log Out</a></p> 
                                     </div>
                                     ) : (
-                                        <div onClick={() => navigate('/login')} className='profile flex items-center border rounded-lg p-3 mb-2 cursor-pointer border-[#A2A2A2]'>
+                                        <div onClick={() => navigate('/login')} className='profile flex items-center border rounded-lg p-2 cursor-pointer border-[#A2A2A2]'>
                                             <FaRegUserCircle size={20}/>
-                                            <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Log In</h2>
+                                            <h2 className='ml-3 text-[#101817] w-[100%] text-sm font-semibold '>Log In</h2>
                                         </div>                                          
                                     )}
                                 </div>
