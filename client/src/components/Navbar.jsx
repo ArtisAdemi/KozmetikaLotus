@@ -32,7 +32,7 @@ const Navbar = () => {
     }
 
     const navProfile = () => {
-        navigate('/');
+        navigate('/profile');
     }
     const navWishList = () => {
         navigate('/wishlist');
