@@ -26,7 +26,7 @@ const Navbar = () => {
     };
    
     const redirect = (name) => {
-        name = name.toString().toLowerCase().replace(/\s+/g, '');
+        name = name.toString().toLowerCase().replace(/\s+/g, '-');
         navigate(`/products/${name}`);
         handleNav(); // addition to remove navbar after navigating to categories..
     }

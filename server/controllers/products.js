@@ -25,6 +25,7 @@ const getProducts = async (req, res) => {
     }
 
     if (category) {
+        const category = req.query.category.replace(/-/g, ' ');
         includeCondition.push({
             model: Categories,
             where: { name: category },
