@@ -57,7 +57,7 @@ const UserService = {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                throw new Error("No token provided");
+                return false;
             }
             const response = await axios.get(`${AUTH_API_URL}/validateToken`, {
                 headers: {

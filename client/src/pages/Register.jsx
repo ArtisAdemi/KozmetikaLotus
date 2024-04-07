@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import UserService from '../services/Users'
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../components";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -54,6 +55,9 @@ const Register = () => {
 
     return (
         <div>
+            <div className='flex w-full justify-center'>
+                <Navbar />
+            </div>
             <div className='contact-container flex justify-center w-full my-12'>
                 <div className='contact-content w-[80%] shadow-2xl justify-center md:flex md:h-[800px]'>
                     
