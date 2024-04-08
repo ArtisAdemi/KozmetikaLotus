@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Navbar } from '../components';
 import AuthService from '../services/AuthService';
+import UserForm from '../components/UserForm';
 
 const Profile = () => {
     const [user, setUser] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
 
     const getUserData = async () => {
         let res;
@@ -14,6 +16,10 @@ const Profile = () => {
           console.error(err)
           return null;
         }
+      }
+
+      const handleEditProfile = () => {
+        setIsEditing(true);
       }
 
       useEffect(() => {
@@ -54,7 +60,7 @@ const Profile = () => {
                                 <h2 className='rounded-md p-3 w-2/3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.phoneNumber}</h2>
                             </div>
 
-                            <button type="submit" className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[40%] mx-auto text-[#FFFFFF] shadow-xl hover:opacity-80'>
+                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[40%] mx-auto text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                 Edit Profile
                             </button>
 
@@ -108,7 +114,7 @@ const Profile = () => {
                         </div>
                     </div>        
                 </div>
-
+                {isEditing && <UserForm closeModal={() => setIsEditing(false)} user={user}/>}
         </div>
 
     )
