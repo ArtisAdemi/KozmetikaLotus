@@ -31,16 +31,31 @@ const UserForm = ({ closeModal, user }) => {
       <h2 className="text-xl font-semibold text-gray-900">Edit Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
 
-          <input type="text" name="email" onChange={handleInputChange} placeholder="Email" required className="input input-bordered w-full" value={formData.email} />
-          <input name="firstName" onChange={handleInputChange} placeholder="First Name" required className="textarea textarea-bordered w-full" value={formData.firstName}/>
-          <input name="lastName" onChange={handleInputChange} placeholder="Last Name" required className="textarea textarea-bordered w-full" value={formData.lastName}/>
-          <input type="text" name="phoneNumber" onChange={handleInputChange} placeholder="Phone" required className="input input-bordered w-full" value={formData.phoneNumber} />
-          
-          <div className="flex justify-end space-x-2">
-            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
-            <button type="submit" className="btn btn-primary">Edit</button>
-          </div>
-            {/* More input fields and submission button */}
+            <div className='flex'>
+                <h2 className='mr-3 w-1/3'>Email: </h2>
+                <input type="text" name="email" onChange={handleInputChange} placeholder="Email" required className="input input-bordered w-full" value={formData.email} />
+            </div>
+
+            <div className='flex'>
+                <h2 className='mr-3 w-1/3'>First Name: </h2>
+                <input name="firstName" onChange={handleInputChange} placeholder="First Name" required className="textarea textarea-bordered w-full" value={formData.firstName}/>
+            </div>
+
+            <div className='flex'>
+                <h2 className='mr-3 w-1/3'>Last Name: </h2>
+                <input name="lastName" onChange={handleInputChange} placeholder="Last Name" required className="textarea textarea-bordered w-full" value={formData.lastName}/>
+            </div>
+
+            <div className='flex'>
+             <h2 className='mr-3 w-1/3'>Phone: </h2>
+             <input type="text" name="phoneNumber" onChange={handleInputChange} placeholder="Phone" required className="input input-bordered w-full" value={formData.phoneNumber} />
+            </div>
+             
+            <div className="flex justify-end space-x-2">
+              <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
+              <button type="submit" className="btn btn-primary">Edit</button>
+            </div>
+              {/* More input fields and submission button */}
       </form>
     </div>
   </div>
