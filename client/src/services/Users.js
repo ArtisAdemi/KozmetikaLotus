@@ -71,6 +71,16 @@ const UserService = {
         }
     },
 
+    updateUser: async (userId, userData) => {
+        try {
+            const response = await axiosInstance.put(`${USERS_API_URL}/${userId}`, userData);
+            return response.data;
+        } catch (err) {
+            console.error('Error updating user:', err);
+            return null;
+        }
+    },
+
     // getUsersWishlist: async (userId) => {
     //     let endpoint = `${USERS_API_URL}/${userId}/wishlist`
     //     try{
