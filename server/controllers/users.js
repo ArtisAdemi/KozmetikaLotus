@@ -83,10 +83,79 @@ const loginUser = async (req, res) => {
         res.status(500).json({error: err.message});
     }
 }
+// const updateUser = async(req, res) => {
+//     const userId = req.params.id;
+//     const { email, firstName, lastName, phoneNumber, role, password, discount } = req.body;
+    
+//     try {
+//         // Find User by id
+//         const user = await Users.findByPk(userId);
+//         if (!user) {
+//             return res.status(404).json({message: "User not found"});
+//         }
+
+//         // Hash the password if it's provided
+//         let hashedPassword = user.password; // Default to the existing password
+//         if (password) {
+//             hashedPassword = await bcrypt.hash(password, 10);
+//         }
+
+//         // Update the user details
+//         await user.update({
+//             email,
+//             firstName,
+//             lastName,
+//             phoneNumber,
+//             role,
+//             password: hashedPassword, // Update with hashed password
+//             discount,
+//         });
+
+//         res.status(200).json(user);
+//     } catch (err) {
+//         res.status(500).json({ error: err.message});
+//     }
+// }
+
+const updateUser = async (req, res) => {
+    const userId = req.params.id;
+    const { email, firstName, lastName, phoneNumber, role, password, discount } = req.body;
+    
+    try {
+        // Find User by id
+        const user = await Users.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Hash the password if it's provided
+        let hashedPassword = user.password; // Default to the existing password
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
+
+        // Update the user details
+        await user.update({
+            email: email || user.email,
+            firstName: firstName || user.firstName,
+            lastName: lastName || user.lastName,
+            phoneNumber: phoneNumber || user.phoneNumber,
+            role: role || user.role,
+            password: hashedPassword, // Update with hashed password
+            discount: discount || user.discount,
+        });
+
+        res.status(200).json({ message: "User updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 // export controller functions
 module.exports = {
     getUsers,
     getUserById,
     registerUser,
-    loginUser
+    loginUser,
+    updateUser
 };

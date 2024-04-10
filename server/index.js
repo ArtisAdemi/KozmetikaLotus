@@ -15,7 +15,7 @@ const apiRouter = express.Router();
 // Mounting Routes under /api endpoint
 
 // UserRouter
-const userRouter = require('./routes/users')
+const userRouter = require('./routes/Users')
 apiRouter.use("/users", userRouter);
 // Auth Router
 const authRouter = require('./routes/Auth');
