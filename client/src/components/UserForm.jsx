@@ -115,8 +115,15 @@ const UserForm = ({ closeModal, user }) => {
             </div>
              
             <div className="flex justify-end space-x-2">
-              <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
-              <button type="submit" className="btn btn-primary">Edit</button>
+
+              <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">
+                Cancel
+              </button>
+
+              <button type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">
+                Edit
+              </button>
+              
             </div>
               {/* More input fields and submission button */}
       </form>
