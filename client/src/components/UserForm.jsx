@@ -111,7 +111,7 @@ const UserForm = ({ closeModal, user }) => {
             </div>
             <div className='flex'>
              <h2 className='mr-3 w-1/3'>New Password: </h2>
-             <input type="password" name="password" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.password} />
+             <input type="password" name="password" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.password} disabled={!formData.currentPassword}/>
             </div>
              
             <div className="flex justify-end space-x-2">
