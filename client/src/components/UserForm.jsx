@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AuthService from '../services/AuthService';
+import UserService from '../services/Users';
 
 const UserForm = ({ closeModal, user }) => {
   const [formData, setFormData] = useState({
@@ -7,21 +7,75 @@ const UserForm = ({ closeModal, user }) => {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     phoneNumber: user?.phoneNumber || '',
-    
-  });
+    currentPassword: user?.currentPassword || '', // Initialize currentPassword
+    password: user?.password || '', // Initialize newPassword
 
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  try {
+    if (!user?.id) {
+      throw new Error("User ID is undefined");
+    }
+
+    // Construct the data object to send only modified fields
+    const updatedFields = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== user[key]) {
+        updatedFields[key] = formData[key];
+      }
+    });
+
+    // Add currentPassword and password only if they are provided
+    if (formData.currentPassword && formData.password) {
+      updatedFields.currentPassword = formData.currentPassword;
+      updatedFields.password = formData.password;
+    }
+
+    const res = await UserService.updateUser(user.id, updatedFields);
+    console.log(res);
+  } catch (err) {
+    console.error("Error updating user", err);
+  }
+  closeModal();
+};
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //           // Construct the data object to send only modified fields
+  //           // const userData = Object.keys(formData).reduce((acc, key) => {
+  //           //   if (formData[key] && formData[key] !== user[key]) {
+  //           //     acc[key] = formData[key];
+  //           //   }
+  //           //   return acc;
+  //           // }, {});
+  //   const userData = {};
+  // Object.keys(formData).forEach(key => {
+  //   if (formData[key] !== user[key]) {
+  //     userData[key] = formData[key];
+  //   }
+  // });
+
+  //   if (formData.newPassword) { // Check if newPassword is provided
+  //     userData.password = formData.newPassword;
+  //     userData.currentPassword = formData.currentPassword;
+  //   }
     
-    closeModal();
-  };
+  //   try {
+  //     const response = await UserService.updateUser(user.id, userData);
+  //     console.log(response);
+  //     closeModal();
+  //   } catch (error) {
+  //     console.error('Failed to update user:', error);
+  //   }
+  // };
 
 
 
@@ -49,6 +103,15 @@ const UserForm = ({ closeModal, user }) => {
             <div className='flex'>
              <h2 className='mr-3 w-1/3'>Phone: </h2>
              <input type="text" name="phoneNumber" onChange={handleInputChange} placeholder="Phone" required className="input input-bordered w-full" value={formData.phoneNumber} />
+            </div>
+
+            <div className='flex'>
+             <h2 className='mr-3 w-1/3'>Current Password: </h2>
+             <input type="password" name="currentPassword" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.currentPassword} />
+            </div>
+            <div className='flex'>
+             <h2 className='mr-3 w-1/3'>New Password: </h2>
+             <input type="password" name="password" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.password} />
             </div>
              
             <div className="flex justify-end space-x-2">
