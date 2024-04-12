@@ -80,7 +80,7 @@ const Profile = () => {
             </div>
 
                 <div className='orders-container flex justify-center w-full my-12'>
-                    <div className='orders-content w-[50%] flex flex-col'>
+                    <div className='orders-content w-[80%] flex flex-col'>
                         <div className='flex items-center p-2 w-full border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
                             <h2 className='text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
                             <h2 className='text-[#828282] ml-5 cursor-pointer'>View All</h2>
