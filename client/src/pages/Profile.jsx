@@ -33,34 +33,41 @@ const Profile = () => {
             </div>
 
             <div className='profile-container flex justify-center w-full my-12'>
-                <div className='profile-content w-[50%] shadow-2xl justify-center md:flex'>
+                <div className='profile-content w-[80%] justify-center md:flex'>
                     
-                    <div className='w-[100%] flex bg-[#FBEFF2] '>
+                    <div className='w-[100%] flex '>
                         <div className='w-[100%] flex flex-col gap-10 justify-center my-12'>
 
-                            <h1 className='text-[#A10550] font-semibold text-3xl text-center'>My Profile</h1>
+                            <h1 className='text-[#212121] font-semibold text-3xl'>My Profile</h1>
 
-                            <div className='flex w-[40%] mx-auto justify-start items-center'>
-                                <h2 className='mr-3 w-1/3'>Email: </h2>
-                                <h2 className='rounded-md p-3 w-2/3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.email}</h2>
+                            <div className='flex w-full'>
+
+                                <div className='flex w-[20%] flex-col mr-36'>
+                                    <div className='flex flex-col mb-8 justify-start items-start'>
+                                        <h2 className='mr-3 w-full'>First Name: </h2>
+                                        <h2 className='rounded-md w-full p-3  md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.firstName}</h2>
+                                    </div>
+
+                                    <div className='flex flex-col justify-start items-start'>
+                                        <h2 className='mr-3 w-full'>Email: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.email}</h2>
+                                    </div>
+                                </div>
+
+                                <div className=' w-[20%] flex flex-col'>
+                                    <div className='flex flex-col mb-8 justify-start items-start'>
+                                        <h2 className='mr-3 w-full'>Last Name: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.lastName}</h2>
+                                    </div>
+
+                                    <div className='flex flex-col justify-start items-start'>
+                                        <h2 className='mr-3 w-full'>Phone: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.phoneNumber}</h2>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className='flex w-[40%] mx-auto justify-start items-center'>
-                                <h2 className='mr-3 w-1/3'>First Name: </h2>
-                                <h2 className='rounded-md p-3 w-2/3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.firstName}</h2>
-                            </div>
-
-                            <div className='flex w-[40%] mx-auto justify-start items-center'>
-                                <h2 className='mr-3 w-1/3'>Last Name: </h2>
-                                <h2 className='rounded-md p-3 w-2/3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.lastName}</h2>
-                            </div>
-
-                            <div className='flex w-[40%] mx-auto justify-start items-center'>
-                                <h2 className='mr-3 w-1/3'>Phone: </h2>
-                                <h2 className='rounded-md p-3 w-2/3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.phoneNumber}</h2>
-                            </div>
-
-                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[40%] mx-auto text-[#FFFFFF] shadow-xl hover:opacity-80'>
+                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[20%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                 Edit Profile
                             </button>
 
