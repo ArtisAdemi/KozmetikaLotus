@@ -47,38 +47,6 @@ const UserForm = ({ closeModal, user }) => {
 };
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //           // Construct the data object to send only modified fields
-  //           // const userData = Object.keys(formData).reduce((acc, key) => {
-  //           //   if (formData[key] && formData[key] !== user[key]) {
-  //           //     acc[key] = formData[key];
-  //           //   }
-  //           //   return acc;
-  //           // }, {});
-  //   const userData = {};
-  // Object.keys(formData).forEach(key => {
-  //   if (formData[key] !== user[key]) {
-  //     userData[key] = formData[key];
-  //   }
-  // });
-
-  //   if (formData.newPassword) { // Check if newPassword is provided
-  //     userData.password = formData.newPassword;
-  //     userData.currentPassword = formData.currentPassword;
-  //   }
-    
-  //   try {
-  //     const response = await UserService.updateUser(user.id, userData);
-  //     console.log(response);
-  //     closeModal();
-  //   } catch (error) {
-  //     console.error('Failed to update user:', error);
-  //   }
-  // };
-
-
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
     <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
