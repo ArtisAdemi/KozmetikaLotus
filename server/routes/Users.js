@@ -12,6 +12,9 @@ router.get('/', userController.getUsers);
 // Get UserById
 router.get('/:id', userController.getUserById);
 
+// Update a user
+router.put('/:id', authMiddleware.validateToken, userController.updateUser);
+
 
 // Protected Routes
 // Get user's wishlist

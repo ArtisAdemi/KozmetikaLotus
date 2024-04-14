@@ -83,10 +83,94 @@ const loginUser = async (req, res) => {
         res.status(500).json({error: err.message});
     }
 }
+// const updateUser = async(req, res) => {
+//     const userId = req.params.id;
+//     const { email, firstName, lastName, phoneNumber, role, password, discount } = req.body;
+    
+//     try {
+//         // Find User by id
+//         const user = await Users.findByPk(userId);
+//         if (!user) {
+//             return res.status(404).json({message: "User not found"});
+//         }
+
+//         // Hash the password if it's provided
+//         let hashedPassword = user.password; // Default to the existing password
+//         if (password) {
+//             hashedPassword = await bcrypt.hash(password, 10);
+//         }
+
+//         // Update the user details
+//         await user.update({
+//             email,
+//             firstName,
+//             lastName,
+//             phoneNumber,
+//             role,
+//             password: hashedPassword, // Update with hashed password
+//             discount,
+//         });
+
+//         res.status(200).json(user);
+//     } catch (err) {
+//         res.status(500).json({ error: err.message});
+//     }
+// }
+
+const updateUser = async (req, res) => {
+    const userId = req.params.id;
+    const { email, firstName, lastName, phoneNumber, role, password, currentPassword, discount } = req.body;
+    
+    try {
+        // Find User by id
+        const user = await Users.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Check if current password matches the user's password
+        if (currentPassword) {
+            const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!passwordMatch) {
+                return res.status(400).json({ message: "Current password is incorrect" });
+            }
+        }
+
+        // Hash the password if it's provided
+        let hashedPassword = user.password; // Default to the existing password
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
+
+        // Construct updated user object with only non-empty fields
+        const updatedUser = {
+            email: email || user.email,
+            firstName: firstName || user.firstName,
+            lastName: lastName || user.lastName,
+            phoneNumber: phoneNumber || user.phoneNumber,
+            role: role || user.role,
+            discount: discount || user.discount,
+        };
+
+        // Add password field only if it's provided
+        if (password) {
+            updatedUser.password = hashedPassword;
+        }
+
+        // Update the user details
+        await user.update(updatedUser);
+
+        res.status(200).json({ message: "User updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 // export controller functions
 module.exports = {
     getUsers,
     getUserById,
     registerUser,
-    loginUser
+    loginUser,
+    updateUser
 };
