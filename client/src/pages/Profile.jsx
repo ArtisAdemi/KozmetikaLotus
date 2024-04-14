@@ -44,25 +44,25 @@ const Profile = () => {
 
                                 <div className='flex w-[20%] flex-col mr-36'>
                                     <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full'>First Name: </h2>
-                                        <h2 className='rounded-md w-full p-3  md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.firstName}</h2>
+                                        <h2 className='mr-3 w-full font-medium'>First Name: </h2>
+                                        <h2 className='rounded-md w-full p-3  md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
                                     </div>
 
                                     <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full'>Email: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.email}</h2>
+                                        <h2 className='mr-3 w-full font-medium'>Email: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
                                     </div>
                                 </div>
 
                                 <div className=' w-[20%] flex flex-col'>
                                     <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full'>Last Name: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.lastName}</h2>
+                                        <h2 className='mr-3 w-full font-medium'>Last Name: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
                                     </div>
 
                                     <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full'>Phone: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-transparent'>{user.phoneNumber}</h2>
+                                        <h2 className='mr-3 w-full font-medium'>Phone: </h2>
+                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
                                     </div>
                                 </div>
                             </div>

@@ -40,7 +40,6 @@ const Navbar = () => {
 
     const isLoggedIn = async () => {
         const user = await UserService.validateToken();
-        console.log("current user", user)
         if(user){
             setCurrentUser(true);
         }
