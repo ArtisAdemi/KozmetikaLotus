@@ -58,11 +58,11 @@ const Checkout = () => {
                 <div className='profile-content w-[80%] justify-center md:flex'>
                     
                     <div className='w-[100%] flex '>
-                        <div className='w-[100%] flex flex-col gap-10 justify-center my-12'>
+                        <div className='w-[100%] flex flex-col gap-10 justify-center md:my-12'>
 
                             <div className='flex w-full'>
 
-                                <div className='flex w-[40%] flex-col'>
+                                <div className='flex md:w-[40%] flex-col'>
 
                                 <form onSubmit={formik.handleSubmit}>
 
@@ -71,50 +71,50 @@ const Checkout = () => {
                                     </h1>
 
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Emri: </h2>
-                                        <h2 className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Emri: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
                                     </div>
 
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Mbiemri: </h2>
-                                        <h2 className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Mbiemri: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
                                     </div>
 
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Email: </h2>
-                                        <h2 className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Email: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
                                     </div>
 
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Nr. Telefonit: </h2>
-                                        <h2 className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Nr. Telefonit: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
                                     </div>
                                     
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Qyteti: </h2>
-                                        <input className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Qyteti: </h2>
+                                        <input className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
                                          type="text" name='city' onChange={formik.handleChange} value={formik.values.city} />
                                     </div>
                                          {formik.errors.city && formik.touched.city && 
-                                        <h2 className='w-[60%] text-red-500 text-sm h-5 mx-auto'>{formik.errors.city}</h2>}
+                                        <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.city}</h2>}
 
                                     <div className='flex mb-5 justify-start items-center'>
-                                        <h2 className='w-[20%] font-medium'>Adresa: </h2>
-                                        <input className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Adresa: </h2>
+                                        <input className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
                                          type="text" name='address' onChange={formik.handleChange} value={formik.values.address}/>
                                     </div>
                                          {formik.errors.address && formik.touched.address && 
-                                        <h2 className='w-[60%] text-red-500 text-sm h-5 mx-auto'>{formik.errors.address}</h2>}
+                                        <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.address}</h2>}
                                     
                                     <div className='flex justify-start mb-8 items-center'>
-                                        <h2 className='w-[20%] font-medium'>Kodi Postal: </h2>
-                                        <input className='rounded-md w-[80%] p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
+                                        <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Kodi Postal: </h2>
+                                        <input className='rounded-md w-[75%] md:w-[80%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'
                                          type="text" name='postalCode' onChange={formik.handleChange} value={formik.values.postalCode}/>
                                     </div>
                                          {formik.errors.postalCode && formik.touched.postalCode && 
-                                        <h2 className='w-[60%] text-red-500 text-sm h-5 mx-auto'>{formik.errors.postalCode}</h2>}
+                                        <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.postalCode}</h2>}
 
-                                    <button type='submit' className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[50%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
+                                    <button type='submit' className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-full md:w-[50%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                         Porosit
                                     </button>
 
