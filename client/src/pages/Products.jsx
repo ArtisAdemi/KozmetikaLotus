@@ -14,7 +14,7 @@ const Products = () => {
 
   useEffect(() => {
     // updating category
-    setCategory(categoryName);
+    setCategory(categoryName.toLowerCase());
   }, [categoryName]);
 
 
