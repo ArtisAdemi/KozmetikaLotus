@@ -7,6 +7,7 @@ const LikeProduct = ({productId}) => {
     const [isLiked, setIsLiked] = useState(false);
     const [user, setUser] = useState({});
     const [userId, setUserId] = useState(0)
+    const token = localStorage.getItem("token")
 
 
   
@@ -64,7 +65,9 @@ const LikeProduct = ({productId}) => {
   }
 
   useEffect(() => {
-    loadData();
+    if (token){
+      loadData();
+    }
   }, [])
 
   return (

@@ -87,7 +87,6 @@ const getProductById = async (req, res) => {
 // Register Product
 const registerProduct = async (req, res) => {
     const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
-    
     try {
         // Create new product using variables from body
         const newProduct = await Products.create({
@@ -112,9 +111,10 @@ const registerProduct = async (req, res) => {
         // Check if categoryNames have been provided
         if (categoryNames && categoryNames.length > 0) {
             // Promise.all takes an array of promises and returns a new promise that holds in an array all the values of those promises 
+            const categoriesToLower = categoryNames.map(name => name.toLowerCase());
             const categories = await Promise.all(
                 // For each category name Find it in DB. If not existant create it.
-                categoryNames.map(name => 
+                categoriesToLower.map(name => 
                     Categories.findOrCreate({ where: { name } })
                         .then(([category]) => category)
                 )
