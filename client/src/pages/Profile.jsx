@@ -32,42 +32,42 @@ const Profile = () => {
                 <Navbar />
             </div>
 
-            <div className='profile-container flex justify-center w-full my-12'>
+            <div className='profile-container flex justify-center w-full md:my-12'>
                 <div className='profile-content w-[80%] justify-center md:flex'>
                     
                     <div className='w-[100%] flex '>
                         <div className='w-[100%] flex flex-col gap-10 justify-center my-12'>
 
-                            <h1 className='text-[#212121] font-semibold text-3xl'>My Profile</h1>
 
-                            <div className='flex w-full'>
+                            <h1 className='text-[#212121] w-[100%] md:w-[50%] pb-4  border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-3xl'>My Profile</h1>
+                            <div className='flex flex-col md:flex-row w-full'>
 
-                                <div className='flex w-[20%] flex-col mr-36'>
-                                    <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>First Name: </h2>
-                                        <h2 className='rounded-md w-full p-3  md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
+                                <div className='flex md:w-[20%] flex-col md:mr-36'>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>First Name: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
                                     </div>
 
-                                    <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Email: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Email: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
                                     </div>
                                 </div>
 
-                                <div className=' w-[20%] flex flex-col'>
-                                    <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Last Name: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
+                                <div className='flex md:w-[20%] flex-col'>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Last Name: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
                                     </div>
 
-                                    <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Phone: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
+                                    <div className='flex md:flex-col md:mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Phone: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
                                     </div>
                                 </div>
                             </div>
 
-                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[20%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
+                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-full md:w-[20%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                 Edit Profile
                             </button>
 
