@@ -39,8 +39,10 @@ const Checkout = () => {
 
                                 <div className='flex w-[40%] flex-col'>
 
+                                <form>
+
                                     <h1 className='text-[#212121] pb-4 mb-8 border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-3xl'>
-                                        Fatura e Porosisë
+                                        Fatura e Adresimit
                                     </h1>
 
                                     <div className='flex mb-5 justify-start items-center'>
@@ -84,6 +86,8 @@ const Checkout = () => {
                                     <button className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[50%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                         Porosit
                                     </button>
+
+                                </form>
 
                                 </div>
 
