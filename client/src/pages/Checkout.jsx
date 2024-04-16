@@ -81,9 +81,9 @@ const Checkout = () => {
 
                             <div className='flex w-full'>
 
-                                <div className='flex md:w-[40%] flex-col'>
+                                <div className='flex w-full md:w-[40%] flex-col'>
 
-                                    <form onSubmit={formik.handleSubmit}>
+                                    <form className='w-full' onSubmit={formik.handleSubmit}>
 
                                         <h1 className='text-[#212121] pb-4 mb-8 border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-3xl'>
                                             Fatura e Adresimit
