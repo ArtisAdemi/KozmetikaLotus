@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Footer } from './components';
 import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails, Wishlist, Profile } from './pages';
+import CartMenu from './components/CartMenu';
 
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route path='/profile'exact Component={Profile}/>
             <Route path='/admin/:productName'exact Component={AdminProductDetails}/>
           </Routes>
+          <CartMenu/>
         <Footer></Footer>
       </Router>
     </div>

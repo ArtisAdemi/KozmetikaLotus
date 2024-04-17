@@ -8,10 +8,13 @@ import Discount from '../Icons/Discount';
 import QAndA from '../Icons/Q&A';
 import ProductSlider from './ProductSlider';
 import LikeProduct from './LikeProduct';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../state';
 
 
 const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
+  const dispatch = useDispatch()
  
 
   const [selectedImage, setSelectedImage] = useState('');
@@ -37,6 +40,19 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
     const handleImageSelect = (imagePath) => {
       setSelectedImage(imagePath);
     };
+
+    const handleAddToCart = () => {
+      const product = {
+          title,
+          category,
+          shortDescription,
+          longDescription,
+          id,
+          price,
+          imgUrl: selectedImage
+      };
+      dispatch(addToCart({ product }));
+  };
     
   
 
@@ -74,7 +90,7 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
                 <LikeProduct productId={id}/>  
               </div>
               <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
-                <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Add To Cart</a></button>
+                <button className='text-center items-center py-2 ' onClick={handleAddToCart}>Add To Cart</button>
               </div>
               <div className='text-xs mt-6 bg-[#A3A7FC] p-8 text-[#FFFFFF] font-sans font-semibold'>
                 <div className='flex mb-3'>

@@ -10,7 +10,6 @@ import UserService from '../services/Users';
 import AuthService from '../services/AuthService';
 import { setIsCartOpen } from '../state';
 import { useDispatch, useSelector } from 'react-redux';
-import CartMenu from './CartMenu';
 
 
 const Navbar = () => {
@@ -153,11 +152,8 @@ const Navbar = () => {
             {/* Shopping cart icon */}
             <div onClick={() => dispatch(setIsCartOpen({}))} className="relative p-2 pr-4 hover:cursor-pointer">
                 <IoCartOutline size={25}/>
-                <span className="text-xs absolute top-0 right-[0] transform translate-x-50% -translate-y-50% text-white bg-red-700 font-semibold rounded-full p-1">{cart.length > 0 ? cart.length: "2"}</span>
+                <span className="text-xs absolute top-0 right-[0] transform translate-x-50% -translate-y-50% text-white bg-red-700 font-semibold rounded-full p-1">{cart.length > 0 ? cart.length: "0"}</span>
             </div>
-            {isCartOpen && 
-                <CartMenu />
-            }
 
             <div className='m-2 relative'
                  onMouseEnter={() => setProfileModal(true)} // Open profile modal on hover
