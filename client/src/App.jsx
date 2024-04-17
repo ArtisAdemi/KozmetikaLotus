@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Navbar, Footer } from './components';
-import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails, Wishlist, Profile } from './pages';
+import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails, Wishlist, Profile, Checkout } from './pages';
 
 
 
@@ -22,6 +22,7 @@ function App() {
             <Route path='/register'exact Component={Register}/>
             <Route path='/admin'exact Component={AdminPannel}/>
             <Route path='/profile'exact Component={Profile}/>
+            <Route path='/checkout'exact Component={Checkout}/>
             <Route path='/admin/:productName'exact Component={AdminProductDetails}/>
           </Routes>
         <Footer></Footer>
