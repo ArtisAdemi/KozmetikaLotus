@@ -19,6 +19,7 @@ const Navbar = () => {
     const [user, setUser] = useState({});
     const { logout } = Logout();
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
     const handleNav = () => {
         setNav(!nav);
@@ -56,7 +57,9 @@ const Navbar = () => {
       }
 
     useEffect(() => {
-        getUserData();
+        if (token) {
+            getUserData();
+        }
         isLoggedIn();
         fetchCategories();
       }, [])

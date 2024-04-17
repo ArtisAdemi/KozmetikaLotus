@@ -46,7 +46,8 @@ const ProductService = {
         try {
             let params = {};
             if (filterModel.category) {
-                params['category'] = filterModel.category;
+                const category = filterModel.category.toLowerCase();
+                params['category'] = category;
             }
             if (filterModel.name) {
                 params['productName'] = filterModel.name;
@@ -92,7 +93,6 @@ const ProductService = {
     
     registerProduct: async (productData, images) => {
     const formData = new FormData();
-    console.log("productData",productData)
     // Append product data fields to formData, excluding categoryNames
     Object.keys(productData).forEach(key => {
             if (Array.isArray(productData[key])) {
