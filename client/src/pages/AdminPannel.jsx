@@ -44,16 +44,28 @@ const AdminPannel = () => {
   return (
    <div className='w-full justify-center'>
     
-     {/* Test shit */}
-     <div className='tab-selector flex rounded-md mt-10 w-[20%] mx-auto justify-center'>
+     {/* Test shit   bg-[#202630] text-[#FFFFFF] */}
+     <div className='tab-selector bg-[#F1F1F1] flex rounded-md mt-10 w-[17%] mx-auto justify-center'>
        <div className=''>
-         <button onClick={() => setSelectedTab("Products")} className='border rounded-md py-2 px-6'>Products</button>
+        {selectedTab === 'Products' ? (
+          <button onClick={() => setSelectedTab("Products")} className='font-semibold bg-[#202630] text-[#FFFFFF] rounded-md py-4 px-6'>Products</button>
+        ) : (
+          <button onClick={() => setSelectedTab("Products")} className='font-semibold rounded-md py-4 px-6'>Products</button>
+        )}         
        </div>
        <div className=''>
-         <button onClick={() => setSelectedTab("Orders")} className='border rounded-md py-2 px-6'>Orders</button>
+       {selectedTab === 'Orders' ? (
+          <button onClick={() => setSelectedTab("Orders")} className='font-semibold bg-[#202630] text-[#FFFFFF] rounded-md py-4 px-6'>Orders</button>
+        ) : (
+          <button onClick={() => setSelectedTab("Orders")} className='font-semibold rounded-md py-4 px-6'>Orders</button>
+        )}
        </div>
        <div className=''>
-         <button onClick={() => setSelectedTab("Clients")} className='border rounded-md py-2 px-6'>Clients</button>
+       {selectedTab === 'Clients' ? (
+          <button onClick={() => setSelectedTab("Clients")} className='font-semibold bg-[#202630] text-[#FFFFFF] rounded-md py-4 px-6'>Clients</button>
+        ) : (
+          <button onClick={() => setSelectedTab("Clients")} className='font-semibold rounded-md py-4 px-6'>Clients</button>
+        )}
        </div>
      </div>
      {selectedTab === 'Orders' && <Orders/>}
