@@ -119,7 +119,7 @@ const Checkout = () => {
                                              type="text" name='city' onChange={formik.handleChange} value={formik.values.city} />
                                         </div>
                                              {formik.errors.city && formik.touched.city && 
-                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.city}</h2>}
+                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 md:-mt-5 mx-auto'>{formik.errors.city}</h2>}
 
                                         <div className='flex mb-5 justify-start items-center'>
                                             <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Adresa: </h2>
@@ -127,7 +127,7 @@ const Checkout = () => {
                                              type="text" name='address' onChange={formik.handleChange} value={formik.values.address}/>
                                         </div>
                                              {formik.errors.address && formik.touched.address && 
-                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.address}</h2>}
+                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 md:-mt-5 mx-auto'>{formik.errors.address}</h2>}
 
                                         <div className='flex justify-start mb-8 items-center'>
                                             <h2 className='w-[25%] md:w-[20%] text-sm md:text-base font-medium'>Kodi Postal: </h2>
@@ -135,7 +135,7 @@ const Checkout = () => {
                                              type="text" name='postalCode' onChange={formik.handleChange} value={formik.values.postalCode}/>
                                         </div>
                                              {formik.errors.postalCode && formik.touched.postalCode && 
-                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 mx-auto'>{formik.errors.postalCode}</h2>}
+                                            <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 md:-mt-5 mx-auto'>{formik.errors.postalCode}</h2>}
 
                                       <button type='submit' className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-full md:w-[50%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                           Porosit
