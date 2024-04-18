@@ -1,19 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import ProductListItem from './ProductListItem';
 import ProductService from '../services/Products';
+import WishlistService from '../services/Wishlist'; // Import WishlistService
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 const ProductList = ({ category, productName, isAdmin }) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Track total number of products
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); // Track total number of pages
+    const [wishlist, setWishlist] = useState([]); // State to hold wishlist items
+    const [userId, setUserId] = useState(null); // Initialize userId state
     const limit = 12; // Assuming each page shows 12 products
     const navigate = useNavigate();
+    const token = localStorage.getItem("token"); // Assuming you store token in localStorage
 
     useEffect(() => {
        fetchProducts();
     }, [page, category, productName]);
+
+    // First useEffect to decode user and set userId
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (token) {
+                try {
+                    const decodedUser = await AuthService.decodeUser(token);
+                    setUserId(decodedUser.data.id); // Set userId state
+                } catch (error) {
+                    console.error("Error decoding user", error);
+                }
+            }
+        };
+
+        fetchUserData();
+    }, [token]); // Dependency on token
+
+    // Second useEffect to fetch wishlist, triggered by changes to userId
+    useEffect(() => {
+        const fetchWishlist = async () => {
+            if (userId) { // Ensure userId is not null
+                try {
+                    const wishlistItems = await WishlistService.getUsersWishlist(userId);
+                    setWishlist(wishlistItems.map(item => item.id));
+                } catch (error) {
+                    console.error("Error fetching wishlist", error);
+                }
+            }
+        };
+
+        fetchWishlist();
+    }, [userId]); // Dependency on userId
 
     const fetchProducts = async () => {
         try {
@@ -40,13 +77,30 @@ const ProductList = ({ category, productName, isAdmin }) => {
         setPage(newPage);
     };
 
+    const toggleWishlistItem = async (productId, isLiked) => {
+        try {
+            if (isLiked) {
+                // Call service to remove from wishlist
+                await WishlistService.removeFromWishlist(userId, productId);
+                setWishlist(wishlist.filter(id => id !== productId));
+            } else {
+                // Call service to add to wishlist
+                await WishlistService.addToWishlist(userId, productId);
+                setWishlist([...wishlist, productId]);
+            }
+        } catch (error) {
+            console.error("Error updating wishlist", error);
+        }
+    };
         
     return (
         <div className='w-full pb-10 flex justify-center'>
             <div>
                 <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
-                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category} isAdmin={isAdmin}/>
+                    <div>
+                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category} isAdmin={isAdmin} isLiked={wishlist.includes(product.id)} toggleWishlist={toggleWishlistItem}/>
+                    </div>
                 ))}
                 </div> 
                 {totalPages > 1 && (

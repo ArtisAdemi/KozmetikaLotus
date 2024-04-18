@@ -6,14 +6,14 @@ import LikeProduct from "./LikeProduct";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../state';
 
-const ProductListItem = ({title, shortDescription, price, category, id, isAdmin }) => {
+const ProductListItem = ({title, shortDescription, price, category, id, isAdmin, isLiked, toggleWishlist }) => {
   const navigate = useNavigate();
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   const [images, setImages] = useState([])
   const dispatch = useDispatch();
 
   const handleLike = () => {
-    setIsLiked(!isLiked);
+    toggleWishlist(id, isLiked);
   }
   
   const fetchImages = async () => {
@@ -41,19 +41,19 @@ const ProductListItem = ({title, shortDescription, price, category, id, isAdmin 
 };
 
     return (
-      <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg h-[430px]">
+      <div className="max-w-[250px] w-[250px] mx-auto bg-white shadow-lg h-[430px]">
         <div className="flex justify-center items-center w-full h-[300px]" onClick={() => isAdmin ? navigate(`/admin/${id}`) : navigate(`/products/${category}/${id}`)}>
           <img  className="object-cover max-w-[200px]" src={process.env.PUBLIC_URL + imagePath} alt="Image here" />
         </div>
         <div className="p-4">
-          <h2 className="text-start text-xl text-[#292929] font-bold">{title}</h2>
-          <p className="mt-1 text-start text-[#292929] text-sm">{shortDescription}</p>
+          <h2 className="text-start text-xl text-[#292929] font-bold max-h-10 overflow-ellipsis overflow-hidden whitespace-nowrap">{title}</h2>
+          <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{shortDescription}</p>
           {/* Lower Part */}
           <div className="flex justify-between items-center mt-4">
             <span className="text-xl text-[#292929] font-bold">€{price}</span>
             <button className='text-center text-[#A3A7FC] font-semibold items-center py-2 ' onClick={handleAddToCart}>Add To Cart</button>
             {/* This works, it changes the outline of the heart icon to red */}
-            <LikeProduct productId={id} />
+            <FaRegHeart size={25} color={isLiked ? 'red' : 'black'} onClick={handleLike} />
           </div>
         </div>
       </div>
