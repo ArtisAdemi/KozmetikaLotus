@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid'); // Import UUID library
 
 // Define the checkFileType function
 function checkFileType(file, cb) {
@@ -19,14 +20,15 @@ function checkFileType(file, cb) {
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    // Construct the correct path by moving up one directory from 'server' and then into 'client/public/uploads'
-    const uploadPath = path.join(__dirname, '../../client/public/uploads');
-    cb(null, uploadPath);
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // File naming convention
-  }
+    destination: function(req, file, cb) {
+        // Construct the correct path by moving up one directory from 'server' and then into 'client/public/uploads'
+        const uploadPath = path.join(__dirname, '../../client/public/uploads');
+        cb(null, uploadPath);
+    },
+    filename: function(req, file, cb) {
+        const uniqueFileName = uuidv4(); // Generate a unique identifier for the file
+        cb(null, uniqueFileName + path.extname(file.originalname)); // Append the unique identifier to the file name
+    }
 });
 
 // Initialize upload for multiple files
