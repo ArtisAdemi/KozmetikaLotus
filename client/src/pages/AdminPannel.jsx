@@ -9,6 +9,7 @@ import ProductFormModal from '../components/ProductForm';
 import Orders from '../components/Orders';
 import AdminProducts from '../components/AdminProducts';
 import Clients from '../components/Clients';
+import { Navbar } from '../components';
 
 const AdminPannel = () => {
   const navigate = useNavigate();
@@ -32,11 +33,7 @@ const AdminPannel = () => {
             }
         }
     };
-  console.log(selectedTab);
 
-  const handleInputChange = (e) => {
-    setProductName(e.target.value);
-  }
 
   useEffect(() => {
     checkAdminRole();
@@ -60,8 +57,12 @@ const AdminPannel = () => {
 
   return (
    <div className='w-full justify-center'>
+
+    <div className='flex w-full justify-center'>
+      <Navbar />
+    </div>
     
-     {/* Test shit   bg-[#202630] text-[#FFFFFF] */}
+      {/* ADMIN PANEL */}
      <div className='tab-selector bg-[#F1F1F1] flex rounded-md mt-10 w-[17%] mx-auto justify-center'>
        <div className=''>
         {selectedTab === 'Products' ? (
