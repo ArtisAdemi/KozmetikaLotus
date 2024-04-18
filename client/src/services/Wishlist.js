@@ -24,7 +24,6 @@ const WishlistService = {
     addToWishlist: async (userId, productId) => {
         let endpoint = `${USERS_API_URL}/${userId}/wishlist`
         try{
-            console.log("Service productId", productId)
             const result = await axiosInstance.post(endpoint, {productId: productId});
             return result;
         } catch (err) {

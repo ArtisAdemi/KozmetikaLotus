@@ -30,6 +30,15 @@ const Wishlist = () => {
       console.error(err)
     }
   }
+
+  const handleRemoveItem = async (productId) => {
+    try {
+      await WishlistService.removeFromWishlist(user.id, productId);
+      loadData(); // Reload wishlist data
+    } catch (err) {
+      console.error(err);
+    }
+  };
   
   const loadData = async () => {
     const userId = await getUserData();
@@ -53,7 +62,7 @@ const Wishlist = () => {
                   <div className='mt-10 md:flex md:flex-cols md:flex-wrap'>
                     {/* Wishlist item */}
                     {products.length > 0 && products.map((product, index) => (
-                      <WishlistItem key={index} product={product}/>
+                      <WishlistItem key={index} product={product} onRemoveItem={handleRemoveItem}/>
                       ))}
                     {/* Wishlist item end */}
                   </div>
