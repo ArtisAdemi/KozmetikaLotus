@@ -57,12 +57,12 @@ const Login = () => {
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
                             type="email" name="email" placeholder="Email" onChange={formik.handleChange} value={formik.values.email} />
                             {formik.errors.email && formik.touched.email && 
-                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.email}</h2>}
+                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 -mb-5 mx-auto'>{formik.errors.email}</h2>}
    
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto' 
                             type="password" name="password" placeholder="Password" onChange={formik.handleChange} value={formik.values.password} />
                             {formik.errors.password && formik.touched.password && 
-                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.password}</h2>}
+                            <h2 className='w-[60%] text-red-500 text-sm -mt-10 -mb-5 mx-auto'>{formik.errors.password}</h2>}
                             
                             <button type="submit" className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md hover:opacity-80 border-2 p-3 md:p-4 w-[60%] mx-auto text-[#FFFFFF] shadow-xl'>Login</button>
 

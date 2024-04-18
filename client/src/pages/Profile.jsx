@@ -32,42 +32,42 @@ const Profile = () => {
                 <Navbar />
             </div>
 
-            <div className='profile-container flex justify-center w-full my-12'>
+            <div className='profile-container flex justify-center w-full md:my-12'>
                 <div className='profile-content w-[80%] justify-center md:flex'>
                     
                     <div className='w-[100%] flex '>
                         <div className='w-[100%] flex flex-col gap-10 justify-center my-12'>
 
-                            <h1 className='text-[#212121] font-semibold text-3xl'>My Profile</h1>
 
-                            <div className='flex w-full'>
+                            <h1 className='text-[#212121] w-[100%] md:w-[50%] pb-4  border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-3xl'>My Profile</h1>
+                            <div className='flex flex-col md:flex-row w-full'>
 
-                                <div className='flex w-[20%] flex-col mr-36'>
-                                    <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>First Name: </h2>
-                                        <h2 className='rounded-md w-full p-3  md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
+                                <div className='flex md:w-[20%] flex-col md:mr-36'>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start order-1 md:order-none'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>First Name: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.firstName}</h2>
                                     </div>
 
-                                    <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Email: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Email: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.email}</h2>
                                     </div>
                                 </div>
 
-                                <div className=' w-[20%] flex flex-col'>
-                                    <div className='flex flex-col mb-8 justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Last Name: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
+                                <div className='flex md:w-[20%] flex-col'>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Last Name: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.lastName}</h2>
                                     </div>
 
-                                    <div className='flex flex-col justify-start items-start'>
-                                        <h2 className='mr-3 w-full font-medium'>Phone: </h2>
-                                        <h2 className='rounded-md w-full p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
+                                    <div className='flex md:flex-col md:mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Phone: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{user.phoneNumber}</h2>
                                     </div>
                                 </div>
                             </div>
 
-                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-[20%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
+                            <button onClick={handleEditProfile} className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-full md:w-[20%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                 Edit Profile
                             </button>
 
@@ -81,43 +81,43 @@ const Profile = () => {
 
                 <div className='orders-container flex justify-center w-full my-12'>
                     <div className='orders-content w-[80%] flex flex-col'>
-                        <div className='flex items-center p-2 w-full border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
-                            <h2 className='text-[#828282] ml-5 cursor-pointer'>View All</h2>
+                        <div className='flex items-center p-2 w-full justify-between md:justify-normal border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
+                            <h2 className='text-xl md:text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
+                            <h2 className='text-[#828282] text-sm md:text-base ml-5 cursor-pointer'>View All</h2>
                         </div>
-                        <div className='flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Order #</h2>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Date</h2>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Ship To</h2>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Order Total</h2>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Status</h2>
-                            <h2 className='text-[#333333] text-lg font-semibold w-[16.6%]'>Action</h2>
+                        <div className='hidden md:flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Order #</h2>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Date</h2>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Ship To</h2>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Order Total</h2>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Status</h2>
+                            <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Action</h2>
                         </div>
 
                         {/* STATIC ORDER DATA */}
-                        <div className='flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>0001</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-lg w-[16.6%] cursor-pointer'>View Order</h2>
+                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
+                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>1</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
+                            <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>Veronica Costello</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
+                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
                         </div>
-                        <div className='flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>0001</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-lg w-[16.6%] cursor-pointer'>View Order</h2>
+                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
+                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>0001</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
+                            <h2 className='hidden md:block text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
+                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
                         </div>
-                        <div className='flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>0001</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-lg w-[16.6%] cursor-pointer'>View Order</h2>
+                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
+                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>0001</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
+                            <h2 className='hidden md:block text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
+                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
+                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
                         </div>
                     </div>        
                 </div>
