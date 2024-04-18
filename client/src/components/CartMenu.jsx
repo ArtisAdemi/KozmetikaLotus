@@ -90,7 +90,7 @@ const CartMenu = () => {
                                                 </IconButton>
                                             </Box>
                                         {/* PRICE */}
-                                        <Typography fontWeight={"bold"}>{item?.price}</Typography>
+                                        <Typography fontWeight={"bold"}>{item?.price}€</Typography>
                                         </FlexBox>
                                         <IconButton onClick={() => dispatch(removeFromCart({id: item.id}))}>
                                             <CloseIcon />
@@ -106,7 +106,7 @@ const CartMenu = () => {
                  <Box m="20px 0">
                     <FlexBox m="20px 0">
                         <Typography fontWeight={"bold"}>SUBTOTAL</Typography>
-                        <Typography fontWeight={"bold"}>${totalPrice}</Typography>
+                        <Typography fontWeight={"bold"}>{totalPrice}€</Typography>
                     </FlexBox>
                     <Button
                     sx={{

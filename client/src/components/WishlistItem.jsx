@@ -4,9 +4,9 @@ import AuthService from '../services/AuthService';
 import WishlistService from '../services/Wishlist';
 import { useNavigate } from 'react-router-dom';
 
-const WishlistItem = (product) => {
-  const {title, price, id} = product.product;
-  const productImg = product.product.Images[0].fileName;
+const WishlistItem = ({product, onRemoveItem}) => {
+  const {title, price, id} = product;
+  const productImg = product.Images[0].fileName;
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState(0)
   const navigate = useNavigate();
@@ -29,14 +29,6 @@ const WishlistItem = (product) => {
     navigate(`/products/all/${id}`)
   }
   
-  const removeFromWishlist = async () => {
-    let res;
-    try{
-        res = await WishlistService.removeFromWishlist(user.id, id);
-    } catch (err) {
-        console.error(err)
-    }
-  }
 
   useEffect(() => {
     getUserData();
@@ -56,7 +48,7 @@ const WishlistItem = (product) => {
           </div>
         </div>
         <div className='md:pl-6 md:pt-6'>
-          <div className='cursor-pointer' onClick={removeFromWishlist}>
+          <div className='cursor-pointer' onClick={() => onRemoveItem(id)}>
             <XIcon />
           </div>
         </div>
