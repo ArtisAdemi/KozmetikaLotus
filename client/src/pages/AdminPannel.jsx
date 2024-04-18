@@ -14,7 +14,7 @@ const AdminPannel = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productName, setProductName] = useState("");
-  const [selectedTab, setSelectedTab] = useState("Products");
+  const [selectedTab, setSelectedTab] = useState(getInitialTab());
   
   const checkAdminRole = async () => {
         try {
@@ -37,9 +37,26 @@ const AdminPannel = () => {
   const handleInputChange = (e) => {
     setProductName(e.target.value);
   }
+
   useEffect(() => {
     checkAdminRole();
   }, [navigate]);
+
+
+  //By default kjo o "Products", kur ndrrohet me onClick perdoret useEffect poshte, edhe masanej ndrrohet savedTab
+  function getInitialTab() {
+    // getting stored tabs
+    const tabData = localStorage.getItem('ADMIN_TAB');
+    const savedTab = JSON.parse(tabData);
+    return savedTab || "Products";  
+  }
+
+  useEffect(() => {
+    // storing tabs
+    const tabData = JSON.stringify(selectedTab);
+    localStorage.setItem('ADMIN_TAB', tabData);
+  }, [selectedTab]);
+  
 
   return (
    <div className='w-full justify-center'>

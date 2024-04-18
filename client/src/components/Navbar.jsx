@@ -172,7 +172,7 @@ const Navbar = () => {
                                             <FaRegHeart size={20}/>
                                             <h2 className=' ml-3 text-[#101817] w-[100%] text-sm font-semibold'>My Wishlist</h2>
                                         </div>
-                                        <p className='text-red-700 text-sm ml-1'><a href="/" onClick={logout}>Log Out</a></p> 
+                                        <p className='text-red-700 text-sm ml-1'><a href="/login" onClick={logout}>Log Out</a></p> 
                                     </div>
                                     ) : (
                                         <div onClick={() => navigate('/login')} className='profile flex items-center border rounded-lg p-2 cursor-pointer border-[#A2A2A2]'>
