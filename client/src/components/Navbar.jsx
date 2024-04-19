@@ -8,6 +8,8 @@ import { FaRegUser, FaRegUserCircle, FaRegHeart } from "react-icons/fa";
 import Logout from "../helpers/Logout"
 import UserService from '../services/Users';
 import AuthService from '../services/AuthService';
+import { setIsCartOpen } from '../state';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Navbar = () => {
@@ -20,6 +22,9 @@ const Navbar = () => {
     const { logout } = Logout();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.cart)
+    const isCartOpen = useSelector((state) => state.cart.isCartOpen)
 
     const handleNav = () => {
         setNav(!nav);
@@ -144,11 +149,17 @@ const Navbar = () => {
             }
         </div>
         <div className='w-[100px] hidden md:flex justify-between items-center' >
-            <IoCartOutline size={25} className='hover:cursor-pointer '/>
+            {/* Shopping cart icon */}
+            <div onClick={() => dispatch(setIsCartOpen({}))} className="relative p-2 pr-4 hover:cursor-pointer">
+                <IoCartOutline size={25}/>
+                <span className="text-xs absolute top-0 right-[0] transform translate-x-50% -translate-y-50% text-white bg-red-700 font-semibold rounded-full p-1">{cart.length > 0 ? cart.length: "0"}</span>
+            </div>
+
             <div className='m-2 relative'
                  onMouseEnter={() => setProfileModal(true)} // Open profile modal on hover
                  onMouseLeave={() => setProfileModal(false)} // Close profile modal when not hovering
-            >
+            >   
+            {/* User Profile Icon */}
                 <FaRegUser size={20} className='hover:cursor-pointer'/>
                 {profileModal &&
                     <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[300px] px-4'
