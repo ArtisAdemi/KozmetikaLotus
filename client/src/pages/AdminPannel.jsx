@@ -63,7 +63,7 @@ const AdminPannel = () => {
     </div>
     
       {/* ADMIN PANEL */}
-     <div className='tab-selector bg-[#F1F1F1] flex rounded-md mt-10 w-[17%] mx-auto justify-center'>
+     <div className='tab-selector bg-[#F1F1F1] flex rounded-md mt-10 w-[330px] mx-auto justify-center'>
        <div className=''>
         {selectedTab === 'Products' ? (
           <button onClick={() => setSelectedTab("Products")} className='font-semibold bg-[#202630] text-[#FFFFFF] rounded-md py-4 px-6'>Products</button>

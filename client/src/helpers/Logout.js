@@ -8,6 +8,7 @@ const Logout = () => {
      const logout = () => {
     
         localStorage.clear("token");
+        localStorage.clear("ADMIN_TAB");
         navigate("/login");
     }
 
