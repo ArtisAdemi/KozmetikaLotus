@@ -33,7 +33,7 @@ const AdminProducts = () => {
             </div>
             <div className='flex flex-col md:flex-row justify-center items-center'>
                 <button 
-                className='md:mr-3 border w-[190px] mt-3 md:mt-0 border-[#0C0C0C] bg-[#0C0C0C] text-[#FFF] p-1 px-6 font-semibold' 
+                className='md:mr-3 border w-[190px] mt-3 md:mt-0 border-[#0C0C0C] bg-[#0C0C0C] text-[#FFF] hover:opacity-85 p-1 px-6 font-semibold' 
                 onClick={() => setIsModalOpen(true)}
                 >
                     Add New Product

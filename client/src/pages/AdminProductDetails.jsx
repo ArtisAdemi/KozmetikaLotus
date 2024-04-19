@@ -59,9 +59,13 @@ const SingleProduct = () => {
 
   return (
     <div>
+        <div className='flex w-full justify-center'>
+          <Navbar />
+        </div>
+
         <div className='w-full flex justify-center'>
-          <div className='w-[80%] flex justify-between p-10'>
-            <div className='flex'>
+          <div className='w-[80%] flex flex-col md:flex-row justify-between p-10'>
+            <div className='flex items-center justify-center'>
               <div>
                 <h2 className='text-2xl font-bold'>Produktet</h2>
               </div>
@@ -72,14 +76,14 @@ const SingleProduct = () => {
                 <span>{product ? product.title : 'loading'}</span>
               </div>
             </div>
-            <div className='flex'>
+            <div className='flex flex-col md:flex-row justify-center items-center'>
                 <div>
-                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleEditProduct}>
+                    <button className='md:mr-3 mb-3 mt-3 md:mb-0 md:mt-0 rounded-md border w-[190px] border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleEditProduct}>
                         Edit Product
                     </button>
                 </div>
                 <div>
-                    <button className='mr-3 border border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleDeleteProduct}>
+                    <button className='md:mr-3 rounded-md border w-[190px] border-[#A10550] text-[#A10550] p-1 px-6 font-semibold' onClick={handleDeleteProduct}>
                         Delete Product
                     </button>
                 </div>

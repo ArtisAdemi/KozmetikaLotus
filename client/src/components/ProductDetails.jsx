@@ -57,10 +57,11 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
                 ))}
               </div>
             </div>
-            <div className='block md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
-              <p className='w-full font-bold text-xl mt-5 mb-10 bg-[#ffecf0] rounded-lg py-3 px-5'>
+            <div className='flex flex-col w-full  md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+              <p className='w-full font-bold text-xl mt-5 mb-5 bg-[#ffecf0] rounded-lg py-3 px-5'>
                 €{price}
               </p>
+                <LikeProduct productId={id}/>
             </div>
             <div className='w-full md:w-[40%]'>
               <div className='hidden md:block mb-3'>
