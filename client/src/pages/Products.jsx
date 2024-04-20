@@ -28,8 +28,8 @@ const Products = () => {
           <Navbar />
         </div>
         <div className='w-full flex justify-center'>
-          <div className='w-[80%] md:flex justify-between p-10 ml-[-35px]'>
-            <div className='flex '>
+          <div className='w-[80%] md:flex justify-between p-10 md:ml-[-35px]'>
+            <div className='flex items-center justify-center'>
               <div>
                 <h2 className='text-2xl font-bold text-[#292929]'>Produktet</h2>
               </div>
@@ -40,7 +40,7 @@ const Products = () => {
                 <span>{category}</span>
               </div>
             </div>
-            <div>
+            <div className='flex justify-center'>
               <input className='border border-1 w-[180px] md:w-[250px] border-[#0C0C0C4F] rounded-md p-1 px-6 ' style={{color: 'black'}} type="text" onChange={handleInputChange}  placeholder='Kerko...'/>
             </div>
           </div>
