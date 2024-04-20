@@ -9,7 +9,7 @@ const ClientDetails = ( {closeClientDetails} ) => {
     
     return (
         <div>
-            <div className='profile-container flex justify-center w-full -mt-16 '>
+            <div className='profile-container flex justify-center w-full -mt-16 pb-10'>
                 <div className='profile-content w-[80%] justify-center md:flex'>
                     
                     <div className='w-[100%] flex '>
