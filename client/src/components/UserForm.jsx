@@ -53,33 +53,33 @@ const UserForm = ({ closeModal, user }) => {
       <h2 className="text-xl font-semibold text-gray-900">Edit Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
 
-            <div className='flex'>
+            <div className='flex items-center'>
                 <h2 className='mr-3 w-1/3'>Email: </h2>
-                <input type="text" name="email" onChange={handleInputChange} placeholder="Email" required className="input input-bordered w-full" value={formData.email} />
+                <input type="text" name="email" onChange={handleInputChange} placeholder="Email" required className="input p-3 input-bordered w-full" value={formData.email} />
             </div>
 
-            <div className='flex'>
+            <div className='flex items-center'>
                 <h2 className='mr-3 w-1/3'>First Name: </h2>
-                <input name="firstName" onChange={handleInputChange} placeholder="First Name" required className="textarea textarea-bordered w-full" value={formData.firstName}/>
+                <input name="firstName" onChange={handleInputChange} placeholder="First Name" required className="textarea p-3 textarea-bordered w-full" value={formData.firstName}/>
             </div>
 
-            <div className='flex'>
+            <div className='flex items-center'>
                 <h2 className='mr-3 w-1/3'>Last Name: </h2>
-                <input name="lastName" onChange={handleInputChange} placeholder="Last Name" required className="textarea textarea-bordered w-full" value={formData.lastName}/>
+                <input name="lastName" onChange={handleInputChange} placeholder="Last Name" required className="textarea p-3 textarea-bordered w-full" value={formData.lastName}/>
             </div>
 
-            <div className='flex'>
+            <div className='flex items-center'>
              <h2 className='mr-3 w-1/3'>Phone: </h2>
-             <input type="text" name="phoneNumber" onChange={handleInputChange} placeholder="Phone" required className="input input-bordered w-full" value={formData.phoneNumber} />
+             <input type="text" name="phoneNumber" onChange={handleInputChange} placeholder="Phone" required className="input p-3 input-bordered w-full" value={formData.phoneNumber} />
             </div>
 
             <div className='flex'>
              <h2 className='mr-3 w-1/3'>Current Password: </h2>
-             <input type="password" name="currentPassword" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.currentPassword} />
+             <input type="password" name="currentPassword" onChange={handleInputChange}  className="input px-3 input-bordered w-full" value={formData.currentPassword} />
             </div>
             <div className='flex'>
              <h2 className='mr-3 w-1/3'>New Password: </h2>
-             <input type="password" name="password" onChange={handleInputChange}  className="input input-bordered w-full" value={formData.password} disabled={!formData.currentPassword}/>
+             <input type="password" name="password" onChange={handleInputChange}  className="input px-3 input-bordered w-full" value={formData.password} disabled={!formData.currentPassword}/>
             </div>
              
             <div className="flex justify-end space-x-2">

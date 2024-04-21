@@ -2,11 +2,16 @@ import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 import Product3Home from '../images/Product3Home.png'
+import StatusModal from './StatusModal';
 
 
 
 const OrderDetails = ( {closeOrderDetails} ) => {
-    
+    const [statusModal, setStatusModal] = useState(false);
+
+    const handleEditStatus = () => {
+        setStatusModal(true);
+    }
     
     return (
         <div>
@@ -59,7 +64,7 @@ const OrderDetails = ( {closeOrderDetails} ) => {
                                     </div>
 
                                     <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
-                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Action: </h2>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Status: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>Pending</h2>
                                     </div>
                                 </div>
@@ -117,8 +122,8 @@ const OrderDetails = ( {closeOrderDetails} ) => {
                                     <FontAwesomeIcon icon={faChevronLeft} color='#828282'/>
                                     <h2 className=' ml-3 text-[#828282]'>Back to Orders</h2>
                                 </div>
-                                <button type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
-                                    Update Action
+                                <button onClick={handleEditStatus} type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
+                                    Update Status
                                 </button>
                             </div>
                             <div className='md:mt-5'>
@@ -166,7 +171,7 @@ const OrderDetails = ( {closeOrderDetails} ) => {
                     </div>         
                 </div>
             </div>
-
+            {statusModal && <StatusModal closeStatusModal={() => setStatusModal(false)}/>}
                 
         </div>
 

@@ -36,8 +36,8 @@ const WishlistItem = ({product, onRemoveItem}) => {
 
   return (
     <div className='md:flex md:px-3 md:py-2 md:h-150px md:w-1/2 cursor-pointer'>
-        <div onClick={redirect}>
-          <img src={`/uploads/${productImg}`} className='md:w-[160px] md:h-[130px] object-contain' alt="ASD" />
+        <div onClick={redirect} className=''>
+          <img src={`/uploads/${productImg}`} className='w-[160px] mx-auto h-[130px] object-contain' alt="ASD" />
         </div>
         <div onClick={redirect} className='md:flex md:flex-col md:justify-between md:ml-10'>
           <div className='md:pl-6 md:pt-6'>
