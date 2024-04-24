@@ -35,20 +35,20 @@ const WishlistItem = ({product, onRemoveItem}) => {
   }, [])
 
   return (
-    <div className='md:flex md:px-3 md:py-2 md:h-150px md:w-1/2 cursor-pointer'>
+    <div className='md:flex md:px-3 md:py-2 md:h-150px w-[200px] md:w-1/2 mx-auto md:mx-0 cursor-pointer mb-8 md:mb-0'>
         <div onClick={redirect} className=''>
           <img src={`/uploads/${productImg}`} className='w-[160px] mx-auto h-[130px] object-contain' alt="ASD" />
         </div>
         <div onClick={redirect} className='md:flex md:flex-col md:justify-between md:ml-10'>
           <div className='md:pl-6 md:pt-6'>
-              <h2 className='text-sm underline'>{title}</h2>
+              <h2 className='text-sm underline px-3'>{title}</h2>
           </div>
           <div className='md:pl-6 md:pb-6'>
-              <p className='text-md font-semibold'>{price}€</p>
+              <p className='text-md font-semibold px-3'>{price}€</p>
           </div>
         </div>
         <div className='md:pl-6 md:pt-6'>
-          <div className='cursor-pointer' onClick={() => onRemoveItem(id)}>
+          <div className='cursor-pointer px-3 md:px-0' onClick={() => onRemoveItem(id)}>
             <XIcon />
           </div>
         </div>
