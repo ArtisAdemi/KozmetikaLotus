@@ -71,9 +71,6 @@ const CartMenu = () => {
                                         <Typography fontWeight={"bold"}>
                                             {item?.title}
                                         </Typography>
-                                        <Typography>
-                                            {item?.shortDescription}
-                                        </Typography>
                                         {/* AMOUNT */}
                                         <FlexBox m="15px 0">
                                             <Box
