@@ -1,10 +1,28 @@
 import {createSlice} from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit";
 
+// Define the loadFromLocalStorage function before using it
+const loadFromLocalStorage = () => {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : undefined;
+};
+
+// Now define the initialState using the function
 const initialState = {
     isCartOpen: false,
-    cart: [],
+    cart: loadFromLocalStorage() || [],
     items: [],
-}
+};
+
+const saveToLocalStorage = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+const localStorageMiddleware = store => next => action => {
+    const result = next(action);
+    saveToLocalStorage(store.getState().cart.cart); // Ensure correct path to cart state
+    return result;
+};
 
 export const cartSlice = createSlice({
     name: "cart",
@@ -50,6 +68,13 @@ export const cartSlice = createSlice({
         }
     }
 })
+
+export const store = configureStore({
+    reducer: {
+        cart: cartSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware)
+});
 
 export const {
     setItems,

@@ -97,7 +97,7 @@ const Navbar = () => {
   return (
     <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[1px] border-[#2929299F] p-4 pb-8'>
         <div>
-            <div className='absolute top-1'>
+            <div className='absolute top-1 cursor-pointer' onClick={() => navigate("/")}>
                 <LotusLogo />
             </div>
         </div>
