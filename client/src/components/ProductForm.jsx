@@ -88,10 +88,10 @@ const ProductFormModal = ({ closeModal, product }) => {
     <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
       <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
-      <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" value={formData.title} />
-          <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full" value={formData.shortDescription}></textarea>
-          <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full" value={formData.longDescription}></textarea>
-          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" value={formData.price} />
+      <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input p-3 input-bordered w-full" value={formData.title} />
+          <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea px-3  textarea-bordered w-full" value={formData.shortDescription}></textarea>
+          <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea px-3  textarea-bordered w-full" value={formData.longDescription}></textarea>
+          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input p-3 input-bordered w-full" value={formData.price} />
           {categories.map((category, index) => (
             <div key={index}>
               <input
@@ -104,20 +104,22 @@ const ProductFormModal = ({ closeModal, product }) => {
               <label htmlFor={`category-${index}`}>{category.name}</label>
             </div>
           ))}
-          <div className="flex mt-2">
+          <div className="flex justify-between mt-2 w-full">
             <input
               type="text"
               placeholder="Add new category"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
-              className="flex-1"
+              className="p-3 w-2/3"
             />
-            <button type="button" onClick={addCategory}>Add</button>
+            <button type="button" onClick={addCategory} className='btn md:w-[20%] btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80'>
+              Add
+            </button>
           </div>
           <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
           <div className="flex justify-end space-x-2">
-            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
-            <button type="submit" className="btn btn-primary">Add Product</button>
+            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">Cancel</button>
+            <button type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">Add Product</button>
           </div>
         {/* More input fields and submission button */}
       </form>

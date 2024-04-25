@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons'
+import DiscountModal from './DiscountModal';
 
 
 
 const ClientDetails = ( {closeClientDetails} ) => {
-    
+    const [discountModal, setDiscountModal] = useState(false);
+
+    const handleEditDiscount = () => {
+        setDiscountModal(true);
+    }
     
     return (
         <div>
@@ -96,7 +101,7 @@ const ClientDetails = ( {closeClientDetails} ) => {
                                     <FontAwesomeIcon icon={faChevronLeft} color='#828282'/>
                                     <h2 className=' ml-3 text-[#828282]'>Back to Clients</h2>
                                 </div>
-                                <button type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
+                                <button onClick={handleEditDiscount} type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
                                     Apply Discount
                                 </button>
                             </div>
@@ -105,7 +110,7 @@ const ClientDetails = ( {closeClientDetails} ) => {
                 </div>
             </div>
 
-                
+            {discountModal && <DiscountModal closeDiscountModal={() => setDiscountModal(false)}/>}
         </div>
 
     )
