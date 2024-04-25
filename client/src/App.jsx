@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Footer } from './components';
 import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails, Wishlist, Profile, Checkout } from './pages';
 import CartMenu from './components/CartMenu';
+import {store} from './state/index'
 
 
 
