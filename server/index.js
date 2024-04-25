@@ -1,4 +1,5 @@
 require('dotenv').config();
+const seedCategories = require("./seed/categoriesSeed")
 const express = require('express');
 const app = express();
 const cors = require("cors");
@@ -35,6 +36,7 @@ app.use("/api", apiRouter)
 
 // Creating sequelize sync with db
 db.sequelize.sync().then(() => {
+    seedCategories();
     // After sync is complete we start server
     app.listen(3001, () => {
         console.log(`Server started on port: 3001`);
