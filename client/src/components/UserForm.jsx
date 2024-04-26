@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserService from '../services/Users';
 
-const UserForm = ({ closeModal, user }) => {
+const UserForm = ({ closeModal, user, setUser }) => {
   const [formData, setFormData] = useState({
     email: user?.email || '',
     firstName: user?.firstName || '',
@@ -38,7 +38,13 @@ const UserForm = ({ closeModal, user }) => {
       updatedFields.password = formData.password;
     }
 
+    localStorage.setItem("email", formData.email)
+    localStorage.setItem("firstName", formData.firstName)
+    localStorage.setItem("lastName", formData.lastName)
+    localStorage.setItem("phoneNumber", formData.phoneNumber)
+
     const res = await UserService.updateUser(user.id, updatedFields);
+    //setUser(formData);
     console.log(res);
   } catch (err) {
     console.error("Error updating user", err);

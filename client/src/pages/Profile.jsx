@@ -7,25 +7,37 @@ const Profile = () => {
     const [user, setUser] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
-    const getUserData = async () => {
-        let res;
-        try{
-          res = await AuthService.decodeUser();
-          setUser(res.data);
-        } catch (err) {
-          console.error(err)
-          return null;
+    // const getUserData = async () => {
+    //     let res;
+    //     try{
+    //       res = await AuthService.decodeUser();
+    //       setUser(resemai.data);
+    //     } catch (err) {
+    //       console.error(err)
+    //       return null;
+    //     }
+    //   }
+
+    const getUserData = () => {
+        const userData = {
+            id: localStorage.getItem("id"),
+            email: localStorage.getItem("email"),
+            firstName: localStorage.getItem("firstName"),
+            lastName: localStorage.getItem("lastName"),
+            phoneNumber: localStorage.getItem("phoneNumber"),
         }
-      }
+        return userData
+    }
+
 
       const handleEditProfile = () => {
         setIsEditing(true);
       }
 
       useEffect(() => {
-        getUserData();
+        setUser(getUserData());
       }, [])
-    
+
     return (
         <div>
             <div className='flex w-full justify-center'>
@@ -121,7 +133,7 @@ const Profile = () => {
                         </div>
                     </div>        
                 </div>
-                {isEditing && <UserForm closeModal={() => setIsEditing(false)} user={user}/>}
+                {isEditing && <UserForm closeModal={() => setIsEditing(false)} user={user} setUser={setUser} />}
         </div>
 
     )
