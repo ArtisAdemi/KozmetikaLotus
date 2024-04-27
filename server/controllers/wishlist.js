@@ -1,6 +1,6 @@
 const db = require('../models');
 const { Sequelize, Op } = require('sequelize');
-const Categories = db.Categories;
+const Subcategory = db.Subcategory;
 const Products = db.Products;
 const Images = db.Images;
 const Users = db.Users;
@@ -15,7 +15,7 @@ const getWishlist = async (req, res) => {
             include: [{
                 model: Products,
                 through: 'Wishlist', // Define the many-to-many relationship through the Wishlist table
-                include: [Categories, Images],
+                include: [Subcategory, Images],
             }]
         });
 

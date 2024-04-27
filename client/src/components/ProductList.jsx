@@ -5,7 +5,7 @@ import WishlistService from '../services/Wishlist'; // Import WishlistService
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 
-const ProductList = ({ category, productName, isAdmin }) => {
+const ProductList = ({ subCategory, productName, isAdmin }) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Track total number of products
     const [page, setPage] = useState(1);
@@ -18,7 +18,7 @@ const ProductList = ({ category, productName, isAdmin }) => {
 
     useEffect(() => {
        fetchProducts();
-    }, [page, category, productName]);
+    }, [page, subCategory, productName]);
 
     // First useEffect to decode user and set userId
     useEffect(() => {
@@ -55,7 +55,7 @@ const ProductList = ({ category, productName, isAdmin }) => {
     const fetchProducts = async () => {
         try {
             const filterModel = {
-                category: category !== 'all' ? category : null,
+                subCategory: subCategory !== 'all' ? subCategory : null,
                 name: productName ? productName : null,
                 page: page,
                 limit: limit
@@ -99,7 +99,7 @@ const ProductList = ({ category, productName, isAdmin }) => {
                 <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
                     <div>
-                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} category={category} isAdmin={isAdmin} isLiked={wishlist.includes(product.id)} toggleWishlist={toggleWishlistItem}/>
+                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} subCategory={subCategory} isAdmin={isAdmin} isLiked={wishlist.includes(product.id)} toggleWishlist={toggleWishlistItem}/>
                     </div>
                 ))}
                 </div> 

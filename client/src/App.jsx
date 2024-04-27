@@ -14,7 +14,7 @@ function App() {
           <Routes>
             {/* Add routes here */}
             <Route path='/' exact Component={Home} />
-            <Route path='/products/:categoryName'exact Component={Products}/>
+            <Route path='/products/:subCategoryName'exact Component={Products}/>
             <Route path='/products/:categoryName/:productName'exact Component={SingleProduct}/>
             <Route path='/about'exact Component={AboutUs}/>
             <Route path='/wishlist'exact Component={Wishlist}/>

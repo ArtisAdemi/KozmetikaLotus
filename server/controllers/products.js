@@ -3,6 +3,7 @@ const db = require('../models');
 const { Sequelize, Op } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
+const SubCategories = db.Subcategory
 const Images = db.Images;
 const fs = require('fs');
 const path = require('path');
@@ -14,7 +15,7 @@ const getProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default page is 1
     const limit = parseInt(req.query.limit) || 12; // Default limit is 12
     const offset = (page - 1) * limit;
-    const category = req.query.category;
+    const subCategory = req.query.subCategory;
     const productName = req.query.productName;
 
     let whereCondition = {};
@@ -24,11 +25,11 @@ const getProducts = async (req, res) => {
         whereCondition.title = { [Op.iLike]: `%${productName}%` };
     }
 
-    if (category) {
-        const category = req.query.category.replace(/-/g, ' ');
+    if (subCategory) {
+        const subCategory = req.query.subCategory.replace(/-/g, ' ');
         includeCondition.push({
-            model: Categories,
-            where: { name: category },
+            model: SubCategories,
+            where: { name: subCategory },
             through: { attributes: [] }, // Hide the join table attributes
         });
         includeCondition.push({
@@ -37,7 +38,7 @@ const getProducts = async (req, res) => {
         })
     } else {
         includeCondition.push({
-            model: Categories,
+            model: SubCategories,
             through: { attributes: [] }, // Optionally hide the join table attributes if not needed
         });
     }
@@ -72,7 +73,7 @@ const getProductById = async (req, res) => {
     
     try{
         const product = await Products.findByPk(productId, {
-            include: Categories
+            include: SubCategories
         });
         if (product) {
             res.status(200).json(product);
@@ -86,7 +87,7 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId } = req.body;
     try {
         // Create new product using variables from body
         const newProduct = await Products.create({
@@ -108,30 +109,22 @@ const registerProduct = async (req, res) => {
             await Images.bulkCreate(imageRecords);
         }
 
-        // Check if categoryNames have been provided
-        if (categoryNames && categoryNames.length > 0) {
-            // Promise.all takes an array of promises and returns a new promise that holds in an array all the values of those promises 
-            const categoriesToLower = categoryNames.map(name => name.toLowerCase());
-            const categories = await Promise.all(
-                // For each category name Find it in DB. If not existant create it.
-                categoriesToLower.map(name => 
-                    Categories.findOrCreate({ where: { name } })
-                        .then(([category]) => category)
-                )
-            );
-            // This populates the ProductsCategories Table with the id of product and category
-            await newProduct.setCategories(categories);
+        // Check if subCategoryId is provided
+        if (subCategoryId) {
+            const subCategory = await db.Subcategory.findByPk(subCategoryId);
+            // This populates the Product_Categories Table with the id of product and subcategory
+            await newProduct.addSubcategory(subCategory);
         }
         
         res.status(201).json(newProduct);
     } catch (err) {
-        res.status(500).json({ error: err.message});
+        res.status(500).json({ error: err.message });
     }
 }
 // Update Product 
 const updateProduct = async(req, res) => {
     const productId = req.params.id;
-    const { title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames } = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId } = req.body;
     
     try {
         // Find Product by id
@@ -160,14 +153,13 @@ const updateProduct = async(req, res) => {
             await Images.bulkCreate(imageRecords);
         }
 
-        // Update the categories associated with the product
-        if (categoryNames && categoryNames.length > 0) {
-          const categories = await Promise.all(
-            categoryNames.map(name =>
-                Categories.findOrCreate({ where: { name } })
-                    .then(([category]) => category))
-          );
-          await product.setCategories(categories);  
+        if (subCategoryId) {
+            const subCategory = await db.Subcategory.findByPk(subCategoryId);
+            if (subCategory) {
+                await product.setSubcategories([subCategory]);
+            } else {
+                throw new Error("Subcategory not found");
+            }
         }
 
         res.status(200).json(product);
@@ -218,7 +210,7 @@ const deleteProduct = async (req, res) => {
 // Get unique product per category with associated image
 const getUniqueProductPerCategory = async (req, res) => {
     try {
-        const categories = await Categories.findAll({
+        const subCategories = await SubCategories.findAll({
             include: [{
                 model: Products,
                 include: [{
@@ -226,7 +218,7 @@ const getUniqueProductPerCategory = async (req, res) => {
                     order: [['createdAt', 'DESC']] // Order by creation date
                 },
                 {
-                    model: Categories
+                    model: SubCategories
                 }
             ],
                 order: [['createdAt', 'DESC']] // Order by creation date
@@ -234,11 +226,11 @@ const getUniqueProductPerCategory = async (req, res) => {
         });
 
         // Filter out categories without associated products
-        const validCategories = categories.filter(category => category.Products.length > 0);
+        const validCategories = subCategories.filter(subCategory => subCategory.Products.length > 0);
 
-        // Extract the first product with image for each valid category
-        const uniqueProducts = validCategories.map(category => {
-            const product = category.Products[0]; // Get the first product
+        // Extract the first product with image for each valid subCategory
+        const uniqueProducts = validCategories.map(subCategory => {
+            const product = subCategory.Products[0]; // Get the first product
             if (product) {
                 product.Images = product.Images.slice(0, 1); // Get the first image for the product
             }

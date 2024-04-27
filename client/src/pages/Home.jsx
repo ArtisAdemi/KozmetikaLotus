@@ -148,7 +148,7 @@ const Home = () => {
           </div>
         </div>
       <div className='bg-[#FFFFFF] pb-20 mt-10 w-full'>
-        <ProductSlider category={"lipstick"}/>
+        <ProductSlider subCategory={"conditioner"}/>
       </div>
       </div>
     </div>

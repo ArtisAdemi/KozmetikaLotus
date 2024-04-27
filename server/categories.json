@@ -2,69 +2,79 @@
     {
       "name": "Kujdesi i lekures",
       "subcategories": [
-        {"name": "Lares vajor"},
-        {"name": "Lares ujor"},
-        {"name": "Tonike"},
-        {"name": "Serum"},
-        {"name": "Ampule"},
-        {"name": "Esence"},
-        {"name": "Maska"},
-        {"name": "Krem Hidratues"},
-        {"name": "Mbrojtje ndaj diellit"},
-        {"name": "Acne patches"},
-        {"name": "Sport treatment"},
-        {"name": "Zona e syve"},
-        {"name": "Buzet"}
+        {"name": "lares vajor"},
+        {"name": "lares ujor"},
+        {"name": "tonike"},
+        {"name": "serum"},
+        {"name": "ampule"},
+        {"name": "esence"},
+        {"name": "maska"},
+        {"name": "krem hidratues"},
+        {"name": "mbrojtje ndaj diellit"},
+        {"name": "acne patches"},
+        {"name": "sport treatment"},
+        {"name": "zona e syve"},
+        {"name": "buzet"}
       ]
     },
     {
       "name": "Floket",
       "subcategories": [
-        {"name": "Kujdes i skalpit"},
-        {"name": "Shampo"},
-        {"name": "Conditioner"},
-        {"name": "Trajtim i flokut"},
-        {"name": "Vajra per floket"},
-        {"name": "Kacurrela"}
+        {"name": "kujdes i skalpit"},
+        {"name": "shampo"},
+        {"name": "conditioner"},
+        {"name": "trajtim i flokut"},
+        {"name": "vajra per floket"},
+        {"name": "kacurrela"}
       ]
     },
     {
       "name": "Marka",
-      "subcategories": []
+      "subcategories": [
+        {"name": "marka"}
+      ]
     },
     {
       "name": "Trupi",
-      "subcategories": []
+      "subcategories": [
+        {"name": "trupi"}
+      ]
     },
     {
       "name": "Make Up",
       "subcategories": [
-        {"name": "Bb cream"},
-        {"name": "Cushion Foundation"},
-        {"name": "Concealer"},
-        {"name": "Blush"},
-        {"name": "Highlighter"},
-        {"name": "Lip gloss"},
-        {"name": "Lip oil"},
-        {"name": "Lipstick"},
-        {"name": "Mascara"},
-        {"name": "Palette"},
-        {"name": "Qerpike"},
-        {"name": "Setting powder"},
-        {"name": "Vetullat"}
+        {"name": "bb cream"},
+        {"name": "cushion foundation"},
+        {"name": "concealer"},
+        {"name": "blush"},
+        {"name": "highlighter"},
+        {"name": "lip gloss"},
+        {"name": "lip oil"},
+        {"name": "lipstick"},
+        {"name": "mascara"},
+        {"name": "palette"},
+        {"name": "qerpike"},
+        {"name": "setting powder"},
+        {"name": "vetullat"}
       ]
     },
     {
       "name": "Aksesore",
-      "subcategories": []
+      "subcategories": [
+        {"name": "aksesore"}
+      ]
     },
     {
       "name": "Travel kit",
-      "subcategories": []
+      "subcategories": [
+        {"name": "travel kit"}
+      ]
     },
     {
       "name": "Produkte te reja",
-      "subcategories": []
+      "subcategories": [
+        {"name": "produkte te reja"}
+      ]
     }
   ]
   

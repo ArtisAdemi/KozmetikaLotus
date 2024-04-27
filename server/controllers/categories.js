@@ -1,5 +1,6 @@
 const db = require("../models");
 const Categories = db.Categories;
+const Subcategory = db.Subcategory
 
  
 // Controller functions
@@ -31,10 +32,27 @@ const registerCategory = async (req, res) => {
     }
 }
 
+const getSubCategories = async (req, res) => {
+    const {id} = req.params
+
+    try {
+
+        const subCategories = await Subcategory.findAll({
+            where: {CategoryId : id}
+        })
+
+        res.json(subCategories)
+    }
+    catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 
 
 // export controller functions
 module.exports = {
     getCategories,
-    registerCategory
+    registerCategory,
+    getSubCategories,
 };

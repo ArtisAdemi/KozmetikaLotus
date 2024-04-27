@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../state';
 
 
-const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
+const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, isAdmin}) => {
   const [images, setImages] = useState([]);
   const dispatch = useDispatch()
  
@@ -44,7 +44,7 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
     const handleAddToCart = () => {
       const product = {
           title,
-          category,
+          subCategory,
           shortDescription,
           longDescription,
           id,
@@ -134,7 +134,7 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
           <div className='w-[80%] text-center p-6'>
             <h1 className='font-bold text-xl'>You May Also Like</h1>
             <div className='mt-10 pb-10'>
-              <ProductSlider category={category}/>
+              <ProductSlider subCategory={subCategory}/>
             </div>
           </div>
         </div>

@@ -8,12 +8,13 @@ const ProductFormModal = ({ closeModal, product }) => {
     shortDescription: product?.shortDescription || '',
     longDescription: product?.longDescription || '',
     price: product?.price || '',
-    categoryNames: product?.Categories?.map(category => category.name) || [], // Assuming Categories is an array of category objects
-    images: [], // You'll need to handle pre-existing images separately
+    subCategoryId: 0, // Changed from subCategoryIds to subCategoryId
+    images: [],
   });
   const [categories, setCategories] = useState([]);
-  const [newCategoryName, setNewCategoryName] = useState('');
-  
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [subCategories, setSubCategories] = useState([]);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const result = await CategoryService.getCategories();
@@ -22,7 +23,7 @@ const ProductFormModal = ({ closeModal, product }) => {
       } else {
         console.error('Unexpected response structure:', result);
         setCategories([]); // Fallback to ensure state remains valid
-    }
+      }
     };
     fetchCategories();
   }, []);
@@ -31,24 +32,19 @@ const ProductFormModal = ({ closeModal, product }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleCategoryChange = (e) => {
-    const { value, checked } = e.target;
-    const newCategoryNames = checked
-      ? [...formData.categoryNames, value]
-      : formData.categoryNames.filter(name => name !== value);
-    setFormData({ ...formData, categoryNames: newCategoryNames });
+  
+  const handleCategorySelect = async (e) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+    const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+    setSubCategories(subCategoriesData);
+  };
+  
+  const handleSubCategoryChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({... formData, [name]: value});
   };
 
-  const addCategory = (e) => {
-    e.preventDefault();
-    if (newCategoryName.trim() && !categories.some(category => category.name === newCategoryName.trim())) {
-      const updatedCategories = [...categories, { name: newCategoryName.trim() }];
-      setCategories(updatedCategories);
-      setFormData({ ...formData, categoryNames: [...formData.categoryNames, newCategoryName.trim()] });
-      setNewCategoryName('');
-    }
-  };
 
   const handleImageChange = (e) => {
     setFormData({ ...formData, images: Array.from(e.target.files) });
@@ -58,14 +54,13 @@ const ProductFormModal = ({ closeModal, product }) => {
     e.preventDefault();
     const { images, ...productData } = formData;
 
-    if( product ) {
+    if (product) {
         await updateProduct();
-    } else{
+    } else {
         await ProductService.registerProduct(productData, images);
     }
     closeModal();
   };
-
 
   const updateProduct = async () => {
     try {
@@ -81,7 +76,7 @@ const ProductFormModal = ({ closeModal, product }) => {
     } catch (err) {
         console.error("Error updating product", err);
     }
-};
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -92,27 +87,26 @@ const ProductFormModal = ({ closeModal, product }) => {
           <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full" value={formData.shortDescription}></textarea>
           <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full" value={formData.longDescription}></textarea>
           <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" value={formData.price} />
-          {categories.map((category, index) => (
-            <div key={index}>
-              <input
-                type="checkbox"
-                id={`category-${index}`}
-                value={category.name}
-                checked={formData.categoryNames.includes(category.name)}
-                onChange={handleCategoryChange}
-              />
-              <label htmlFor={`category-${index}`}>{category.name}</label>
-            </div>
-          ))}
-          <div className="flex mt-2">
-            <input
-              type="text"
-              placeholder="Add new category"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              className="flex-1"
-            />
-            <button type="button" onClick={addCategory}>Add</button>
+          <select onChange={handleCategorySelect} value={selectedCategory} className="select select-bordered w-full">
+            {categories.map((category) => (
+                <option key={category.id} value={category.id}>{category.name}</option>
+            ))}
+          </select>
+          <div>
+            {console.log("form Data", formData)}
+            {subCategories.map((subCategory, index) => (
+              
+                <div key={index}>
+                    <input
+                        type="radio"
+                        name="subCategoryId"
+                        id={`subCategory-${index}`}
+                        value={subCategory.id}
+                        onChange={handleSubCategoryChange}
+                    />
+                    <label htmlFor={`subCategory-${index}`}>{subCategory.name}</label>
+                </div>
+            ))}
           </div>
           <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
           <div className="flex justify-end space-x-2">
