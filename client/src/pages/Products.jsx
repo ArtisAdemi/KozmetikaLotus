@@ -7,15 +7,15 @@ import ProductList from '../components/ProductList';
 
 
 const Products = () => {
-  // Getting category from url
-  const [category, setCategory] = useState("");
-  const { categoryName } = useParams();
+  // Getting subCategory from url
+  const [subCategory, setSubCategory] = useState("");
+  const { subCategoryName } = useParams();
   const [productName, setProductName] = useState("");
 
   useEffect(() => {
-    // updating category
-    setCategory(categoryName.toLowerCase());
-  }, [categoryName]);
+    // updating subCategory
+    setSubCategory(subCategoryName.toLowerCase());
+  }, [subCategoryName]);
 
 
   const handleInputChange = (e) => {
@@ -37,7 +37,7 @@ const Products = () => {
                 <FontAwesomeIcon icon={faChevronRight} color='#292929'/>
               </div>
               <div className='mt-1 ml-2 text-[#292929]'>
-                <span>{category}</span>
+                <span>{subCategory}</span>
               </div>
             </div>
             <div className='flex justify-center'>
@@ -46,7 +46,7 @@ const Products = () => {
           </div>
         </div>
         <div>
-          <ProductList category={categoryName} productName={productName}/>
+          <ProductList subCategory={subCategoryName} productName={productName}/>
         </div>
     </div>
   )

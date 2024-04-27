@@ -14,6 +14,18 @@ const CategoryService = {
         }
     },
 
+    getSubcategories: async (id) => {
+        let endpoint = `${API_URL}/${id}/subcategories`
+        try{
+            const response = await axios.get(endpoint);
+            return response.data
+        }
+        catch (err) {  
+            console.error('Error fetching subcategories:', err);
+            return null
+        }
+    }
+
     
 };
 

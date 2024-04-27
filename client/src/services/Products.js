@@ -45,9 +45,9 @@ const ProductService = {
         let endpoint = `${API_URL}?`;
         try {
             let params = {};
-            if (filterModel.category) {
-                const category = filterModel.category.toLowerCase();
-                params['category'] = category;
+            if (filterModel.subCategory) {
+                const subCategory = filterModel.subCategory.toLowerCase();
+                params['subCategory'] = subCategory;
             }
             if (filterModel.name) {
                 params['productName'] = filterModel.name;
