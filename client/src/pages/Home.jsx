@@ -103,7 +103,7 @@ const Home = () => {
       </div>
       {/* About us section */}
       <div className='md:flex justify-center px-12 py-16'>
-        <div className='w-[80%] mr-12 max-w-[500px] text-center'>
+        <div className='w-[100%] mr-12 max-w-[500px] text-center'>
           {/* Text Section */}
           <div>
             <h1 className='text-3xl font-bold text-center text-[#292929]'>Rreth Nesh</h1>
@@ -116,7 +116,7 @@ const Home = () => {
           </div>
         {/* Image */}
         </div>
-          <div className='max-w-[500px]'>
+          <div className='md:max-w-[500px]'>
             <img src={require('../images/HomePage1AboutUs.png')} alt="" />
           </div>
       </div>
@@ -141,7 +141,7 @@ const Home = () => {
       {/* Best Seller slider */}
       <div className='w-full bg-[#FFFFFF] justify-center overflow-hidden py-12'>
         {/* Content Container */}
-        <div className='w-[80%] grid justify-center'>
+        <div className='w-[80%] mx-auto grid justify-center'>
           {/* Header */}
           <div className='items-center text-center'>
             <h1 className='text-3xl font-semibold text-center text-[#292929]'>Produktet me te shitura</h1>

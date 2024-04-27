@@ -58,7 +58,7 @@ const Wishlist = () => {
         <div className='pt-6 w-full flex justify-center pb-24'>
             <div className='w-[80%]'>
                 <h4 className='font-semibold text-xl py-2'>Wishlist</h4>
-                <div className='md:w-[70%]'>
+                <div className=' w-[100%] justify-center'>
                   <div className='mt-10 md:flex md:flex-cols md:flex-wrap'>
                     {/* Wishlist item */}
                     {products.length > 0 && products.map((product, index) => (

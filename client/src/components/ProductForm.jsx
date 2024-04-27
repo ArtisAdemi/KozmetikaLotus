@@ -110,8 +110,8 @@ const ProductFormModal = ({ closeModal, product }) => {
           </div>
           <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
           <div className="flex justify-end space-x-2">
-            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent">Cancel</button>
-            <button type="submit" className="btn btn-primary">Add Product</button>
+            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">Cancel</button>
+            <button type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">Add Product</button>
           </div>
         {/* More input fields and submission button */}
       </form>
