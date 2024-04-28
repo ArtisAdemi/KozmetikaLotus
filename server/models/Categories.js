@@ -7,10 +7,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         }
     });
-    // This creates a table with many to many relation
-    // WE MUST ALSO DO THIS IN PRODUCT.js
+
     Categories.associate = (models) => {
-        Categories.belongsToMany(models.Products, { through: 'ProductCategories' });
+        Categories.hasMany(models.Subcategory); // Assuming 'Subcategory' is the correct model name
     };
 
     return Categories

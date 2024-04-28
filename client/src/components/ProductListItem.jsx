@@ -6,7 +6,7 @@ import LikeProduct from "./LikeProduct";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../state';
 
-const ProductListItem = ({title, shortDescription, price, category, id, isAdmin, isLiked, toggleWishlist }) => {
+const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdmin, isLiked, toggleWishlist }) => {
   const navigate = useNavigate();
   // const [isLiked, setIsLiked] = useState(false);
   const [images, setImages] = useState([])
@@ -31,7 +31,7 @@ const ProductListItem = ({title, shortDescription, price, category, id, isAdmin,
   const handleAddToCart = () => {
     const product = {
         title,
-        category,
+        subCategory,
         shortDescription,
         id,
         price,
@@ -42,7 +42,7 @@ const ProductListItem = ({title, shortDescription, price, category, id, isAdmin,
 
     return (
       <div className="max-w-[250px] w-[250px] mx-auto bg-white shadow-lg h-[430px]">
-        <div className="flex justify-center items-center w-full h-[300px]" onClick={() => isAdmin ? navigate(`/admin/${id}`) : navigate(`/products/${category}/${id}`)}>
+        <div className="flex justify-center items-center w-full h-[300px]" onClick={() => isAdmin ? navigate(`/admin/${id}`) : navigate(`/products/${subCategory}/${id}`)}>
           <img  className="object-cover max-w-[200px]" src={process.env.PUBLIC_URL + imagePath} alt="Image here" />
         </div>
         <div className="p-4">
