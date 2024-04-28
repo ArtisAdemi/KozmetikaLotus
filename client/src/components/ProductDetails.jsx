@@ -90,10 +90,10 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
                 <p className='w-full font-bold text-xl'>€{price}</p>
                 <LikeProduct productId={id}/>  
               </div>
-              <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
-                <button className='text-center items-center py-2 ' onClick={handleAddToCart}>Add To Cart</button>
+              <div onClick={handleAddToCart} className='navbar-right mt-3 border-[2px] cursor-pointer border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
+                <button className='text-center items-center py-2 font-semibold ' >Add To Cart</button>
               </div>
-              <div className='text-xs mt-6 bg-[#A3A7FC] p-8 text-[#FFFFFF] font-sans font-semibold'>
+              <div className='text-xs mt-6 bg-[#292929] p-8 text-[#FFFFFF] font-sans font-semibold'>
                 <div className='flex mb-3'>
                   <div>
                     <CardGiftcard />

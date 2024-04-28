@@ -40,10 +40,10 @@ const Footer = () => {
       }
 
   return (
-    <div className="bg-[#F7CEE7] text-[#292929]">
+    <div className="bg-[#292929] text-[#FFFFFF]">
         <div className=' pt-4'>
-            <div className=' text-3xl font-bold'>
-            <LotusIcon/>
+            <div onClick={() => navigate('/')} className=' text-3xl -ml-3 font-bold'>
+                <LotusIcon/>
             </div>
         </div>
     <div className="md:flex justify-between p-5">
@@ -73,29 +73,35 @@ const Footer = () => {
             <p>Ne besojmë në rëndësinë e kujdesit të lëkurës prandaj ofrojmë produkte të specializuara për të mbajtur lëkurën të shëndetshme dhe të freskët.</p>
         </div>
     </div>
-    <div className="bg-[#A3A7FC] md:flex justify-between items-center p-5 w-full">
+    <div className="bg-[#FAFAFA] md:flex justify-between items-center p-5 w-full">
         <div className='flex justify-center w-[50%]'>
             <div className='md:flex justify-around]'>
                 <div className='flex items-center'>
                         <LocationIcon/>                    
-                    <p className='mr-4 text-[#FFFFFF] font-semibold'>Rruga..., Ferizaj </p>
+                    <p className='mr-4 text-[#292929] font-semibold'>Rruga..., Ferizaj </p>
                 </div>
                 <div className='hidden md:block'>
 
                     <Indicator/>
                 </div>
-                <p className='md:ml-4 ml-2 mt-2 md:mt-0 text-[#FFFFFF] font-semibold'> 044-233-233</p>
+                <p className='md:ml-4 ml-2 mt-2 md:mt-0 text-[#292929] font-semibold'> 044-233-233</p>
             </div>
         </div>
         <div className='flex md:mr-6 w-[45%] justify-center'>
             <div className='flex'>
-                <InstagramIcon/>
-                <FacebookIcon/>
-                <TwitterIcon/>
+                <div className='cursor-pointer'>
+                    <InstagramIcon/>
+                </div>
+                <div className='cursor-pointer'>
+                    <FacebookIcon/>
+                </div>
+                <div className='cursor-pointer'>
+                    <TwitterIcon/>
+                </div>
             </div>
         </div>
     </div>
-    <div className='bg-[#F7CEE7] text-center py-3'>
+    <div className='bg-[#292929] text-center py-3'>
             <span>© 2024 ProSolutions. All Rights Reserved.</span>
     </div>
 </div>

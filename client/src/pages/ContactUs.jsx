@@ -50,10 +50,10 @@ const ContactUs = () => {
                 <div className='contact-content w-[80%] shadow-2xl justify-center md:flex md:h-[800px]'>
                     <div className='w-[100%] flex bg-[#FBEFF2] '>
                         <form onSubmit={formik.handleSubmit} className='w-[100%] flex flex-col gap-10 justify-center my-12'>
-                            <h1 className='text-[#A10550] text-3xl text-center'>Contact Us</h1>
+                            <h1 className='text-[#A10550] text-3xl text-center'>Na kontakto</h1>
 
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
-                                type="text" name="name" placeholder="Name" onChange={formik.handleChange} value={formik.values.name} />
+                                type="text" name="name" placeholder="Emri" onChange={formik.handleChange} value={formik.values.name} />
                             {formik.errors.name && formik.touched.name &&
                                 <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.name}</h2>}
 
@@ -63,12 +63,12 @@ const ContactUs = () => {
                                 <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.email}</h2>}
 
                             <input className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto'
-                                type="text" name="phone" placeholder="Phone" onChange={formik.handleChange} value={formik.values.phone} />
+                                type="text" name="phone" placeholder="Telefoni" onChange={formik.handleChange} value={formik.values.phone} />
                             {formik.errors.phone && formik.touched.phone &&
                                 <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.phone}</h2>}
 
                             <textarea style={{ resize: 'none' }} className='rounded-md p-3 md:p-4 placeholder-gray-400 w-[60%] mx-auto' cols="40" rows="5"
-                                type="textarea" name="message" placeholder="Write something..." onChange={formik.handleChange} value={formik.values.message} />
+                                type="textarea" name="message" placeholder="Mesazhi juaj..." onChange={formik.handleChange} value={formik.values.message} />
                             {formik.errors.message && formik.touched.message &&
                                 <h2 className='w-[60%] text-red-500 text-sm -mt-10 mx-auto'>{formik.errors.message}</h2>}
 

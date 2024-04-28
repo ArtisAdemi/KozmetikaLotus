@@ -95,13 +95,13 @@ const Navbar = () => {
 
 
   return (
-    <div className='navbar-container flex justify-between bg-transparent w-[80%] border-b-[1px] border-[#2929299F] p-4 pb-8'>
+    <div className='navbar-container flex justify-between bg-[#FFFFFF] pr-10 md:px-[9%] w-[100%]  p-4 pb-8'>
         <div>
-            <div className='absolute top-1 cursor-pointer' onClick={() => navigate("/")}>
+            <div className='absolute top-2 md:top-4 cursor-pointer' onClick={() => navigate("/")}>
                 <LotusLogo />
             </div>
         </div>
-        <div className='justify-between items-center hidden md:flex'> 
+        <div className='justify-between items-center gap-x-5 mt-1 -mb-3 hidden md:flex'> 
             <div className='m-2 ml-32'>
                 <p><a href="/">Home</a></p>
             </div>
@@ -148,7 +148,14 @@ const Navbar = () => {
         
             }
         </div>
-        <div className='w-[100px] hidden md:flex justify-between items-center' >
+        <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center' >
+            {/* Wishlist Icon*/}
+            {currentUser && 
+                <div onClick={navWishList} className='wishlist flex items-center pr-3 -ml-6 cursor-pointer'>
+                    <FaRegHeart size={20}/>
+                </div>
+            }
+
             {/* Shopping cart icon */}
             <div onClick={() => dispatch(setIsCartOpen({}))} className="relative p-2 pr-4 hover:cursor-pointer">
                 <IoCartOutline size={25}/>
@@ -160,7 +167,7 @@ const Navbar = () => {
                  onMouseLeave={() => setProfileModal(false)} // Close profile modal when not hovering
             >   
             {/* User Profile Icon */}
-                <FaRegUser size={20} className='hover:cursor-pointer'/>
+                <FaRegUser size={20} className='hover:cursor-pointer mr-2'/>
                 {profileModal &&
                     <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[300px] px-4'
                     onMouseEnter={() => setProfileModal(true)} // Open modal on hover
@@ -178,10 +185,6 @@ const Navbar = () => {
                                         <div onClick={navProfile} className='profile flex items-center border rounded-lg p-2 mb-1 cursor-pointer border-[#A2A2A2]'>
                                             <FaRegUserCircle size={20}/>
                                             <h2 className='ml-3 text-[#101817] w-[100%] text-sm font-semibold '>Account Information</h2>
-                                        </div>
-                                        <div onClick={navWishList} className='wishlist flex items-center border rounded-lg p-2 mb-1 cursor-pointer border-[#A2A2A2]'>
-                                            <FaRegHeart size={20}/>
-                                            <h2 className=' ml-3 text-[#101817] w-[100%] text-sm font-semibold'>My Wishlist</h2>
                                         </div>
                                         <p className='text-red-700 text-sm ml-1'><a href="/login" onClick={logout}>Log Out</a></p> 
                                     </div>
@@ -201,7 +204,7 @@ const Navbar = () => {
             
         </div>
         
-        <div onClick={handleNav} className='block md:hidden cursor-pointer'>
+        <div onClick={handleNav} className='block md:hidden mt-1 -mb-3 cursor-pointer'>
             {nav ? <AiOutlineClose size={25} color='#292929'/> : <AiOutlineMenu size={25} color='#292929'/>}    
         </div>
         
@@ -238,6 +241,12 @@ const Navbar = () => {
                         <div onClick={navProfile} className='profile flex items-center p-3 mb-2 border-b border-[#DFDFDF]'>
                         <FaRegUserCircle size={20}/>
                         <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Account Information</h2>
+                    </div>
+                    {/* Shopping cart icon */}
+                    <div onClick={() => {dispatch(setIsCartOpen({})); handleNav()}} className="cart flex items-center p-1 mb-2 border-b border-[#DFDFDF]">
+                        <IoCartOutline size={25}/>
+                        <span className="text-xs top-0 mb-5 right-[0] transform translate-x-50% -translate-y-50% text-white bg-red-700 font-semibold rounded-full p-1">{cart.length > 0 ? cart.length: "0"}</span>
+                        <h2 className='ml-3 text-[#101817] w-[100%] text-md font-semibold '>Shopping Cart</h2>
                     </div>
                     <div onClick={navWishList} className='wishlist flex items-center p-3 mb-2 border-b border-[#DFDFDF]'>
                         <FaRegHeart size={20}/>
