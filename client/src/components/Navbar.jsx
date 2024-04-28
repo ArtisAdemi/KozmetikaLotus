@@ -95,6 +95,8 @@ const Navbar = () => {
 
 
   return (
+    <div className='test-big-div flex flex-col w-[100%]'>
+
     <div className='navbar-container flex justify-between bg-[#FFFFFF] pr-10 md:px-[9%] w-[100%]  p-4 pb-8'>
         <div>
             <div className='absolute top-2 md:top-4 cursor-pointer' onClick={() => navigate("/")}>
@@ -202,7 +204,7 @@ const Navbar = () => {
                 }
             </div>
             
-        </div>
+        </div>     
         
         <div onClick={handleNav} className='block md:hidden mt-1 -mb-3 cursor-pointer'>
             {nav ? <AiOutlineClose size={25} color='#292929'/> : <AiOutlineMenu size={25} color='#292929'/>}    
@@ -273,6 +275,16 @@ const Navbar = () => {
         </div>
 
     </div>
+    <div className='bg-[#292929] w-full hidden md:flex'>
+        <div className='modal-content w-[80%] mx-auto flex justify-between py-5 items-center'>
+            <h2 className='text-[#FFFFFF]  text-lg cursor-pointer' onClick={() => redirect("all")}>All</h2>
+            {categories.map((category, index) => (
+                <h2 className='text-[#FFFFFF]  cursor-pointer text-lg' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                ))}
+        </div>
+    </div>
+    </div>
+
   )
 }
 
