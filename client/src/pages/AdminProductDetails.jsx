@@ -92,7 +92,7 @@ const SingleProduct = () => {
         </div>
           {product && (
             <div>
-              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.Categories[0].name} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id}/>
             </div>
           )}
 
