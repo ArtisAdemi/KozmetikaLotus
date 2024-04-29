@@ -27,6 +27,7 @@ const Navbar = () => {
     const isCartOpen = useSelector((state) => state.cart.isCartOpen)
     const [subCategories, setSubCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleNav = () => {
         setNav(!nav);
@@ -95,19 +96,37 @@ const Navbar = () => {
         }
       }
 
-      const handleCategoryHover = async (categoryId) => {
-        try {
-            const subCategoriesData = await CategoryService.getSubcategories(categoryId);
-            setSubCategories({ ...subCategories, [categoryId]: subCategoriesData });
-            setShowModal(true);
-        } catch (error) {
-            console.error('Error fetching subcategories:', error);
-        }
-    };
+    //   const handleCategoryHover = async (categoryId) => {
+    //     try {
+    //         const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+    //         setSubCategories({ ...subCategories, [categoryId]: subCategoriesData });
+    //         setShowModal(true);
+    //     } catch (error) {
+    //         console.error('Error fetching subcategories:', error);
+    //     }
+    // };
 
-    const closeModal = () => {
-        setShowModal(false);
-        setSubCategories([]); // Clear subcategories when modal is closed
+    // const closeModal = () => {
+    //     setShowModal(false);
+    //     setSubCategories([]); // Clear subcategories when modal is closed
+    //   };
+
+    const handleCategoryHover = async (categoryId) => {
+        try {
+          if (selectedCategory !== categoryId) {
+            // Fetch subcategories only if a new category is hovered
+            const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+            setSubCategories({ [categoryId]: subCategoriesData });
+            setSelectedCategory(categoryId);
+          }
+        } catch (error) {
+          console.error('Error fetching subcategories:', error);
+        }
+      };
+    
+      const closeModal = () => {
+        setSelectedCategory(null);
+        setSubCategories({});
       };
 
 
@@ -264,33 +283,34 @@ const Navbar = () => {
         </div>
 
     </div>
+
     <div className='categories-navbar bg-[#292929] w-full hidden md:flex'>
         <div className='modal-content w-[80%] mx-auto flex justify-between py-5 items-center'>
             <h2 className='text-[#FFFFFF]  text-lg cursor-pointer' onClick={() => redirect("all")}>All</h2>
 
+            
             {categories.map((category) => (
-                <div key={category.id} className="m-2 relative text-[#FFFFFF]" onMouseLeave={closeModal}>
-                  <p
-                    className="cursor-pointer text-lg"
-                    onMouseEnter={() => handleCategoryHover(category.id)}
-                    
-                  >
-                    {category.name}
-                  </p>
-                    {showModal && subCategories[category.id] && (
-                    <div className="modal-overlay absolute top-20  right-50 bg-[#FAF9F5]  px-8"
-                    style={{ top: '100%', left: '50%', transform: 'translateX(-20%)' }}
-                    onMouseLeave={closeModal}>
-                        <div className="modal">  
-                        <div className='flex items-center gap-x-16'>
-                          {subCategories[category.id].map((subCategory, index) => (
-                            <h2 key={index} className='text-[#292929] cursor-pointer' onClick={() => redirect(subCategory.name)}>{subCategory.name}</h2>
-                          ))}
-                        </div>
-                      </div>
+            <div key={category.id} className="m-2 relative text-[#FFFFFF]" onMouseLeave={closeModal}>
+              <p
+                className="cursor-pointer text-lg"
+                onMouseEnter={() => handleCategoryHover(category.id)}
+              >
+                {category.name}
+              </p>
+              {selectedCategory === category.id && (
+                <div className="modal-overlay fixed top-[135px] left-[10%] right-[10%] bg-[#FAF9F5] px-8 py-4 shadow-md rounded-lg">
+                  <div className="modal flex items-center justify-center">
+                    <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
+                      {subCategories[category.id]?.map((subCategory, index) => (
+                        <h2 key={index} className="text-[#292929] cursor-pointer capitalize" onClick={() => redirect(subCategory.name)}>
+                          {subCategory.name}
+                        </h2>
+                      ))}
                     </div>
-                    )}
+                  </div>
                 </div>
+              )}
+            </div>
             ))}
 
         </div>
