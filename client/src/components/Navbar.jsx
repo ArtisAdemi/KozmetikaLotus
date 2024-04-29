@@ -25,6 +25,8 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart)
     const isCartOpen = useSelector((state) => state.cart.isCartOpen)
+    const [subCategories, setSubCategories] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     const handleNav = () => {
         setNav(!nav);
@@ -93,11 +95,26 @@ const Navbar = () => {
         }
       }
 
+      const handleCategoryHover = async (categoryId) => {
+        try {
+            const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+            setSubCategories({ ...subCategories, [categoryId]: subCategoriesData });
+            setShowModal(true);
+        } catch (error) {
+            console.error('Error fetching subcategories:', error);
+        }
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSubCategories([]); // Clear subcategories when modal is closed
+      };
+
 
   return (
-    <div className='test-big-div flex flex-col w-[100%]'>
+    <div className='navbar-wrapper flex flex-col w-[100%]'>
 
-    <div className='navbar-container flex justify-between bg-[#FFFFFF] pr-10 md:px-[9%] w-[100%]  p-4 pb-8'>
+    <div className='pages-navbar flex justify-between bg-[#FFFFFF] pr-10 md:px-[9%] w-[100%]  p-4 pb-8'>
         <div>
             <div className='absolute top-2 md:top-4 cursor-pointer' onClick={() => navigate("/")}>
                 <LotusLogo />
@@ -107,35 +124,7 @@ const Navbar = () => {
             <div className='m-2 ml-32'>
                 <p><a href="/">Home</a></p>
             </div>
-            <div className='m-2 relative'
-                 onMouseEnter={() => setModal(true)} // Open modal on hover
-                 onMouseLeave={() => setModal(false)} // Close modal when not hovering
-            >
-                <p className='cursor-pointer'>Products</p>
-                {modal &&
-                    <div className='modal rounded-2xl absolute top-20 left-50 right-50 bg-[#FAF9F5] w-[600px] px-8'
-                    onMouseEnter={() => setModal(true)} // Open modal on hover
-                    onMouseLeave={() => setModal(false)} // Close modal when not hovering
-                    style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }} // Center modal directly below the Products text
-                    >
-                        <div className='w-full flex justify-center'>
-                            <div className='w-[90%] justify-center'>
-                                <div className='test flex justify-center py-4 px-5 flex-col items-center'>
-                                <div className='mt-5 text-start items-start align-middle w-full pb-4'>
-                                    <h2 className='text-[#3D021E] text-md font-semibold'>Categories</h2>
-                                </div>
-                                    <div className='modal-content w-full grid grid-cols-2 gap-8 items-center'>
-                                        <h2 className='text-[#111B29] font-semibold text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
-                                        {categories.map((category, index) => (
-                                            <h2 className='text-[#111B29] font-semibold cursor-pointer text-lg' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
-                                            ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
+            
             <div className='m-2'>
                 <p><a href="/about">About Us</a></p>
             </div>
@@ -275,12 +264,35 @@ const Navbar = () => {
         </div>
 
     </div>
-    <div className='bg-[#292929] w-full hidden md:flex'>
+    <div className='categories-navbar bg-[#292929] w-full hidden md:flex'>
         <div className='modal-content w-[80%] mx-auto flex justify-between py-5 items-center'>
             <h2 className='text-[#FFFFFF]  text-lg cursor-pointer' onClick={() => redirect("all")}>All</h2>
-            {categories.map((category, index) => (
-                <h2 className='text-[#FFFFFF]  cursor-pointer text-lg' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
-                ))}
+
+            {categories.map((category) => (
+                <div key={category.id} className="m-2 relative text-[#FFFFFF]" onMouseLeave={closeModal}>
+                  <p
+                    className="cursor-pointer text-lg"
+                    onMouseEnter={() => handleCategoryHover(category.id)}
+                    
+                  >
+                    {category.name}
+                  </p>
+                    {showModal && subCategories[category.id] && (
+                    <div className="modal-overlay absolute top-20  right-50 bg-[#FAF9F5]  px-8"
+                    style={{ top: '100%', left: '50%', transform: 'translateX(-20%)' }}
+                    onMouseLeave={closeModal}>
+                        <div className="modal">  
+                        <div className='flex items-center gap-x-16'>
+                          {subCategories[category.id].map((subCategory, index) => (
+                            <h2 key={index} className='text-[#292929] cursor-pointer' onClick={() => redirect(subCategory.name)}>{subCategory.name}</h2>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    )}
+                </div>
+            ))}
+
         </div>
     </div>
     </div>
