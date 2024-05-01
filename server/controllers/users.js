@@ -78,7 +78,7 @@ const loginUser = async (req, res) => {
         // Assing a jwt token for user if credentials are correct
         // In JWT we save useful data for user
         const token = jwt.sign({id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, discount: user.discount, phoneNumber: user.phoneNumber, role: user.role}, "Thisisveryverysecret", {expiresIn: '12h'});
-        res.status(200).json({token: token});
+        res.status(200).json({token: token, user: user});
     } catch (err) {
         res.status(500).json({error: err.message});
     }
