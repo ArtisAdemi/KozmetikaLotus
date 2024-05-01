@@ -60,7 +60,7 @@ const Footer = () => {
         <div className="space-y-4 p-4">
             <div>
                 <h2 className='text-lg font-bold mb-3'>Categories</h2>
-                <div className='w-full grid grid-cols-3 md:grid-cols-2 gap-x-12 gap-y-3'>
+                <div className='w-full grid grid-cols-2 gap-x-12 gap-y-3'>
                     <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
                         {categories.map((category, index) => (
                            <h2 className=' text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
