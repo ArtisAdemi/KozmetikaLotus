@@ -15,8 +15,8 @@ const LikeProduct = ({productId}) => {
     let res;
     try{
       res = await AuthService.decodeUser();
-      setUser(res.data);
-      return res.data.id
+      setUser(res);
+      return res.id
     } catch (err) {
       console.error(err)
       return null;

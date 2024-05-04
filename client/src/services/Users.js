@@ -45,12 +45,6 @@ const UserService = {
         let endpoint = `${AUTH_API_URL}/login`
         try {
             const response = await axios.post(endpoint, credentials);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem("id", response.data.user.id);
-            localStorage.setItem("email", response.data.user.email);
-            localStorage.setItem("firstName", response.data.user.firstName);
-            localStorage.setItem("lastName", response.data.user.lastName);
-            localStorage.setItem("phoneNumber", response.data.user.phoneNumber);
             return response.data;
         } catch (err) {
             console.error("Error logging in", err);

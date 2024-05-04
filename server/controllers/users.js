@@ -166,11 +166,32 @@ const updateUser = async (req, res) => {
     }
 };
 
+const getUserData = async (req, res) => {
+    const userId = req.user.id
+    try {
+        try {
+            const user = await Users.findByPk(userId, {
+                attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },  // Exclude sensitive fields
+            });
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({ message: "User not found" });
+            }
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 // export controller functions
 module.exports = {
     getUsers,
     getUserById,
     registerUser,
     loginUser,
-    updateUser
+    updateUser,
+    getUserData
 };

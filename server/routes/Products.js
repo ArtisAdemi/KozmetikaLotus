@@ -15,6 +15,8 @@ router.put('/:id', productsController.updateProduct)
 // Get Product by ID
 router.get('/productPerCategory', productsController.getUniqueProductPerCategory)
 
+// Get Brands
+router.get('/brands', productsController.getBrands)
 // Get Products
 router.get("/", productsController.getProducts)
 
