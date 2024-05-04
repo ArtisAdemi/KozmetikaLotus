@@ -142,6 +142,16 @@ const ProductService = {
             console.error('Error deleting product:', err);
             return null
         }
+    },
+
+    getBrands: async () => {
+        try{
+            const res = await axios.get(`${API_URL}/brands`);
+            return res.data;
+        } catch (err) {
+            console.error('Error fetching images', err);
+            return [];
+        }
     }
 
 };

@@ -8,23 +8,35 @@ const ProductFormModal = ({ closeModal, product }) => {
     shortDescription: product?.shortDescription || '',
     longDescription: product?.longDescription || '',
     price: product?.price || '',
+    brandName: '',
     subCategoryId: 0, // Changed from subCategoryIds to subCategoryId
     images: [],
   });
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState('')
 
   useEffect(() => {
+    const fetchBrands = async () => {
+      await ProductService.getBrands().then((brands) => {
+        setBrands(brands);
+      });
+    }
     const fetchCategories = async () => {
       const result = await CategoryService.getCategories();
       if (result) {
         setCategories(result);
+        const subCategoriesData = await CategoryService.getSubcategories(result[0].id).then((subCategories) => {
+          setSubCategories(subCategories)
+        });
       } else {
         console.error('Unexpected response structure:', result);
         setCategories([]); // Fallback to ensure state remains valid
       }
     };
+    fetchBrands();
     fetchCategories();
   }, []);
 
@@ -38,6 +50,12 @@ const ProductFormModal = ({ closeModal, product }) => {
     setSelectedCategory(categoryId);
     const subCategoriesData = await CategoryService.getSubcategories(categoryId);
     setSubCategories(subCategoriesData);
+  };
+
+  const handleBrandSelect = async (e) => {
+    const brandName = e.target.value;
+    setFormData({... formData, brandName: brandName});
+    setSelectedBrand(brandName);
   };
   
   const handleSubCategoryChange = (e) => {
@@ -86,14 +104,41 @@ const ProductFormModal = ({ closeModal, product }) => {
       <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" value={formData.title} />
           <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full" value={formData.shortDescription}></textarea>
           <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full" value={formData.longDescription}></textarea>
-          <input type="number" name="price" onChange={handleInputChange} placeholder="Price" required className="input input-bordered w-full" value={formData.price} />
+          <div className="flex items-center border border-gray-300 rounded-lg input-bordered w-full">
+            <input
+                type="number"
+                name="price"
+                onChange={handleInputChange}
+                placeholder="Price"
+                required
+                className="flex-grow p-2 focus:outline-none"
+                value={formData.price} // Ensure only numeric value is in state
+            />
+            <span className="p-2">€</span>
+        </div>
+          <div className='pt-3'>
+          <span className='text-gray-500'>Brand</span>
+          <select onChange={handleBrandSelect} name="brandName" value={selectedBrand} className="select select-bordered w-full">
+            {/* Brands */}
+            {brands.map((brand) => (
+              <option key={brand.id} value={brand.name}>{brand.name}</option>
+              ))}
+          </select>
+          </div>
+          {/* Categories */}
+          <div>
+          <span className='text-gray-500'>Kategori</span>
           <select onChange={handleCategorySelect} value={selectedCategory} className="select select-bordered w-full">
             {categories.map((category) => (
-                <option key={category.id} value={category.id}>{category.name}</option>
-            ))}
+              <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
           </select>
+          </div>
           <div>
-            {console.log("form Data", formData)}
+            {subCategories.length > 0 &&
+              <span className='text-gray-500'>Nen Kategorite</span>
+            }
+            {/* Sub Categories */}
             {subCategories.map((subCategory, index) => (
               
                 <div key={index}>

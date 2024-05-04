@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        brand:{
-            type: DataTypes.STRING(30),
-            allowNull: true,
-        },
         quantity:{
             type: DataTypes.INTEGER,
             allowNull: true,
