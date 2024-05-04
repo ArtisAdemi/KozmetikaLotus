@@ -57,7 +57,7 @@ const Navbar = () => {
         let res;
         try{
           res = await AuthService.decodeUser();
-          setUser(res.data);
+          setUser(res);
         } catch (err) {
           console.error(err)
           return null;
