@@ -87,7 +87,7 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const { title, shortDescription, longDescription, brandName, quantity, price, discount, subCategoryId } = req.body;
+    const { title, shortDescription, longDescription, brandName, quantity, price, discount, subCategoryId, inStock } = req.body;
     try {
         // Create new product using variables from body
         const newProduct = await Products.create({
@@ -96,6 +96,7 @@ const registerProduct = async (req, res) => {
             longDescription,
             quantity,
             price,
+            inStock,
             discount,
         });
 
@@ -134,7 +135,7 @@ const registerProduct = async (req, res) => {
 // Update Product 
 const updateProduct = async(req, res) => {
     const productId = req.params.id;
-    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId } = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId, inStock } = req.body;
     
     try {
         // Find Product by id
@@ -151,6 +152,7 @@ const updateProduct = async(req, res) => {
             brand,
             quantity,
             price,
+            inStock,
             discount,
         });
 

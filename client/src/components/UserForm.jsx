@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UserService from '../services/Users';
+import Swal from 'sweetalert2';
 
 const UserForm = ({ closeModal, user, setUser }) => {
   const [formData, setFormData] = useState({
@@ -38,14 +39,15 @@ const UserForm = ({ closeModal, user, setUser }) => {
       updatedFields.password = formData.password;
     }
 
-    localStorage.setItem("email", formData.email)
-    localStorage.setItem("firstName", formData.firstName)
-    localStorage.setItem("lastName", formData.lastName)
-    localStorage.setItem("phoneNumber", formData.phoneNumber)
-
-    const res = await UserService.updateUser(user.id, updatedFields);
-    //setUser(formData);
-    console.log(res);
+    const res = await UserService.updateUser(user.id, updatedFields).then(() => {
+      setUser({ ...user, ...updatedFields });
+      Swal.fire({
+        title: "Profile Updated!",
+        text: "You profile has been successfully updated!",
+        icon: "success",
+        confirmButtonText: "Ok"
+      })
+    });
   } catch (err) {
     console.error("Error updating user", err);
   }

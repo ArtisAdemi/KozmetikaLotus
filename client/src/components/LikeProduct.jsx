@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaRegHeart } from 'react-icons/fa';
 import WishlistService from '../services/Wishlist';
 import AuthService from '../services/AuthService';
+import Swal from 'sweetalert2';
 
 const LikeProduct = ({productId}) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -36,7 +37,14 @@ const LikeProduct = ({productId}) => {
   const addToWishlist = async () => {
     let res;
     try{
-        res = await WishlistService.addToWishlist(userId, productId);
+        res = await WishlistService.addToWishlist(userId, productId).then(() => {
+          Swal.fire({
+            title: "Item Added!",
+            text: "Item was successfully added to wishlist!",
+            icon:"success",
+            confirmButtonText: "Ok",
+          })
+        });
     } catch (err) {
         console.error(err)
     }
@@ -45,7 +53,14 @@ const LikeProduct = ({productId}) => {
   const removeFromWishlist = async () => {
     let res;
     try{
-        res = await WishlistService.removeFromWishlist(userId, productId);
+        res = await WishlistService.removeFromWishlist(userId, productId).then(() => {
+          Swal.fire({
+            title: "Item Removed!",
+            text: "Item was successfully removed from wishlist!",
+            icon:"success",
+            confirmButtonText: "Ok",
+          })
+        });
     } catch (err) {
         console.error(err)
     }

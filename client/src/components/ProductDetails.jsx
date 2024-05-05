@@ -10,9 +10,10 @@ import ProductSlider from './ProductSlider';
 import LikeProduct from './LikeProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../state';
+import Swal from 'sweetalert2';
 
 
-const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, isAdmin}) => {
+const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, inStock, isAdmin}) => {
   const [images, setImages] = useState([]);
   const dispatch = useDispatch()
  
@@ -52,6 +53,12 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
           imgUrl: selectedImage
       };
       dispatch(addToCart({ product }));
+      Swal.fire({
+        title: "Item Added!",
+        text: "Item was successfully added to cart!",
+        icon: 'success',
+        confirmButtonText: "Ok"
+      })
   };
     
   

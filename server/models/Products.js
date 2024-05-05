@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.FLOAT,
             allowNull: true,
         },
+        inStock: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
         discount:{
             type: DataTypes.INTEGER,
             allowNull: true,
