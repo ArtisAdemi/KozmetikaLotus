@@ -22,7 +22,12 @@ const getOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
     const orderId = req.params.id;
     try{
-        const order = await Orders.findByPk(orderId);
+        const order = await Orders.findByPk(orderId, {
+            include: [{
+                model: Products,
+                through: 'Order_Products'
+            }]
+        });
         if (order) {
             res.json(order);
         } else {
@@ -34,18 +39,13 @@ const getOrderById = async (req, res) => {
 };
 
 const registerOrder = async (req, res) => {
-    const { status, address, userId, productId} = req.body;
-
     try {
-        const newOrder = await Orders.create({
-            status: status,
-            address: address,
-            UserId: userId,
-            productId: productId,
-        })
-        res.status(201).json({message: "Order Created successfully",newOrder});
+        const { userId, products } = req.body; // Assuming userId and products are sent in the request body
+        const order = await Orders.create({ status: 'pending', address: req.body.address, UserId: userId }); // Create the order
+        await order.addProducts(products); // Add products to the order
+        res.status(201).json(order);
     } catch (err) {
-        res.status(500).json({error: err.message});
+        res.status(500).json({ error: err.message });
     }
 }
 
