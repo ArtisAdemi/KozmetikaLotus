@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from '../helpers/BuildParam';
+import Swal from 'sweetalert2';
 const API_URL = 'http://localhost:3001/api/products';
 
 // Create an axios instance for authenticated requests
@@ -116,10 +117,17 @@ const ProductService = {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
-        });
+        })
+
         return response.data;
     } catch (err) {
         console.error('Error registering product:', err);
+        Swal.fire({
+            title: "Error!",
+            text: `${err.message}`,
+            icon: "error",
+            confirmButtonText: "Ok"
+          })
         return null;
     }
 },
@@ -130,15 +138,34 @@ const ProductService = {
             return response.data;
         } catch (err) {
             console.error('Error updating product:', err);
+            Swal.fire({
+                title: "Error!",
+                text: "Product could not be saved",
+                icon: "error",
+                confirmButtonText: "Ok"
+              })
             return null;
         }
     },
 
     deleteProduct: async (productId) => {
         try{
-            const response = await axiosInstance.delete(`${API_URL}/${productId}`)
+            const response = await axiosInstance.delete(`${API_URL}/${productId}`).then(() => {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Product was deleted successfully",
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                  })
+            })
             return response;
         } catch (err){
+            Swal.fire({
+                title: "Error!",
+                text: "Product could not be deleted",
+                icon: "error",
+                confirmButtonText: "Ok"
+              })
             console.error('Error deleting product:', err);
             return null
         }

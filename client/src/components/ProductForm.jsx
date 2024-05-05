@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import CategoryService from '../services/Categories';
 import ProductService from '../services/Products';
+import Swal from 'sweetalert2'
 
 const ProductFormModal = ({ closeModal, product }) => {
   const [formData, setFormData] = useState({
     title: product?.title || '',
     shortDescription: product?.shortDescription || '',
     longDescription: product?.longDescription || '',
+    inStock: product?.inStock || false,
     price: product?.price || '',
     brandName: '',
     subCategoryId: 0, // Changed from subCategoryIds to subCategoryId
@@ -40,9 +42,23 @@ const ProductFormModal = ({ closeModal, product }) => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    // Disable scroll on the body when the modal is open
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      // Re-enable scroll on the body when the modal is closed
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, type, checked, value } = e.target;
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: checked }); // Use checked for checkboxes
+    } else {
+      setFormData({ ...formData, [name]: value }); // Use value for other inputs
+    }
   };
   
   const handleCategorySelect = async (e) => {
@@ -73,9 +89,27 @@ const ProductFormModal = ({ closeModal, product }) => {
     const { images, ...productData } = formData;
 
     if (product) {
-        await updateProduct();
+        await updateProduct().then((res) => {
+
+            Swal.fire({
+              title: "Saved!",
+              text: "Product was successfully updated.",
+              icon: "success",
+              confirmButtonText: "Ok"
+            })
+          
+        });
     } else {
-        await ProductService.registerProduct(productData, images);
+        await ProductService.registerProduct(productData, images).then((res) => {
+          if (res){
+            Swal.fire({
+                title: "Saved!",
+                text: "Product was successfully saved.",
+                icon: "success",
+                confirmButtonText: "Ok"
+              })
+            }
+          });
     }
     closeModal();
   };
@@ -97,13 +131,29 @@ const ProductFormModal = ({ closeModal, product }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed z-100 h-full inset-0 bg-black bg-opacity-50 flex justify-center items-center">
     <div className="bg-white p-5 rounded-lg max-w-lg w-full space-y-4">
+      {/* Header */}
       <h2 className="text-xl font-semibold text-gray-900">Add New Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-3">
+      {/* Content */}
+      <div className='md:h-auto md:max-h-[500px] overflow-auto'>
+      <form className="space-y-3">
       <input type="text" name="title" onChange={handleInputChange} placeholder="Title" required className="input input-bordered w-full" value={formData.title} />
           <textarea name="shortDescription" onChange={handleInputChange} placeholder="Short Description" required className="textarea textarea-bordered w-full" value={formData.shortDescription}></textarea>
           <textarea name="longDescription" onChange={handleInputChange} placeholder="Long Description" required className="textarea textarea-bordered w-full" value={formData.longDescription}></textarea>
+          <div className="flex flex-col pt-4 ml-2 mt-4">
+            <span className="mb-1 md:text-lg font-semibold border-0">In Stock</span>
+            <label className="relative inline-flex items-center cursor-pointer mb-2">
+            <input type="checkbox"
+            className="sr-only peer"
+            name="inStock"
+            checked={formData.inStock}
+            onChange={handleInputChange}/>
+              <div
+                className="w-11 h-6 bg-gray-200 dark:bg-dark-input rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-0  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
+              </div>
+            </label>
+          </div>
           <div className="flex items-center border border-gray-300 rounded-lg input-bordered w-full">
             <input
                 type="number"
@@ -154,12 +204,15 @@ const ProductFormModal = ({ closeModal, product }) => {
             ))}
           </div>
           <input type="file" multiple name="images" onChange={handleImageChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer" />
-          <div className="flex justify-end space-x-2">
-            <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">Cancel</button>
-            <button type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">Add Product</button>
-          </div>
         {/* More input fields and submission button */}
       </form>
+      </div>
+      {/* End Of form */}
+      {/* Buttons */}
+      <div className="flex justify-end space-x-2">
+      <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">Cancel</button> 
+      <button onClick={handleSubmit} type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">Save</button>
+      </div>
     </div>
   </div>
   );

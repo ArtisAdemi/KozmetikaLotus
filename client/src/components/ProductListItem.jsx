@@ -5,6 +5,7 @@ import ProductService from '../services/Products';
 import LikeProduct from "./LikeProduct";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../state';
+import Swal from 'sweetalert2';
 
 const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdmin, isLiked, toggleWishlist }) => {
   const navigate = useNavigate();
@@ -38,6 +39,12 @@ const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdm
         imgUrl: img
     };
     dispatch(addToCart({ product }));
+    Swal.fire({
+      title: "Item Added!",
+      text: "Item was successfully added to cart!",
+      icon: 'success',
+      confirmButtonText: "Ok"
+    })
 };
 
     return (

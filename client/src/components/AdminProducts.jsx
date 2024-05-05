@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProductForm from '../components/ProductForm';
-import UserService from '../services/Users';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronRight} from '@fortawesome/free-solid-svg-icons'
 import ProductList from '../components/ProductList';
