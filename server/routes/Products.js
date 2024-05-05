@@ -9,6 +9,9 @@ const fileUpload = require("../helpers/fileUpload");
 // Register Product
 router.post('/', validateToken, fileUpload, productsController.registerProduct);
 
+// RemindMe when in stock
+router.post('/remindWhenInStock', validateToken ,productsController.remindMeWhenInStock);
+
 // Update Product
 router.put('/:id', productsController.updateProduct)
 

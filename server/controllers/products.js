@@ -7,6 +7,7 @@ const SubCategories = db.Subcategory
 const Images = db.Images;
 const fs = require('fs');
 const path = require('path');
+const {notifyUsersOfStockChange} = require("../middleware/Mailer")
 
 // Controller functions
 
@@ -144,6 +145,9 @@ const updateProduct = async(req, res) => {
             return res.status(404).json({message: "Product not found"});
         }
 
+        const wasInStock = product.inStock;
+        const isNowInStock = inStock;
+
         // Update the product details
         await product.update({
             title,
@@ -155,6 +159,11 @@ const updateProduct = async(req, res) => {
             inStock,
             discount,
         });
+
+        // Notify users if the product is now in stock and was not before
+        if (!wasInStock && isNowInStock) {
+            await notifyUsersOfStockChange(productId);
+        }
 
         // If images have been uploaded, save their paths in the Images table
         if (req.uploadedFiles && req.uploadedFiles.length > 0) {
@@ -287,7 +296,46 @@ const getBrands = async (req, res) => {
     } catch (err) {
         res.status(500).json({error: err.message})
     }
-}
+};
+
+const remindMeWhenInStock = async (req, res) => {
+    const userId = req.user.id; // Assuming you have user's ID from the session or token
+    const { productId, remindMe } = req.body; // `remindMe` is a boolean indicating whether to notify the user
+    console.log("----------------------------------")
+    console.log("productId in backend", productId)
+
+    try {
+        // Check if the product exists
+        const productExists = await db.Products.findByPk(productId);
+        if (!productExists) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        // Check if there's an existing notification setup
+        const notification = await db.StockNotifications.findOne({
+            where: {
+                userId: userId,
+                productId: productId
+            }
+        });
+
+        if (notification) {
+            // Update existing notification
+            await notification.update({ remindMe });
+        } else {
+            // Create new notification
+            await db.StockNotifications.create({
+                userId: userId,
+                productId: productId,
+                notify: remindMe
+            });
+        }
+
+        res.status(200).json({ message: "Notification setting updated successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
 module.exports = {
     getProducts,
@@ -298,4 +346,5 @@ module.exports = {
     getUniqueProductPerCategory,
     getProductImages,
     getBrands,
+    remindMeWhenInStock
 }

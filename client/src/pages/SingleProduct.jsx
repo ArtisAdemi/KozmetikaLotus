@@ -54,7 +54,7 @@ const SingleProduct = () => {
         {console.log("product", product)}
           {product && (
             <div>
-              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id} inStock={product.inStock}/>
             </div>
           )}
     </div>
