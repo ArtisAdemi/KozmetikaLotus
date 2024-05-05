@@ -28,6 +28,7 @@ const Login = () => {
             }
             try {
                 let res = await UserService.loginUser(userData);
+                localStorage.setItem("token", res.token)
                 if (!res.message) {
                     navigate("/admin");
                 }
