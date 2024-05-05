@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navbar, WishlistItem } from '../components';
 import AuthService from '../services/AuthService';
 import WishlistService from '../services/Wishlist';
+import Swal from 'sweetalert2';
 
 const Wishlist = () => {
   const [products, setProducts] = useState([]);
@@ -13,8 +14,8 @@ const Wishlist = () => {
     let res;
     try{
       res = await AuthService.decodeUser();
-      setUser(res.data);
-      return res.data.id
+      setUser(res);
+      return res.id
     } catch (err) {
       console.error(err)
       return null;
@@ -33,7 +34,14 @@ const Wishlist = () => {
 
   const handleRemoveItem = async (productId) => {
     try {
-      await WishlistService.removeFromWishlist(user.id, productId);
+      await WishlistService.removeFromWishlist(user.id, productId).then(() => {
+        Swal.fire({
+          title: "Item Removed!",
+          text: "Item was successfully removed from wishlist!",
+          icon:"success",
+          confirmButtonText: "Ok",
+        })
+      });
       loadData(); // Reload wishlist data
     } catch (err) {
       console.error(err);

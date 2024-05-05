@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        brand:{
-            type: DataTypes.STRING(30),
-            allowNull: true,
-        },
         quantity:{
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -24,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         price:{
             type: DataTypes.FLOAT,
             allowNull: true,
+        },
+        inStock: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
         discount:{
             type: DataTypes.INTEGER,

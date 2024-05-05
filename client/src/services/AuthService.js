@@ -11,8 +11,8 @@ const axiosInstance = axios.create({
 const AuthService = {
     decodeUser: async () => {
         try {
-            const response = await axiosInstance.get(`${AUTH_API_URL}/decode`);
-            return response;
+            const response = await axiosInstance.get(`${AUTH_API_URL}/getUserData`);
+            return response.data;
         } catch (err) {
             console.error("Error fetching users", err);
             throw err;

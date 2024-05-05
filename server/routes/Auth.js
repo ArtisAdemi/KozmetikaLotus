@@ -17,6 +17,8 @@ router.get('/validateToken', validateToken, (req, res) => {
     res.json({ message: "Token is valid", user: req.user });
 });
 
+router.get('/getUserData', validateToken, userController.getUserData);
+
 router.get('/decode', validateToken, authController.getDecodedUser)
 
 module.exports = router;

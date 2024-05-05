@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import ProductService from '../services/Products'
 import ProductFormModal from '../components/ProductForm'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 
 const SingleProduct = () => {
@@ -23,6 +24,7 @@ const SingleProduct = () => {
     let result;
     try {
       result = await ProductService.getProductById(id);
+      console.log("product", result)
       setProduct(result);
     }catch (err) {
       console.log("Error fetchin product by id", err);
@@ -36,26 +38,34 @@ const SingleProduct = () => {
   };
 
   const handleDeleteProduct = async () => {
-    // Show a confirmation dialog to the user
-  const isConfirmed = window.confirm("Are you sure you want to delete this product?");
-
-  // If the user clicks "OK", proceed with the deletion
-  if (isConfirmed) {
-    try {
       // Assuming ProductService.deleteProduct is an async function
       // and productName is the ID or unique identifier for the product
-      const res = await ProductService.deleteProduct(productName);
-      if (res) {
-        navigate(`/admin`)
-      }
-    } catch (err) {
-      console.error("Error deleting product in AdminProductDetails", err);
-    }
-  } else {
-    // If the user clicks "Cancel", you can optionally handle this case
-    console.log("Product deletion was canceled.");
-  }
-  }
+      Swal.fire({
+        title: "Are you sure?",
+        text: "This product will be deleted.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete"
+      }).then((result) => {
+        try{
+          if (result.isConfirmed){
+
+             ProductService.deleteProduct(productName).then(() => {
+              navigate(`/admin`);
+            })
+        }
+        } catch (err) {
+          Swal.fire({
+            title: "Error",
+            text: "There was an error deleting the product",
+            icon: "error",
+            confirmButtonText: "Ok",
+          })
+          console.error(err);
+        }
+      })
+    } 
+
 
   return (
     <div>
@@ -92,7 +102,7 @@ const SingleProduct = () => {
         </div>
           {product && (
             <div>
-              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id} inStock={product.inStock}/>
             </div>
           )}
 

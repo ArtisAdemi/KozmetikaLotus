@@ -4,6 +4,7 @@ import ProductService from '../services/Products';
 import WishlistService from '../services/Wishlist'; // Import WishlistService
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
+import Swal from 'sweetalert2';
 
 const ProductList = ({ subCategory, productName, isAdmin }) => {
     const [products, setProducts] = useState([]);
@@ -25,8 +26,9 @@ const ProductList = ({ subCategory, productName, isAdmin }) => {
         const fetchUserData = async () => {
             if (token) {
                 try {
-                    const decodedUser = await AuthService.decodeUser(token);
-                    setUserId(decodedUser.data.id); // Set userId state
+                     await AuthService.decodeUser().then((res) => {
+                         setUserId(res.id); // Set userId state
+                     });
                 } catch (error) {
                     console.error("Error decoding user", error);
                 }
@@ -81,11 +83,25 @@ const ProductList = ({ subCategory, productName, isAdmin }) => {
         try {
             if (isLiked) {
                 // Call service to remove from wishlist
-                await WishlistService.removeFromWishlist(userId, productId);
+                await WishlistService.removeFromWishlist(userId, productId).then(() => {
+                    Swal.fire({
+                        title: "Item Removed!",
+                        text: "Item was successfully removed from wishlist!",
+                        icon:"success",
+                        confirmButtonText: "Ok",
+                      })
+                });
                 setWishlist(wishlist.filter(id => id !== productId));
             } else {
                 // Call service to add to wishlist
-                await WishlistService.addToWishlist(userId, productId);
+                await WishlistService.addToWishlist(userId, productId).then(() => {
+                    Swal.fire({
+                        title: "Item Added!",
+                        text: "Item was successfully added to wishlist!",
+                        icon:"success",
+                        confirmButtonText: "Ok",
+                      })
+                });
                 setWishlist([...wishlist, productId]);
             }
         } catch (error) {

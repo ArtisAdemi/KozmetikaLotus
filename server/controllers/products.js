@@ -87,16 +87,16 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId } = req.body;
+    const { title, shortDescription, longDescription, brandName, quantity, price, discount, subCategoryId, inStock } = req.body;
     try {
         // Create new product using variables from body
         const newProduct = await Products.create({
             title,
             shortDescription,
             longDescription,
-            brand,
             quantity,
             price,
+            inStock,
             discount,
         });
 
@@ -115,6 +115,17 @@ const registerProduct = async (req, res) => {
             // This populates the Product_Categories Table with the id of product and subcategory
             await newProduct.addSubcategory(subCategory);
         }
+
+        if (brandName){
+            const brand = await db.Brand.findOne({
+                where: {name: brandName}
+            });
+
+            if(brand){
+                await newProduct.setBrand(brand);
+            }
+        }
+
         
         res.status(201).json(newProduct);
     } catch (err) {
@@ -124,7 +135,7 @@ const registerProduct = async (req, res) => {
 // Update Product 
 const updateProduct = async(req, res) => {
     const productId = req.params.id;
-    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId } = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId, inStock } = req.body;
     
     try {
         // Find Product by id
@@ -141,6 +152,7 @@ const updateProduct = async(req, res) => {
             brand,
             quantity,
             price,
+            inStock,
             discount,
         });
 
@@ -263,6 +275,20 @@ const getProductImages = async (req, res) => {
     }
 };
 
+const getBrands = async (req, res) => {
+    try{
+        const brands = await db.Brand.findAll();
+
+        if (brands.length > 0) {
+            res.status(200).json(brands);
+        } else {
+            res.status(404).json({message: "No brands where found!"});
+        }
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
 module.exports = {
     getProducts,
     getProductById,
@@ -270,5 +296,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getUniqueProductPerCategory,
-    getProductImages
+    getProductImages,
+    getBrands,
 }

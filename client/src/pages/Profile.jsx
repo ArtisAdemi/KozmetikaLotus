@@ -18,15 +18,10 @@ const Profile = () => {
     //     }
     //   }
 
-    const getUserData = () => {
-        const userData = {
-            id: localStorage.getItem("id"),
-            email: localStorage.getItem("email"),
-            firstName: localStorage.getItem("firstName"),
-            lastName: localStorage.getItem("lastName"),
-            phoneNumber: localStorage.getItem("phoneNumber"),
-        }
-        return userData
+    const getUserData = async () => {
+        await AuthService.decodeUser().then((data) => {
+            setUser(data);
+        })
     }
 
 
@@ -35,7 +30,7 @@ const Profile = () => {
       }
 
       useEffect(() => {
-        setUser(getUserData());
+        getUserData();
       }, [])
 
     return (
