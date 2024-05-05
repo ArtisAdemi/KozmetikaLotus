@@ -11,7 +11,11 @@ router.get('/', orderController.getOrders);
 // Get OrderById
 router.get('/:id', orderController.getOrderById);
 
-router.post('/', orderController.registerOrder)
+router.post('/', orderController.registerOrder);
+
+router.put('/:id', orderController.updateOrder);
+
+router.delete('/:id', orderController.deleteOrder);
 
 
 
