@@ -34,11 +34,15 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.associate = (models) => {
         Users.belongsToMany(models.Products, { through: 'Wishlist' });
+<<<<<<< HEAD
         Users.belongsToMany(models.Products, {
             through: models.StockNotifications,
             as: 'InterestedProducts',
             foreignKey: 'userId'
         });
+=======
+        Users.hasMany(models.Orders, { foreignKey: 'UserId' });
+>>>>>>> 26221942767d40ca9d1cdfc2da93c970f72ca418
     };
 
     return Users;

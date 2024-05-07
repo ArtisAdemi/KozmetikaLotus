@@ -27,7 +27,10 @@ const productRouter = require('./routes/Products')
 apiRouter.use("/products", productRouter);
 // CategoryRouter
 const categoryRouter = require('./routes/Categories');
-apiRouter.use("/categories", categoryRouter)
+apiRouter.use("/categories", categoryRouter);
+// OrderRouter
+const orderRouter = require('./routes/Orders');
+apiRouter.use("/orders", orderRouter);
 // Mailer Routes
 const mailerRouter = require("./routes/Mailer");
 apiRouter.use("/mailer", mailerRouter)
