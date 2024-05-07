@@ -11,11 +11,9 @@ router.get('/', orderController.getOrders);
 // Get OrderById
 router.get('/:id', orderController.getOrderById);
 
-router.post('/', orderController.registerOrder);
-
+//Update an Order --- In this case, i made it so the status only can change
 router.put('/:id', orderController.updateOrder);
 
-router.delete('/:id', orderController.deleteOrder);
 
 
 

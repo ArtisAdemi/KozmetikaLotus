@@ -34,6 +34,33 @@ const getOrders = async (req, res) => {
     }
 };
 
+// Get A User's Orders  -   needs fix
+const getUserOrders = async (req, res) => {
+    const userId = req.user.id; // Get the authenticated user's ID from req.user
+    try {
+        const userOrders = await Orders.findAll({
+            where: { UserId: userId }, // Filter orders by UserId (associated with the authenticated user)
+            include: [
+                {
+                    model: Products,
+                    through: { model: Order_Products },
+                    include: [{ model: Images }] // Include Images associated with each Product
+                }
+            ]
+        });
+
+        if (!userOrders || userOrders.length === 0) {
+            return res.status(404).json({ message: "User's orders not found" });
+        }
+
+        res.status(200).json(userOrders);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+};
+
+
     // Get OrderById
     const getOrderById = async (req, res) => {
         const orderId = req.params.id;
@@ -61,21 +88,23 @@ const getOrders = async (req, res) => {
         }
     };
 
+                        //fixed
     const registerOrder = async (req, res) => {
+        const userId = req.user.id; 
         try {
-            const { userId, products, address } = req.body; // Assuming userId and products are sent in the request body
+            const { products, address } = req.body; // Assuming products are sent in the request body
             const order = await Orders.create({
                 status: 'Pending',
                 address: address,
                 UserId: userId 
             }); // Create the order
-    
+              
             // Loop through each product and add it to the order with the specified quantity
             for (const product of products) {
                 await order.addProducts(product.id, {
                      through: { quantity: product.quantity } 
                 });
-            }
+            }            
     
             res.status(201).json(order);
         } catch (err) {
@@ -110,24 +139,32 @@ const getOrders = async (req, res) => {
     };
 
 
-        // Delete Order
-    const deleteOrder = async (req, res) => {
-        const orderId = req.params.id;
-
-        try {
-            // Get order from database 
-            const order = await Orders.findByPk(orderId);
-            if (!order) { //if no order
-                return res.status(404).json({ message: "Order not found" });
+        // Delete Order -   fixed
+        const deleteOrder = async (req, res) => {
+            const userId = req.user.id;
+            const orderId = req.params.orderId;
+        
+            try {
+                // Get order from database including associated user
+                const order = await Orders.findByPk(orderId, {
+                    include: {
+                        model: Users,
+                        where: { id: userId } // Ensure that the order belongs to the requesting user
+                    }
+                });
+        
+                if (!order) {
+                    return res.status(404).json({ message: "Order not found or not owned by the user" });
+                }
+        
+                // Delete order
+                await order.destroy();
+                res.status(200).json({ message: "Order deleted successfully" });
+            } catch (err) {
+                console.error(err);
+                res.status(500).json({ error: err.message });
             }
-            // Delete order
-            await order.destroy();
-            res.status(200).json({message: "Order deleted successfully"});
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: err.message });
-        }
-    };
+        };
 
 
 // export controller functions
@@ -136,5 +173,6 @@ module.exports = {
     getOrderById,
     registerOrder,
     deleteOrder,
-    updateOrder
+    updateOrder,
+    getUserOrders
 };
