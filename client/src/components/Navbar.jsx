@@ -309,7 +309,7 @@ const Navbar = () => {
 
             
             {categoriesCopy.map((category) => (
-            <div key={category.id} className="m-2 relative text-[#FFFFFF]" onMouseLeave={closeModal}>
+            <div key={category.id} className="m-2 text-[#FFFFFF]" onMouseLeave={closeModal}>
               <p
                 className="cursor-pointer text-lg"
                 onMouseEnter={() => handleCategoryHover(category.id)}
@@ -317,7 +317,7 @@ const Navbar = () => {
                 {category.name}
               </p>
               {selectedCategory === category.id && (
-                <div className="modal-overlay fixed top-[135px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
+                <div className="modal-overlay fixed top-[130px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
                   <div className="modal flex items-center justify-center">
                     <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
                       {subCategories[category.id]?.map((subCategory, index) => (
