@@ -2,10 +2,25 @@ import React, {useState, useEffect} from 'react';
 import { Navbar } from '../components';
 import AuthService from '../services/AuthService';
 import UserForm from '../components/UserForm';
+import OrderService from '../services/OrderService';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import OrderDetails from '../components/OrderDetails';
 
 const Profile = () => {
     const [user, setUser] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+    const [orders, setOrders] = useState([])
+    const navigate = useNavigate();
+    const [orderDetails, setOrderDetails] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState(0)
+    const [totalPriceForOrder, setTotalPriceForOrder] = useState(0)
+
+    const handleOrderDetails = (id, totalPrice) => {
+        setSelectedOrderId(id);
+        setTotalPriceForOrder(totalPrice);
+        setOrderDetails(true);
+      }
 
     // const getUserData = async () => {
     //     let res;
@@ -20,7 +35,25 @@ const Profile = () => {
 
     const getUserData = async () => {
         await AuthService.decodeUser().then((data) => {
+            if(data.message === "Token is expired, Log in again"){
+                Swal.fire({
+                    title: "You are logged out!",
+                    text:"Please log in again",
+                    icon:"warning",
+                    confirmButtonText: "Log In",
+                }).then((confirmed) => {
+                    if(confirmed.isConfirmed){
+                        navigate("/login")
+                    }
+                })
+            }
             setUser(data);
+        })
+    }
+
+    const getOrders = async () => {
+        await OrderService.getOrdersByUser().then((data) => {
+            setOrders(data);
         })
     }
 
@@ -31,6 +64,7 @@ const Profile = () => {
 
       useEffect(() => {
         getUserData();
+        getOrders();
       }, [])
 
     return (
@@ -85,7 +119,7 @@ const Profile = () => {
           
                 </div>
             </div>
-
+            {!orderDetails && 
                 <div className='orders-container flex justify-center w-full my-12'>
                     <div className='orders-content w-[80%] flex flex-col'>
                         <div className='flex items-center p-2 w-full justify-between md:justify-normal border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
@@ -102,32 +136,30 @@ const Profile = () => {
                         </div>
 
                         {/* STATIC ORDER DATA */}
-                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>1</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
-                        </div>
-                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>0001</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='hidden md:block text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
-                        </div>
-                        <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                            <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>0001</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>5/21/19</h2>
-                            <h2 className='hidden md:block text-[#333333] text-lg w-[16.6%]'>Veronica Costello</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>$96.60</h2>
-                            <h2 className='text-[#333333] md:text-lg w-[16.6%]'>Finished</h2>
-                            <h2 className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
-                        </div>
+                        {orders.length > 0 && orders.map((order, index) => {
+                        let totalPrice = 0; // Initialize totalPrice to 0 for each order
+                        order.Products.forEach(product => {
+                            totalPrice += (product.price * product.Order_Products.quantity); // Sum up the price of each product
+                        });
+
+                         // Format the date
+                        const formattedDate = new Date(order.createdAt).toLocaleDateString('en-GB'); // 'en-GB' uses day/month/year format
+
+                        return (
+                            <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0' key={index}>
+                                <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{order.id}</h2>
+                                <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{formattedDate}</h2>
+                                <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{order.address}</h2>
+                                <h2 className='text-[#333333] md:text-lg w-[16.6%]'>${totalPrice.toFixed(2)}</h2> {/* Display the calculated total price */}
+                                <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{order.status}</h2>
+                                <h2 onClick={() => handleOrderDetails(order.id, totalPrice)} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
+                            </div>
+                        );
+                    })}
                     </div>        
                 </div>
+                }
+                {orderDetails && <OrderDetails closeOrderDetails={() => setOrderDetails(false)} id={selectedOrderId} totalPrice={totalPriceForOrder}/>}
                 {isEditing && <UserForm closeModal={() => setIsEditing(false)} user={user} setUser={setUser} />}
         </div>
 

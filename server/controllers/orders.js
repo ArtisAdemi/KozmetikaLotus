@@ -43,7 +43,7 @@ const getUserOrders = async (req, res) => {
             include: [
                 {
                     model: Products,
-                    through: { model: Order_Products },
+                    through: { model: db.Order_Products },
                     include: [{ model: Images }] // Include Images associated with each Product
                 }
             ]
@@ -142,7 +142,7 @@ const getUserOrders = async (req, res) => {
         // Delete Order -   fixed
         const deleteOrder = async (req, res) => {
             const userId = req.user.id;
-            const orderId = req.params.orderId;
+            const orderId = req.params.id;
         
             try {
                 // Get order from database including associated user

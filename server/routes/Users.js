@@ -10,6 +10,14 @@ const orderController = require('../controllers/orders');
 // Get all users
 router.get('/', userController.getUsers);
 
+// ORDERS
+router.post("/orders", authMiddleware.validateToken, orderController.registerOrder)
+
+router.delete("/orders/:id", authMiddleware.validateToken, orderController.deleteOrder)
+
+router.get("/orders", authMiddleware.validateToken, orderController.getUserOrders)
+// END OF ORDER ROUTES
+
 // Get UserById
 router.get('/:id', userController.getUserById);
 
@@ -30,16 +38,7 @@ router.post("/:userId/wishlist",authMiddleware.validateToken, wishlistController
 router.delete("/:userId/wishlist/:productId",authMiddleware.validateToken, wishlistController.removeFromWishlist)
 
 
-                                    //Detected validateToken bug while trying these user-order api routes 
-// User's orders
-// User create an order
-router.post("/orders", authMiddleware.validateToken, orderController.registerOrder)
 
-//Delete an order
-router.delete("/orders/:orderId", authMiddleware.validateToken, orderController.deleteOrder)
-
-// Get a User's orders
-router.get("/orders", authMiddleware.validateToken, orderController.getUserOrders)
 
 
 
