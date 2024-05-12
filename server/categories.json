@@ -29,12 +29,6 @@
       ]
     },
     {
-      "name": "Marka",
-      "subcategories": [
-        {"name": "marka"}
-      ]
-    },
-    {
       "name": "Trupi",
       "subcategories": [
         {"name": "trupi"}

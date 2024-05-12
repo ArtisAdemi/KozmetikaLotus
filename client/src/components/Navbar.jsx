@@ -10,6 +10,7 @@ import UserService from '../services/Users';
 import AuthService from '../services/AuthService';
 import { setIsCartOpen } from '../state';
 import { useDispatch, useSelector } from 'react-redux';
+import ProductService from '../services/Products';
 
 
 const Navbar = () => {
@@ -28,6 +29,10 @@ const Navbar = () => {
     const [subCategories, setSubCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [brands, setBrands] = useState([]);
+    const [brandModal, setBrandModal] = useState(false);
+
+
 
     const handleNav = () => {
         setNav(!nav);
@@ -64,12 +69,19 @@ const Navbar = () => {
         }
       }
 
+      const fetchBrands = async () => {
+        await ProductService.getBrands().then((brands) => {
+          setBrands(brands);
+        });
+      }
+
     useEffect(() => {
         if (token) {
             getUserData();
         }
         isLoggedIn();
         fetchCategories();
+        fetchBrands();
       }, [])
 
       useEffect(() => {
@@ -133,7 +145,7 @@ const Navbar = () => {
         setSubCategories({});
       };
 
-      console.log(showModal);
+     // console.log(brands);
 
       // Swap categories logic
   if (categories.length >= 3) {
@@ -252,22 +264,43 @@ const Navbar = () => {
 
               <h1 className="text-[#292929] text-sm font-semibold p-4 w-[95%] border-b border-[#DFDFDF]">Categories</h1>
               <div>
-                <h2 className="text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]" onClick={() => redirect('all')}>
+                <h2 className="text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]" onClick={() => {redirect('all'); setBrandModal(!brandModal)}}>
                   All
                 </h2>
+                <div>
+                  <h2 className='text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]'
+                    onClick={() => {setBrandModal(!brandModal); setShowModal(false)}}>
+                    Marka
+                  </h2>
+                  {brandModal && (
+                      <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
+                      {brands.map((brand, index) => (
+                        <h2
+                          key={index}
+                          className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
+                          onClick={() => {redirect(brand.name); setBrandModal(!brandModal)}}
+                        >
+                          {brand.name}
+                        </h2>
+                      ))}
+                    </div>
+                    )
+                  }
+                </div>
+                
                 {categories.map((category) => (
                 <div key={category.id} className="m-2 relative text-[#292929]">
                   {subCategories[category.id]?.length === 1 ? (
                     <p
                       className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
-                      onClick={() => {redirect(subCategories[category.id][0].name)}}
+                      onClick={() => {redirect(subCategories[category.id][0].name); setBrandModal(false)}}
                     >
                       {category.name}
                     </p>
                   ) : (
                     <p
                       className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
-                      onClick={() => {handleCategoryMobile(category.id); setShowModal(!showModal)}}
+                      onClick={() => {handleCategoryMobile(category.id); setShowModal(!showModal); setBrandModal(false)}}
                     >
                       {category.name}
                     </p>
@@ -278,7 +311,7 @@ const Navbar = () => {
                         <h2
                           key={index}
                           className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
-                          onClick={() => {redirect(subCategory.name); setShowModal(!showModal)}}
+                          onClick={() => {redirect(subCategory.name); setShowModal(!showModal); setBrandModal(false)}}
                         >
                           {subCategory.name}
                         </h2>
@@ -334,6 +367,26 @@ const Navbar = () => {
         <div className='modal-content w-[80%] mx-auto flex justify-between py-4 items-center'>
             <h2 className='text-[#FFFFFF]  text-lg cursor-pointer' onClick={() => redirect("all")}>All</h2>
 
+            <div className='m-2 '
+                 onMouseEnter={() => setBrandModal(true)} // Open modal on hover
+                 onMouseLeave={() => setBrandModal(false)} // Close modal when not hovering
+            >
+                <h2 className='text-[#FFFFFF]  text-lg cursor-pointer'>Marka</h2>
+                {brandModal &&
+                     <div className="modal-overlay absolute top-[130px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
+                     <div className="modal flex items-center justify-center">
+                       <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
+                         {brands.map((brand, index) => (
+                           <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(brand.name)}>
+                             {brand.name}
+                           </h2>
+                         ))}
+                       </div>
+                     </div>
+                   </div>
+                }
+            </div>
+
             
             {categoriesCopy.map((category) => (
             <div key={category.id} className="m-2 text-[#FFFFFF]" onMouseLeave={closeModal}>
@@ -357,7 +410,7 @@ const Navbar = () => {
                   <div className="modal flex items-center justify-center">
                     <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
                       {subCategories[category.id]?.map((subCategory, index) => (
-                        <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer capitalize" onClick={() => redirect(subCategory.name)}>
+                        <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(subCategory.name)}>
                           {subCategory.name}
                         </h2>
                       ))}
