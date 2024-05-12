@@ -110,11 +110,30 @@ const Navbar = () => {
           console.error('Error fetching subcategories:', error);
         }
       };
+
+      const handleCategoryMobile = async (categoryId) => {
+        try {
+          if (selectedCategory !== categoryId) {
+            const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+            if (subCategoriesData.length === 1) {
+              redirect(subCategoriesData[0].name);
+              setShowModal(false);
+            } else {
+              setSubCategories({ [categoryId]: subCategoriesData });
+              setSelectedCategory(categoryId);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching subcategories:', error);
+        }
+      };
     
       const closeModal = () => {
         setSelectedCategory(null);
         setSubCategories({});
       };
+
+      console.log(showModal);
 
       // Swap categories logic
   if (categories.length >= 3) {
@@ -153,7 +172,7 @@ const Navbar = () => {
         
             }
         </div>
-        <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center' >
+        <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center'>
             {/* Wishlist Icon*/}
             {currentUser && 
                 <div onClick={navWishList} className='wishlist flex items-center pr-3 -ml-6 cursor-pointer'>
@@ -237,29 +256,37 @@ const Navbar = () => {
                   All
                 </h2>
                 {categories.map((category) => (
-                  <div key={category.id} className="m-2 relative text-[#292929]">
+                <div key={category.id} className="m-2 relative text-[#292929]">
+                  {subCategories[category.id]?.length === 1 ? (
                     <p
                       className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
-                      onClick={() => {handleCategoryHover(category.id); setShowModal(!showModal)}}
-
+                      onClick={() => {redirect(subCategories[category.id][0].name)}}
                     >
                       {category.name}
                     </p>
-                    {selectedCategory === category.id && showModal && (
-                      <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
-                        {subCategories[category.id]?.map((subCategory, index) => (
-                          <h2
-                            key={index}
-                            className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
-                            onClick={() => redirect(subCategory.name)}
-                          >
-                            {subCategory.name}
-                          </h2>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  ) : (
+                    <p
+                      className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
+                      onClick={() => {handleCategoryMobile(category.id); setShowModal(!showModal)}}
+                    >
+                      {category.name}
+                    </p>
+                  )}
+                  {selectedCategory === category.id && showModal && subCategories[category.id]?.length > 1 && (
+                    <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
+                      {subCategories[category.id]?.map((subCategory, index) => (
+                        <h2
+                          key={index}
+                          className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
+                          onClick={() => {redirect(subCategory.name); setShowModal(!showModal)}}
+                        >
+                          {subCategory.name}
+                        </h2>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
               </div>
             </div>
             <div className='profile mt-10 ml-3'>
@@ -310,13 +337,22 @@ const Navbar = () => {
             
             {categoriesCopy.map((category) => (
             <div key={category.id} className="m-2 text-[#FFFFFF]" onMouseLeave={closeModal}>
+              {subCategories[category.id]?.length === 1 ? (
+              <p
+                className="cursor-pointer text-lg"
+                onClick={() => redirect(subCategories[category.id][0].name)}
+              >
+                {category.name}
+              </p>
+              ) : (
               <p
                 className="cursor-pointer text-lg"
                 onMouseEnter={() => handleCategoryHover(category.id)}
               >
                 {category.name}
               </p>
-              {selectedCategory === category.id && (
+              )}
+              {selectedCategory === category.id && subCategories[category.id]?.length > 1 &&  (
                 <div className="modal-overlay absolute top-[130px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
                   <div className="modal flex items-center justify-center">
                     <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">

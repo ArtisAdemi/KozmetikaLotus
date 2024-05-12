@@ -16,7 +16,7 @@ const Home = () => {
             <Navbar />
           </div>
           <div className='flex justify-center'>
-            <img src={require('../images/LotusHero.png')} className=' h-[950px] w-full' alt="Home Hero Image" />
+            <img src={require('../images/LotusHero.png')} className=' h-[950px] w-full object-cover' alt="Home Hero Image" />
           </div>
          
         </div>
