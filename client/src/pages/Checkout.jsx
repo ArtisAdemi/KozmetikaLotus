@@ -56,7 +56,8 @@ const Checkout = () => {
         let newOrder = {
             products: products.map((product) => ({
                 id: product.id,
-                quantity: product.count
+                quantity: product.count,
+                price: product.price
             })),
             address: values.address
         }

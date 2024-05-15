@@ -7,6 +7,7 @@ const Users = db.Users;
 const Images = db.Images;
 const validateToken = require('../middleware/AuthMiddleware');
 const { createClient } = require('./clients');
+const { resetDiscount } = require('./discount');
  
 // Controller functions
 
@@ -75,7 +76,11 @@ const getUserOrders = async (req, res) => {
         const totalPages = Math.ceil(count / limit);
 
         if (!rows || rows.length === 0) {
-            return res.status(200).json({ message: "User's orders not found" });
+            return res.status(200).json({
+                orders: [],
+                totalOrders: 0,
+                totalPages: 0,
+            });
         }
 
         res.status(200).json({
@@ -123,19 +128,29 @@ const getUserOrders = async (req, res) => {
         try {
             const { products, address } = req.body; // Assuming products are sent in the request body
             
+            const user = await Users.findByPk(userId);
             // Create or find the client associated with the user
             const client = await createClient(userId);
+            let totalPrice = 0
+            for (const product of products) {
+                totalPrice += (product.price * product.quantity)
+            }
+            
+            totalPrice = totalPrice - ((totalPrice * user.discount)/100);
+
+            await resetDiscount(userId);
             
             const order = await Orders.create({
                 status: 'Pending',
                 address: address,
-                UserId: userId 
+                UserId: userId,
+                totalPrice: totalPrice
             }); // Create the order
-              
+            
             // Loop through each product and add it to the order with the specified quantity
             for (const product of products) {
                 await order.addProducts(product.id, {
-                     through: { quantity: product.quantity } 
+                    through: { quantity: product.quantity } 
                 });
             }            
     

@@ -8,9 +8,10 @@ import OrderService from '../services/OrderService';
 
 
 
-const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
+const OrderDetails = ( {closeOrderDetails, id, location} ) => {
     const [statusModal, setStatusModal] = useState(false);
     const [order, setOrder] = useState({})
+    const [totalPrice, setTotalPrice] = useState(0)
 
     const handleEditStatus = () => {
         setStatusModal(true);
@@ -20,6 +21,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
         try {
             await OrderService.getOrderById(id).then((res) => {
                 setOrder(res);
+                setTotalPrice(res.totalPrice)
             })
         } catch (err) {
             console.error(err);
@@ -27,7 +29,6 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
     }
 
     useEffect(() => {
-        console.log("location of orderDetails", location)
         getOrderById(id);
     }, [id])
 
@@ -154,7 +155,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                     <FontAwesomeIcon icon={faChevronLeft} color='#828282'/>
                                     <h2 className=' ml-3 text-[#828282]'>Back to Orders</h2>
                                 </div>
-                                {location === "admin" || location === "clients"&& 
+                                {location === "admin" | location === "clients" && 
                                 <button onClick={handleEditStatus} type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
                                     Update Status
                                 </button>
