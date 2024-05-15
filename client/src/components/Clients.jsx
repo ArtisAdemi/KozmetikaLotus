@@ -5,8 +5,10 @@ import ClientsService from '../services/ClientService';
 const Clients = () => {
     const [clientDetails, setClientDetails] = useState(false);
     const [clients, setClients] = useState([])
+    const [selectedUser, setSelectedUetuser] = useState({})
 
-    const handleClientDetails = () => {
+    const handleClientDetails = (user) => {
+        setSelectedUetuser(user)
         setClientDetails(true);
       }
 
@@ -48,13 +50,13 @@ const Clients = () => {
                             <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{client.User.id}</h2>                           
                             <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{fullName}</h2>
                             <h2 className='hidden md:block text-[#333333] text-end md:text-start md:text-lg w-[16.6%]'>{user.phoneNumber}</h2>
-                            <h2 onClick={handleClientDetails} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View Client</h2>
+                            <h2 onClick={() => handleClientDetails(user)} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View Client</h2>
                         </div>
                         )})}
                     </div>        
                 }</div>
                     
-                {clientDetails && <ClientDetails closeClientDetails={() => setClientDetails(false)} />}
+                {clientDetails && <ClientDetails user={selectedUser} closeClientDetails={() => setClientDetails(false)} />}
     </div>
   );
 }

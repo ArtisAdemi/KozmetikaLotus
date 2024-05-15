@@ -37,17 +37,26 @@ const getOrders = async (req, res) => {
 
 // Get A User's Orders  -   needs fix
 const getUserOrders = async (req, res) => {
-    const userId = req.user.id; // Get the authenticated user's ID from req.user
+    let userId = 0;
+    if (req.query.userId){
+         userId = req.query.userId
+    } else {
+         userId = req.user.id
+    }
     try {
         const userOrders = await Orders.findAll({
             where: { UserId: userId }, // Filter orders by UserId (associated with the authenticated user)
-            include: [
-                {
-                    model: Products,
-                    through: { model: db.Order_Products },
-                    include: [{ model: Images }] // Include Images associated with each Product
-                }
-            ]
+            include: [{
+                model: Products,
+                through: 'Order_Products',
+                include: [Images],
+            },
+            {
+                model: Users,
+                attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] },
+            },
+            ],
+            attributes: { exclude: ['UserId'] }
         });
 
         if (!userOrders || userOrders.length === 0) {
