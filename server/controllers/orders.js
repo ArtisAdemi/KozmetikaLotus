@@ -75,7 +75,11 @@ const getUserOrders = async (req, res) => {
         const totalPages = Math.ceil(count / limit);
 
         if (!rows || rows.length === 0) {
-            return res.status(200).json({ message: "User's orders not found" });
+            return res.status(200).json({
+                orders: [],
+                totalOrders: 0,
+                totalPages: 0,
+            });
         }
 
         res.status(200).json({
