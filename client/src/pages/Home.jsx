@@ -2,9 +2,11 @@ import React from 'react'
 import { Navbar, ProductSlider } from '../components'
 import overlap from "../images/overlap.png"
 import {useNavigate} from 'react-router-dom';
+import HeroCarousel from '../components/HeroCarousel';
 
 const Home = () => {
   const navigate = useNavigate();
+
 
   return (
     <div>
@@ -15,11 +17,13 @@ const Home = () => {
           <div className='flex w-full justify-center'>
             <Navbar />
           </div>
-          <div className='flex justify-center'>
-            <img src={require('../images/LotusHero.png')} className=' h-[950px] w-full object-cover' alt="Home Hero Image" />
-          </div>
+
+          {/* HOME HERO SLIDER */}
          
         </div>
+          <div  className='home-hero-slider'>
+              <HeroCarousel/>
+          </div>
      
       </div>
 
@@ -36,7 +40,7 @@ const Home = () => {
         </div>
       </div>
           {/* Slider */}
-      <div className='bg-[#FFFFFF] pb-20'>
+      <div className='bg-[#FFFFFF] capitalize pb-20'>
           <ProductSlider uniqueCategories={true}/>
       </div>
       
@@ -49,7 +53,7 @@ const Home = () => {
             <h1 className='text-3xl md:text-5xl font-eb-garamond font-semibold text-center text-[#292929]'>Produktet me te shitura</h1>
           </div>
         </div>
-      <div className='bg-[#F2E2DA] pb-20 mt-10 w-full'>
+      <div className='bg-[#F2E2DA] capitalize pb-20 mt-10 w-full'>
         <ProductSlider subCategory={"tonic"}/>
       </div>
       </div>
