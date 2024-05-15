@@ -1,4 +1,5 @@
 import axios from "axios";
+import buildUrl from "../helpers/BuildParam";
 
 const USER_ROUTES = 'http://localhost:3001/api/users/orders';
 const ORDER_ROUTES = 'http://localhost:3001/api/orders';
@@ -20,9 +21,16 @@ const OrderService = {
         }
     },
 
-    getOrdersByUser: async () => {
+    getOrdersByUser: async (userId) => {
+        let endpoint = `${USER_ROUTES}?`
         try {
-            const response = await axiosWithAuth.get(USER_ROUTES);
+            if (userId) {
+                let params = {}
+                params["userId"] = userId
+
+                endpoint += buildUrl(params)
+            }
+            const response = await axiosWithAuth.get(endpoint);
             return response.data;
         } catch (err) {
             console.error("Error fetching orders", err);

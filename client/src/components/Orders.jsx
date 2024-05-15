@@ -3,11 +3,12 @@ import OrderDetails from './OrderDetails';
 import OrderService from '../services/OrderService';
 
 
-const Orders = () => {
+const Orders = ({userId, location}) => {
     const [orderDetails, setOrderDetails] = useState(false);
     const [orders, setOrders] = useState([])
     const [selectedOrderId, setSelectedOrderId] = useState(0)
     const [totalPriceForOrder, setTotalPriceForOrder] = useState(0)
+    const [currentLocation, setCurrentLocation] = useState("admin")
 
     const handleOrderDetails = (id, totalPrice) => {
         setSelectedOrderId(id);
@@ -17,25 +18,34 @@ const Orders = () => {
 
     const getOrders = async () => {
         try{
-            await OrderService.getOrders().then((res) => {
-                if (res.length > 0) {
-                    setOrders(res);
-                }
-            })
+            if(userId > 0){
+                await OrderService.getOrdersByUser(userId).then((res) => {
+                    console.log("res", res)
+                    setOrders(res)
+                })
+            } else {
+                await OrderService.getOrders().then((res) => {
+                    if (res.length > 0) {
+                        setOrders(res);
+                    }
+                })
+            }
         } catch (err) {
             console.error(err);
         }
     }
 
     useEffect(() => {
+        if(location){
+            setCurrentLocation(location);
+        }
         getOrders();
     }, [])
 
   return (
     <div>
         <div className='orders-container flex justify-center w-full my-16'>
-            {
-            !orderDetails &&
+            {!orderDetails &&
             <div className='orders-content w-[80%] flex flex-col'>
                 <div className='flex items-center p-2 w-full justify-between md:justify-normal border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
                     <h2 className='text-xl md:text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
@@ -75,7 +85,7 @@ const Orders = () => {
             </div>        
             }
          </div>
-         {orderDetails && <OrderDetails location={"admin"} id={selectedOrderId} totalPrice={totalPriceForOrder} closeOrderDetails={() => setOrderDetails(false)} />}
+         {orderDetails && <OrderDetails location={currentLocation} id={selectedOrderId} totalPrice={totalPriceForOrder} closeOrderDetails={() => setOrderDetails(false)} />}
     </div>
   );
 };
