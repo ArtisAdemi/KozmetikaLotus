@@ -9,6 +9,8 @@ const Orders = ({userId, location}) => {
     const [selectedOrderId, setSelectedOrderId] = useState(0)
     const [totalPriceForOrder, setTotalPriceForOrder] = useState(0)
     const [currentLocation, setCurrentLocation] = useState("admin")
+    const [displayedOrders, setDisplayedOrders] = useState(10);
+    const [totalPages, setTotalPages] = useState(1)
 
     const handleOrderDetails = (id, totalPrice) => {
         setSelectedOrderId(id);
@@ -16,17 +18,21 @@ const Orders = ({userId, location}) => {
         setOrderDetails(true);
       }
 
+    const loadMoreOrders = () => {
+        setDisplayedOrders(prevCount => prevCount + 10); // Load 10 more orders
+    };
+
     const getOrders = async () => {
         try{
             if(userId > 0){
                 await OrderService.getOrdersByUser(userId).then((res) => {
-                    console.log("res", res)
                     setOrders(res)
                 })
             } else {
-                await OrderService.getOrders().then((res) => {
-                    if (res.length > 0) {
-                        setOrders(res);
+                await OrderService.getOrders(displayedOrders).then((res) => {
+                    if (res.orders.length > 0) {
+                        setOrders(res.orders);
+                        setTotalPages(res.totalPages);
                     }
                 })
             }
@@ -40,7 +46,7 @@ const Orders = ({userId, location}) => {
             setCurrentLocation(location);
         }
         getOrders();
-    }, [])
+    }, [displayedOrders])
 
   return (
     <div>
@@ -59,8 +65,8 @@ const Orders = ({userId, location}) => {
                     <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Action</h2>
                 </div>
 
-                {/* STATIC ORDER DATA */}
-                {orders.length > 0 && orders.map((order, index) => {
+                {/* Display only the specified number of orders */}
+                {orders.slice(0, displayedOrders).map((order, index) => {
                     const user = order.User
 
                     const fullName = `${user.firstName} ${user.lastName}`
@@ -80,12 +86,17 @@ const Orders = ({userId, location}) => {
                     <h2 onClick={() => handleOrderDetails(order.id, totalPrice)} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View Order</h2>
                    </div>
                 )
+                {/* Button to load more orders */}
             })}
+            {totalPages > 1 && (
+                <button className='underline' onClick={loadMoreOrders}>Load More Orders</button>
+            )}
         
             </div>        
             }
          </div>
          {orderDetails && <OrderDetails location={currentLocation} id={selectedOrderId} totalPrice={totalPriceForOrder} closeOrderDetails={() => setOrderDetails(false)} />}
+        
     </div>
   );
 };

@@ -15,6 +15,8 @@ const Profile = () => {
     const [orderDetails, setOrderDetails] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(0)
     const [totalPriceForOrder, setTotalPriceForOrder] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
+    const [displayedOrders, setDisplayedOrders] = useState(10);
 
     const handleOrderDetails = (id, totalPrice) => {
         setSelectedOrderId(id);
@@ -32,6 +34,10 @@ const Profile = () => {
     //       return null;
     //     }
     //   }
+
+    const loadMoreOrders = () => {
+        setDisplayedOrders(prevCount => prevCount + 10); // Load 10 more orders
+    };
 
     const getUserData = async () => {
         await AuthService.decodeUser().then((data) => {
@@ -53,8 +59,9 @@ const Profile = () => {
     }
 
     const getOrders = async () => {
-        await OrderService.getOrdersByUser().then((data) => {
-            setOrders(data);
+        await OrderService.getOrdersByUser(null, displayedOrders).then((data) => {
+            setOrders(data.orders);
+            setTotalPages(data.totalPages)
         })
     }
 
@@ -66,7 +73,7 @@ const Profile = () => {
       useEffect(() => {
         getUserData();
         getOrders();
-      }, [])
+      }, [displayedOrders])
 
     return (
         <div>
@@ -125,7 +132,6 @@ const Profile = () => {
                     <div className='orders-content w-[80%] flex flex-col'>
                         <div className='flex items-center p-2 w-full justify-between md:justify-normal border border-b-[#BDBDBD] border-l-0 border-r-0 border-t-0'>
                             <h2 className='text-xl md:text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
-                            <h2 className='text-[#828282] text-sm md:text-base ml-5 cursor-pointer'>View All</h2>
                         </div>
                         <div className='hidden md:flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
                             <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Order #</h2>
@@ -157,6 +163,9 @@ const Profile = () => {
                             </div>
                         );
                     })}
+                    {totalPages > 1 && (
+                        <button className='underline' onClick={loadMoreOrders}>Load More Orders</button>
+                        )}
                     </div>        
                 </div>
                 }

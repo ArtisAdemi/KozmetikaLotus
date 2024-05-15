@@ -114,8 +114,8 @@ const ProductList = ({ subCategory, productName, isAdmin }) => {
             <div>
                 <div className='grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 cursor-pointer'>
                 {products.length > 0 && products.map((product, index) => (
-                    <div>
-                    <ProductListItem key={index} title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} subCategory={subCategory} isAdmin={isAdmin} isLiked={wishlist.includes(product.id)} toggleWishlist={toggleWishlistItem}/>
+                    <div  key={index}>
+                    <ProductListItem title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} price={product.price} id={product.id} subCategory={subCategory} isAdmin={isAdmin} isLiked={wishlist.includes(product.id)} toggleWishlist={toggleWishlistItem} inStock={product.inStock}/>
                     </div>
                 ))}
                 </div> 
