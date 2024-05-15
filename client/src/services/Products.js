@@ -187,8 +187,6 @@ const ProductService = {
 
     remindMeWhenInStock: async (productId, remindMe) => {
         try{
-            console.log("productId in service", productId)
-            console.log("remindMe in service", remindMe)
             const res = await axios.post(`${API_URL}/remindWhenInStock`, {
                 productId: productId,
                 remindMe: remindMe

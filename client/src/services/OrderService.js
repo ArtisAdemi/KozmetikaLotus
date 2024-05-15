@@ -11,9 +11,15 @@ const axiosWithAuth = axios.create({
 });
 
 const OrderService = {
-    getOrders: async () => {
+    getOrders: async (limit) => {
+        let endpoint = `${ORDER_ROUTES}?`
         try {
-            const response = await axios.get(ORDER_ROUTES);
+            let params = {}
+            if (limit) {
+                params["limit"] = limit
+            }
+            endpoint += buildUrl(params)
+            const response = await axios.get(endpoint);
             return response.data;
         } catch (err) {
             console.error("Error fetching orders", err);
@@ -21,15 +27,17 @@ const OrderService = {
         }
     },
 
-    getOrdersByUser: async (userId) => {
+    getOrdersByUser: async (userId, limit) => {
         let endpoint = `${USER_ROUTES}?`
         try {
+            let params = {}
             if (userId) {
-                let params = {}
                 params["userId"] = userId
-
-                endpoint += buildUrl(params)
             }
+            if (limit) {
+                params["limit"] = limit
+            }
+            endpoint += buildUrl(params)
             const response = await axiosWithAuth.get(endpoint);
             return response.data;
         } catch (err) {
