@@ -43,6 +43,7 @@ const Profile = () => {
                     confirmButtonText: "Log In",
                 }).then((confirmed) => {
                     if(confirmed.isConfirmed){
+                        localStorage.removeItem("token")
                         navigate("/login")
                     }
                 })

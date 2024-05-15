@@ -22,7 +22,7 @@ const OrderService = {
 
     getOrdersByUser: async () => {
         try {
-            const response = await axiosWithAuth.get(ORDER_ROUTES);
+            const response = await axiosWithAuth.get(USER_ROUTES);
             return response.data;
         } catch (err) {
             console.error("Error fetching orders", err);
@@ -64,7 +64,10 @@ const OrderService = {
 
     updateOrder: async (orderId, data) => {
         try {
-            const response = await axiosWithAuth.put(`${ORDER_ROUTES}/${orderId}`, data);
+            console.log(data)
+            const response = await axiosWithAuth.put(`${ORDER_ROUTES}/${orderId}`, {
+                status: data
+            });
             return response.data;
         } catch (err) {
             console.error('Error updating order:', err);

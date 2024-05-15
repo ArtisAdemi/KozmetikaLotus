@@ -3,10 +3,12 @@ import axios from "axios";
 const USERS_API_URL = 'http://localhost:3001/api/users';
 const AUTH_API_URL = 'http://localhost:3001/api/auth';
 
-const axiosInstance = axios.create({
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
+const axiosInstance = axios.create();
+
+axiosInstance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization =  token ? `Bearer ${token}` : '';
+    return config;
 });
 
 const UserService = {

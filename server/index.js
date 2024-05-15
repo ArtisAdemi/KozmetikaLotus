@@ -35,6 +35,9 @@ apiRouter.use("/orders", orderRouter);
 const mailerRouter = require("./routes/Mailer");
 apiRouter.use("/mailer", mailerRouter)
 
+const clientsRouter = require("./routes/Clients");
+apiRouter.use("/clients", clientsRouter)
+
 // Mount the apiRouter under the /api endpoint
 app.use("/api", apiRouter)
 

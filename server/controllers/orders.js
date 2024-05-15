@@ -5,7 +5,8 @@ const Orders = db.Orders;
 const Products = db.Products;
 const Users = db.Users;
 const Images = db.Images;
-const validateToken = require('../middleware/AuthMiddleware')
+const validateToken = require('../middleware/AuthMiddleware');
+const { createClient } = require('./clients');
  
 // Controller functions
 
@@ -50,7 +51,7 @@ const getUserOrders = async (req, res) => {
         });
 
         if (!userOrders || userOrders.length === 0) {
-            return res.status(404).json({ message: "User's orders not found" });
+            return res.status(200).json({ message: "User's orders not found" });
         }
 
         res.status(200).json(userOrders);
@@ -93,6 +94,10 @@ const getUserOrders = async (req, res) => {
         const userId = req.user.id; 
         try {
             const { products, address } = req.body; // Assuming products are sent in the request body
+            
+            // Create or find the client associated with the user
+            const client = await createClient(userId);
+            
             const order = await Orders.create({
                 status: 'Pending',
                 address: address,
