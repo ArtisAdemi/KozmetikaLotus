@@ -3,11 +3,12 @@ import OrderDetails from './OrderDetails';
 import OrderService from '../services/OrderService';
 
 
-const Orders = ({userId}) => {
+const Orders = ({userId, location}) => {
     const [orderDetails, setOrderDetails] = useState(false);
     const [orders, setOrders] = useState([])
     const [selectedOrderId, setSelectedOrderId] = useState(0)
     const [totalPriceForOrder, setTotalPriceForOrder] = useState(0)
+    const [currentLocation, setCurrentLocation] = useState("admin")
 
     const handleOrderDetails = (id, totalPrice) => {
         setSelectedOrderId(id);
@@ -35,6 +36,9 @@ const Orders = ({userId}) => {
     }
 
     useEffect(() => {
+        if(location){
+            setCurrentLocation(location);
+        }
         getOrders();
     }, [])
 
@@ -81,7 +85,7 @@ const Orders = ({userId}) => {
             </div>        
             }
          </div>
-         {orderDetails && <OrderDetails location={"clients"} id={selectedOrderId} totalPrice={totalPriceForOrder} closeOrderDetails={() => setOrderDetails(false)} />}
+         {orderDetails && <OrderDetails location={currentLocation} id={selectedOrderId} totalPrice={totalPriceForOrder} closeOrderDetails={() => setOrderDetails(false)} />}
     </div>
   );
 };

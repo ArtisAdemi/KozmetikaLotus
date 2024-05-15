@@ -27,6 +27,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
     }
 
     useEffect(() => {
+        console.log("location of orderDetails", location)
         getOrderById(id);
     }, [id])
 
@@ -49,6 +50,8 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                     <div className='flex md:w-[20%] flex-col md:mr-36'>
                                 {location === "admin" && 
                                     <>
+                                    {location !== "clients" && 
+                                    <>
                                     <div className='flex md:flex-col mb-8 justify-start items-center md:items-start order-1 md:order-none'>
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>First Name: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{order?.User?.firstName}</h2>
@@ -58,6 +61,8 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Email: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{order?.User?.email}</h2>
                                     </div>
+                                    </>
+                                    }
                                     </>
                                     }
 
@@ -70,6 +75,8 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                 <div className='flex md:w-[20%] flex-col'>
                                     {location === "admin" && 
                                     <>
+                                    {location !== "clients" && 
+                                    <>
                                     <div className='flex md:flex-col mb-8 justify-start items-center md:items-start order-1 md:order-none'>
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Last Name: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{order?.User?.lastName}</h2>
@@ -79,7 +86,8 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Phone: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{order?.User?.phoneNumber}</h2>
                                     </div>
-
+                                    </>
+                                    }
                                     </>
                                     }
 
@@ -146,7 +154,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                                     <FontAwesomeIcon icon={faChevronLeft} color='#828282'/>
                                     <h2 className=' ml-3 text-[#828282]'>Back to Orders</h2>
                                 </div>
-                                {location === "admin" && 
+                                {location === "admin" || location === "clients"&& 
                                 <button onClick={handleEditStatus} type="button" className="order-1 md:order-none btn btn-outline btn-accent md:-mt-5 border rounded-lg p-3 bg-[#A3A7FC] w-full md:w-[40%] text-white hover:opacity-80">
                                     Update Status
                                 </button>

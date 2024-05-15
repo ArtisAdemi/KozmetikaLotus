@@ -91,7 +91,7 @@ const ClientDetails = ( {closeClientDetails, user} ) => {
                     </div>         
                 </div>
             </div>
-                <Orders userId={user.id} />
+                <Orders userId={user.id} location={"clients"}/>
 
             {discountModal && <DiscountModal closeDiscountModal={() => setDiscountModal(false)}/>}
         </div>
