@@ -42,34 +42,33 @@ const Footer = () => {
   return (
     <div className="bg-[#292929] text-[#FFFFFF]">
         <div className=' pt-4'>
-            <div onClick={() => navigate('/')} className=' text-3xl -ml-3 font-bold'>
+            <div onClick={() => navigate('/')} className='w-[150px] cursor-pointer text-3xl -ml-3 font-bold'>
                 <LotusIcon/>
             </div>
         </div>
     <div className="md:flex justify-between p-5">
         <div className="space-y-4 p-4">
             <div>
-                <h2 className="font-bold text-lg">How Can We Help?</h2>
+                <h2 className="font-bold text-lg">Si mund t'ju ndihmojme</h2>
                 <p className='my-3'><a href="/">Home</a></p>
-                <p className='mb-3'><a href="/about">About Us</a></p>
-                <p className='mb-3'><a href="/categories">Categories</a></p>
-                <p className=''><a href="/contact">Contact Us</a></p>
+                <p className='mb-3'><a href="/about">Rreth Nesh</a></p>
+                <p className=''><a href="/contact">Na Kontaktoni</a></p>
                 
             </div>
         </div>
         <div className="space-y-4 p-4">
             <div>
-                <h2 className='text-lg font-bold mb-3'>Categories</h2>
+                <h2 className='text-lg font-bold mb-3'>Kategoritë</h2>
                 <div className='w-full grid grid-cols-2 gap-x-12 gap-y-3'>
-                    <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>All Categories</h2>
+                    <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>Të gjitha</h2>
                         {categories.map((category, index) => (
-                           <h2 className=' text-lg cursor-pointer' key={index} onClick={() => redirect(category.name)}>{category.name}</h2>
+                           <h2 className=' text-lg cursor-pointer' key={index}>{category.name}</h2>
                            ))}
                 </div>
             </div>
         </div>
         <div className="space-y-4 max-w-[600px] p-4 hidden md:block">
-            <h2 className="font-bold text-lg">About Us</h2>
+            <h2 className="font-bold text-lg">Rreth Nesh</h2>
             <p>Ne besojmë në rëndësinë e kujdesit të lëkurës prandaj ofrojmë produkte të specializuara për të mbajtur lëkurën të shëndetshme dhe të freskët.</p>
         </div>
     </div>
