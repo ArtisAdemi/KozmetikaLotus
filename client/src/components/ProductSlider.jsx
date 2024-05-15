@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const truncateDescription = (description, maxLength) => {
   if(description.length <= maxLength) {
@@ -16,10 +17,17 @@ const truncateDescription = (description, maxLength) => {
   return truncated + '...';
 }
 
-const ProductSlider = ({ subCategory, uniqueCategories }) => {
-  const [products, setProducts] = useState([])
-  
 
+
+const ProductSlider = ({ subCategory, uniqueCategories }) => {
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+
+  
+  const redirect = (name) => {
+    name = name.toString().toLowerCase().replace(/\s+/g, '-');
+    navigate(`/products/${name}`); // addition to remove navbar after navigating to categories..
+}
 
   // Settings for the slider
   const settings = {
@@ -99,10 +107,10 @@ const ProductSlider = ({ subCategory, uniqueCategories }) => {
       <div className='w-[80%]'>
         <Slider {...settings}>
         {products.length > 0 && products.map((product, index) => (
-          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg" key={index}>
+          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg cursor-pointer" onClick={() => redirect(product.Subcategories[0].name)} key={index}>
           <div className="flex justify-center items-center w-full">
           {product.Images && product.Images.length > 0 && (
-                  <img className="object-cover w-full min-h-[375px]" src={`/uploads/${product.Images[0].fileName}`} alt={product.title} />
+                  <img className="object-cover w-full min-h-[375px] max-h-[375px]" src={`/uploads/${product.Images[0].fileName}`} alt={product.title} />
                 )}
           </div>
           <div className="p-4">

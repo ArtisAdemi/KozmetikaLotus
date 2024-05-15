@@ -1,8 +1,8 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import about1 from "../images/about1.png"
-import carissa from "../images/carissa.png"
-import overlap from "../images/overlap.png"
+import carissa from "../images/carisa.png"
+import overlap from "../images/overlap2.jpg"
 
 const AboutUs = () => {
   return (
@@ -81,7 +81,7 @@ const AboutUs = () => {
           <div className='w-[80%] lg:flex gap-10'>
 
             <div className='-mt-28'>
-              <img src={overlap} alt="blla" className="w-[777px] " />
+              <img src={overlap} alt="blla" className="w-[777px] rounded-md" />
             </div>
             <div className='mt-3 lg:w-96 lg:h-48'>
               <h2 className='font-bold text-2xl text-[#292929] mb-5'>Diversiteti, Barazia dhe Përfshirja.</h2>

@@ -53,6 +53,10 @@ const ProductService = {
             if (filterModel.name) {
                 params['productName'] = filterModel.name;
             }
+            //  E kom shtu ktu per brands dmth
+            if (filterModel.brandName) {
+                params['brandName'] = filterModel.brandName; // Add brandName to the params
+            }
             if (filterModel.page) {
                 params['page'] = filterModel.page;
             }

@@ -10,6 +10,7 @@ import UserService from '../services/Users';
 import AuthService from '../services/AuthService';
 import { setIsCartOpen } from '../state';
 import { useDispatch, useSelector } from 'react-redux';
+import ProductService from '../services/Products';
 
 
 const Navbar = () => {
@@ -28,6 +29,10 @@ const Navbar = () => {
     const [subCategories, setSubCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [brands, setBrands] = useState([]);
+    const [brandModal, setBrandModal] = useState(false);
+
+
 
     const handleNav = () => {
         setNav(!nav);
@@ -64,12 +69,19 @@ const Navbar = () => {
         }
       }
 
+      const fetchBrands = async () => {
+        await ProductService.getBrands().then((brands) => {
+          setBrands(brands);
+        });
+      }
+
     useEffect(() => {
         if (token) {
             getUserData();
         }
         isLoggedIn();
         fetchCategories();
+        fetchBrands();
       }, [])
 
       useEffect(() => {
@@ -110,11 +122,30 @@ const Navbar = () => {
           console.error('Error fetching subcategories:', error);
         }
       };
+
+      const handleCategoryMobile = async (categoryId) => {
+        try {
+          if (selectedCategory !== categoryId) {
+            const subCategoriesData = await CategoryService.getSubcategories(categoryId);
+            if (subCategoriesData.length === 1) {
+              redirect(subCategoriesData[0].name);
+              setShowModal(false);
+            } else {
+              setSubCategories({ [categoryId]: subCategoriesData });
+              setSelectedCategory(categoryId);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching subcategories:', error);
+        }
+      };
     
       const closeModal = () => {
         setSelectedCategory(null);
         setSubCategories({});
       };
+
+     // console.log(brands);
 
       // Swap categories logic
   if (categories.length >= 3) {
@@ -153,7 +184,7 @@ const Navbar = () => {
         
             }
         </div>
-        <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center' >
+        <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center'>
             {/* Wishlist Icon*/}
             {currentUser && 
                 <div onClick={navWishList} className='wishlist flex items-center pr-3 -ml-6 cursor-pointer'>
@@ -233,33 +264,62 @@ const Navbar = () => {
 
               <h1 className="text-[#292929] text-sm font-semibold p-4 w-[95%] border-b border-[#DFDFDF]">Categories</h1>
               <div>
-                <h2 className="text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]" onClick={() => redirect('all')}>
+                <h2 className="text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]" onClick={() => {redirect('all'); setBrandModal(!brandModal)}}>
                   All
                 </h2>
+                <div>
+                  <h2 className='text-[#292929] ml-2 font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]'
+                    onClick={() => {setBrandModal(!brandModal); setShowModal(false)}}>
+                    Marka
+                  </h2>
+                  {brandModal && (
+                      <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
+                      {brands.map((brand, index) => (
+                        <h2
+                          key={index}
+                          className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
+                          onClick={() => {redirect(brand.name); setBrandModal(!brandModal)}}
+                        >
+                          {brand.name}
+                        </h2>
+                      ))}
+                    </div>
+                    )
+                  }
+                </div>
+                
                 {categories.map((category) => (
-                  <div key={category.id} className="m-2 relative text-[#292929]">
+                <div key={category.id} className="m-2 relative text-[#292929]">
+                  {subCategories[category.id]?.length === 1 ? (
                     <p
                       className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
-                      onClick={() => {handleCategoryHover(category.id); setShowModal(!showModal)}}
-
+                      onClick={() => {redirect(subCategories[category.id][0].name); setBrandModal(false)}}
                     >
                       {category.name}
                     </p>
-                    {selectedCategory === category.id && showModal && (
-                      <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
-                        {subCategories[category.id]?.map((subCategory, index) => (
-                          <h2
-                            key={index}
-                            className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
-                            onClick={() => redirect(subCategory.name)}
-                          >
-                            {subCategory.name}
-                          </h2>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  ) : (
+                    <p
+                      className="text-[#292929] font-semibold cursor-pointer w-[94%] p-4 border-b border-[#DFDFDF]"
+                      onClick={() => {handleCategoryMobile(category.id); setShowModal(!showModal); setBrandModal(false)}}
+                    >
+                      {category.name}
+                    </p>
+                  )}
+                  {selectedCategory === category.id && showModal && subCategories[category.id]?.length > 1 && (
+                    <div className="dropdown-content w-[94%] left-2 top-full py-2 shadow-md shadow-[#FFFFFF] rounded-lg">
+                      {subCategories[category.id]?.map((subCategory, index) => (
+                        <h2
+                          key={index}
+                          className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
+                          onClick={() => {redirect(subCategory.name); setShowModal(!showModal); setBrandModal(false)}}
+                        >
+                          {subCategory.name}
+                        </h2>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
               </div>
             </div>
             <div className='profile mt-10 ml-3'>
@@ -307,21 +367,50 @@ const Navbar = () => {
         <div className='modal-content w-[80%] mx-auto flex justify-between py-4 items-center'>
             <h2 className='text-[#FFFFFF]  text-lg cursor-pointer' onClick={() => redirect("all")}>All</h2>
 
+            <div className='m-2 '
+                 onMouseEnter={() => setBrandModal(true)} // Open modal on hover
+                 onMouseLeave={() => setBrandModal(false)} // Close modal when not hovering
+            >
+                <h2 className='text-[#FFFFFF]  text-lg cursor-pointer'>Marka</h2>
+                {brandModal &&
+                     <div className="modal-overlay absolute top-[130px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
+                     <div className="modal flex items-center justify-center">
+                       <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
+                         {brands.map((brand, index) => (
+                           <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(brand.name)}>
+                             {brand.name}
+                           </h2>
+                         ))}
+                       </div>
+                     </div>
+                   </div>
+                }
+            </div>
+
             
             {categoriesCopy.map((category) => (
-            <div key={category.id} className="m-2 relative text-[#FFFFFF]" onMouseLeave={closeModal}>
+            <div key={category.id} className="m-2 text-[#FFFFFF]" onMouseLeave={closeModal}>
+              {subCategories[category.id]?.length === 1 ? (
+              <p
+                className="cursor-pointer text-lg"
+                onClick={() => redirect(subCategories[category.id][0].name)}
+              >
+                {category.name}
+              </p>
+              ) : (
               <p
                 className="cursor-pointer text-lg"
                 onMouseEnter={() => handleCategoryHover(category.id)}
               >
                 {category.name}
               </p>
-              {selectedCategory === category.id && (
-                <div className="modal-overlay fixed top-[135px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
+              )}
+              {selectedCategory === category.id && subCategories[category.id]?.length > 1 &&  (
+                <div className="modal-overlay absolute top-[130px] left-[10%] right-[10%] bg-[#292929] px-8 py-3 shadow-md shadow-[#FFFFFF] rounded-lg">
                   <div className="modal flex items-center justify-center">
                     <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
                       {subCategories[category.id]?.map((subCategory, index) => (
-                        <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer capitalize" onClick={() => redirect(subCategory.name)}>
+                        <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(subCategory.name)}>
                           {subCategory.name}
                         </h2>
                       ))}
