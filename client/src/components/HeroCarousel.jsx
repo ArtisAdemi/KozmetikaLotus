@@ -38,7 +38,7 @@ export default function HeroCarousel() {
             <div className="mt-36 md:mt-[375px] right-0 left-0">
                  <div className="flex items-center justify-center gap-2">
                      {slides.map((_, i) => (
-                         <div className={`transition-all w-3 h-3 bg-white rounded-full ${currentIndex === i ? "p-2" : "bg-opacity-50"}`}>
+                         <div key={i} className={`transition-all w-3 h-3 bg-white rounded-full ${currentIndex === i ? "p-2" : "bg-opacity-50"}`}>
 
                          </div>
                      ))}

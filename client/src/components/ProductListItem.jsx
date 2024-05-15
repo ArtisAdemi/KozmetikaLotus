@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../state';
 import Swal from 'sweetalert2';
 
-const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdmin, isLiked, toggleWishlist }) => {
+const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdmin, isLiked, toggleWishlist, inStock }) => {
   const navigate = useNavigate();
   // const [isLiked, setIsLiked] = useState(false);
   const [images, setImages] = useState([])
@@ -26,10 +26,20 @@ const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdm
       fetchImages();
   }, [id]);
 
+  const handleRemindMe = async () => {
+    try{
+      const res = await ProductService.remindMeWhenInStock(id, true);
+
+    } catch (err) {
+      console.error (err.message)
+    }
+  }
+
   const imagePath = images.length > 0 ? `/uploads/${images[0].fileName}` : '';
   const img = process.env.PUBLIC_URL + imagePath;
 
   const handleAddToCart = () => {
+
     const product = {
         title,
         subCategory,
@@ -38,13 +48,34 @@ const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdm
         price,
         imgUrl: img
     };
-    dispatch(addToCart({ product }));
-    Swal.fire({
-      title: "Item Added!",
-      text: "Item was successfully added to cart!",
-      icon: 'success',
-      confirmButtonText: "Ok"
-    })
+    if (inStock){
+      dispatch(addToCart({ product }));
+      Swal.fire({
+        title: "Item Added!",
+        text: "Item was successfully added to cart!",
+        icon: 'success',
+        confirmButtonText: "Ok"
+      })
+    } else {
+      Swal.fire({
+        title: "Product Out of Stock!",
+        text: "You can set a reminder, so we can inform you when product is back in stock!",
+        icon: 'error',
+        confirmButtonText: "Remind Me",
+        confirmButtonColor: "#A3A7FC",
+        showCancelButton: true        
+      }).then((res) => {
+        if (res.isConfirmed) {
+          handleRemindMe().then(() => {
+              Swal.fire({
+                title:"Reminder has been set.",
+                text: "You will be reminded via email when product is back in stock",
+                confirmButtonText: "Ok"
+              })
+            });
+        }
+      })
+    }
 };
 
     return (
@@ -58,7 +89,7 @@ const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdm
           {/* Lower Part */}
           <div className="flex justify-between items-center mt-4">
             <span className="text-xl text-[#292929] font-bold">€{price}</span>
-            <button className='text-center text-[#A3A7FC] font-semibold items-center py-2 ' onClick={handleAddToCart}>Add To Cart</button>
+            <button className='text-center text-[#A3A7FC] font-semibold items-center py-2 ' onClick={handleAddToCart}>{inStock ? 'Add To Cart' : 'Out of stock'}</button>
             {/* This works, it changes the outline of the heart icon to red */}
             {isLiked &&
               <FaHeart size={25} color={'red'} onClick={handleLike} />

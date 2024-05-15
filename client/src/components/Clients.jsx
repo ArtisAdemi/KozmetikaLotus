@@ -46,7 +46,7 @@ const Clients = () => {
                             const user = client.User
                             let fullName = `${user.firstName} ${user.lastName}`
                             return (
-                            <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
+                            <div key={index} className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
                             <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{client.User.id}</h2>                           
                             <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{fullName}</h2>
                             <h2 className='hidden md:block text-[#333333] text-end md:text-start md:text-lg w-[16.6%]'>{user.phoneNumber}</h2>

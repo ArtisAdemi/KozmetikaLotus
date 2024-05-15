@@ -12,8 +12,11 @@ const { createClient } = require('./clients');
 
 // Get orders
 const getOrders = async (req, res) => {
+    const limit = parseInt(req.query.limit) || 10;
     try {
-        const orders = await Orders.findAll({
+        const {count, rows} = await Orders.findAndCountAll({
+            limit: limit,
+            distinct: true,
             include: [{
                 model: Products,
                 through: 'Order_Products',
@@ -26,10 +29,17 @@ const getOrders = async (req, res) => {
             ],
             attributes: { exclude: ['UserId'] }
         });
-        if(!orders){
+
+        const totalPages = Math.ceil(count / limit);
+
+        if(!rows){
             return res.status(404).json({ message: "Orders not found"})
         }
-        res.status(200).json(orders);
+        res.status(200).json({
+            orders: rows,
+            totalOrders: count,
+            totalPages: totalPages,
+        });
     } catch (err) {
         res.status(500).json({ error: err.message});
     }
@@ -38,13 +48,16 @@ const getOrders = async (req, res) => {
 // Get A User's Orders  -   needs fix
 const getUserOrders = async (req, res) => {
     let userId = 0;
+    const limit = parseInt(req.query.limit) || 10;
     if (req.query.userId){
          userId = req.query.userId
     } else {
          userId = req.user.id
     }
     try {
-        const userOrders = await Orders.findAll({
+        const {count, rows} = await Orders.findAndCountAll({
+            limit: limit,
+            distinct: true,
             where: { UserId: userId }, // Filter orders by UserId (associated with the authenticated user)
             include: [{
                 model: Products,
@@ -59,11 +72,17 @@ const getUserOrders = async (req, res) => {
             attributes: { exclude: ['UserId'] }
         });
 
-        if (!userOrders || userOrders.length === 0) {
+        const totalPages = Math.ceil(count / limit);
+
+        if (!rows || rows.length === 0) {
             return res.status(200).json({ message: "User's orders not found" });
         }
 
-        res.status(200).json(userOrders);
+        res.status(200).json({
+            orders: rows,
+            totalOrders: count,
+            totalPages: totalPages,
+        });;
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
