@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import OrderService from '../services/OrderService';
+import Swal from "sweetalert2"
 
 
-const StatusModal = ({ closeStatusModal }) => {
+const StatusModal = ({id, status, closeStatusModal }) => {
+  const [selectedStatus, setSelectedStatus] = useState(status);
 
-
- 
+  const handleStatusChange = (e) => {
+    setSelectedStatus(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  closeStatusModal();
+  try{
+    await OrderService.updateOrder(id, selectedStatus).then((res) => {
+      Swal.fire({
+        title: "Status has been updated!",
+        confirmButtonText:"ok",
+      })
+    })
+
+    closeStatusModal();
+  }catch (err) {
+    console.error(err);
+  }
 };
+
+const Status = ["Pending", "Accepted", "Shipping", "Finished"]
 
 
   return (
@@ -20,12 +37,11 @@ const StatusModal = ({ closeStatusModal }) => {
 
             <div className='flex items-center'>
                 <h2 className='mr-3 w-2/3'>Status: </h2>
-                <select name="status" id="" className='w-full p-3'>
-                    <option value="Pending">Pending</option>
-                    <option value="Accepted">Accepted</option>
-                    <option value="Shipping">Shipping</option>
-                    <option value="Finished">Finished</option>
-                </select>
+                <select name="status" id="" value={selectedStatus} onChange={handleStatusChange} className='w-full p-3'>
+              {Status.map((value) => (
+                <option key={value} value={value}>{value}</option>
+              ))}
+            </select>
             </div>
 
              

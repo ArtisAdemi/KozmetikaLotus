@@ -3,11 +3,20 @@ const router = express.Router();
 const authMiddleware = require("../middleware/AuthMiddleware")
 const userController = require('../controllers/users');
 const wishlistController = require('../controllers/wishlist');
+const orderController = require('../controllers/orders');
 
 // Routes
 
 // Get all users
 router.get('/', userController.getUsers);
+
+// ORDERS
+router.post("/orders", authMiddleware.validateToken, orderController.registerOrder)
+
+router.delete("/orders/:id", authMiddleware.validateToken, orderController.deleteOrder)
+
+router.get("/orders", authMiddleware.validateToken, orderController.getUserOrders)
+// END OF ORDER ROUTES
 
 // Get UserById
 router.get('/:id', userController.getUserById);
@@ -27,6 +36,8 @@ router.post("/:userId/wishlist",authMiddleware.validateToken, wishlistController
 
 // Remove from wishlist
 router.delete("/:userId/wishlist/:productId",authMiddleware.validateToken, wishlistController.removeFromWishlist)
+
+
 
 
 

@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, inStock, isAdmin}) => {
   const [images, setImages] = useState([]);
   const dispatch = useDispatch()
+  const [remindMe, setRemindMe] = useState(false)
  
 
   const [selectedImage, setSelectedImage] = useState('');
@@ -60,6 +61,17 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
         confirmButtonText: "Ok"
       })
   };
+
+  const handleRemindMe = async (remindMeBool) => {
+    setRemindMe(!remindMe);
+
+    try{
+      const res = await ProductService.remindMeWhenInStock(id, remindMeBool);
+      console.log(res);
+    } catch (err) {
+      console.error (err.message)
+    }
+  }
     
   
 
@@ -97,9 +109,34 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
                 <p className='w-full font-bold text-xl'>€{price}</p>
                 <LikeProduct productId={id}/>  
               </div>
+              {inStock && 
               <div onClick={handleAddToCart} className='navbar-right mt-3 border-[2px] cursor-pointer border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
-                <button className='text-center items-center py-2 font-semibold ' >Add To Cart</button>
+                <button className='text-center items-center py-2 font-semibold' >Add To Cart</button>
               </div>
+              }
+              {!inStock &&
+              <div> 
+
+              <div className='navbar-right mt-3 border-[2px] disabled:opacity-75 border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
+                <button className='text-center items-center py-2 font-semibold cursor-default' >Out Of Stock</button>
+              </div>
+              {/* Remind me when in stock button */}
+              <div className='mt-3 flex flex-col'>
+              <span className="mb-1 md:text-sm font-semibold text-gray-500 border-0">Remind me when in stock!</span>
+              <label className="relative inline-flex items-center cursor-pointer mb-2">
+              <input type="checkbox"
+              className="sr-only peer"
+              name="inStock"
+              checked={remindMe}
+              onChange={() => handleRemindMe(!remindMe)}
+              />
+                <div
+                  className="w-11 h-6 bg-gray-200 dark:bg-dark-input rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-0  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
+                </div>
+              </label>
+              </div>
+              </div> 
+              }
               <div className='text-xs mt-6 bg-[#292929] p-8 text-[#FFFFFF] font-sans font-semibold'>
                 <div className='flex mb-3'>
                   <div>
