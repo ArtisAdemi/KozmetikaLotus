@@ -154,11 +154,11 @@ const Profile = () => {
 
                         return (
                             <div className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0' key={index}>
-                                <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{order.id}</h2>
-                                <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{formattedDate}</h2>
+                                <h2 className='text-[#333333] md:text-lg w-[2%] md:w-[16.6%]'>{order.id}</h2>
+                                <h2 className='text-[#333333] md:text-lg md:w-[16.6%]'>{formattedDate}</h2>
                                 <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{order.address}</h2>
                                 <h2 className='text-[#333333] md:text-lg w-[16.6%]'>${totalPrice.toFixed(2)}</h2> {/* Display the calculated total price */}
-                                <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{order.status}</h2>
+                                <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{order.status}</h2>
                                 <h2 onClick={() => handleOrderDetails(order.id, totalPrice)} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View</h2>
                             </div>
                         );

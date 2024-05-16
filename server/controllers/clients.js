@@ -19,14 +19,28 @@ const createClient = async (userId) => {
 }
 // Get all clients
 const getClients = async (req, res) => {
+    const limit = parseInt(req.query.limit) || 10;
     try {
-        const clients = await Clients.findAll({
+        const {count, rows} = await Clients.findAndCountAll({
+            limit: limit,
+            distinct: true,
             include: [{
                 model: Users,
                 attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] }
             }]
         });
-        res.status(200).json(clients);
+
+        const totalPages = Math.ceil(count / limit);
+
+        if(!rows){
+            return res.status(404).json({ message: "Clients not found" })
+        }
+
+        res.status(200).json({
+            clients: rows,
+            totalClients: count,
+            totalPages: totalPages,
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
