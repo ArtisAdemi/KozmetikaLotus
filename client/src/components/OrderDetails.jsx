@@ -68,7 +68,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
 
                                     <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Total Price: </h2>
-                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{totalPrice}</h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{totalPrice}€</h2>
                                     </div>
                                 </div>
 
@@ -166,18 +166,39 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                             <div className='flex justify-center sm:justify-between mb-5 flex-wrap'>
 
                                 {order.Products && order?.Products.length > 0 && order?.Products.map((product, index) => (
-                                <div key={index} className="max-w-[250px] w-auto  bg-white shadow-lg h-[300px]">
-                                    <div className="flex justify-center items-center w-full">
-                                      <img className="object-cover max-w-[200px]" src={`uploads/${product?.Images[0]?.fileName}`} alt="Image here" />
-                                    </div>
-                                    <div className="p-4">
-                                      <h2 className="text-start text-xl text-[#292929] font-bold">{product?.title}</h2>
-                                      <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{product?.shortDescription}</p>
-                                      <div className="flex justify-between items-center mt-4">
-                                        <span className="text-xl text-[#292929] font-bold">€{product?.price}</span>
-                                      </div>
-                                    </div>
+                                // <div key={index} className="max-w-[250px] w-auto  bg-white shadow-lg h-[300px]">
+                                //     <div className="flex justify-center items-center w-full">
+                                //       <img className="object-cover max-w-[200px]" src={`uploads/${product?.Images[0]?.fileName}`} alt="Image here" />
+                                //     </div>
+                                //     <div className="p-4">
+                                //       <h2 className="text-start text-xl text-[#292929] font-bold">{product?.title}</h2>
+                                //       <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{product?.shortDescription}</p>
+                                //       <div className="flex justify-between items-center mt-4">
+                                //         <span className="text-xl text-[#292929] font-bold">€{product?.price}</span>
+                                //       </div>
+                                //     </div>
+                                // </div>
+
+                                
+
+                                <div key={index} className="max-w-[250px] w-[250px] mx-auto bg-white shadow-lg h-[430px] m-5">
+                                <div className="flex justify-center items-center w-full h-[300px]">
+                                <img  className="object-cover max-w-[250px] min-h-[300px] max-h-[300px]" src={`uploads/${product?.Images[0]?.fileName}`} alt="Image here" />
                                 </div>
+                                <div className="p-4">
+                                <h2 className="text-start text-xl text-[#292929] font-bold max-h-10 overflow-ellipsis overflow-hidden whitespace-nowrap">{product.title}</h2>
+                                <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{product.shortDescription}</p>
+                                {/* Lower Part */}
+                                <div className='flex justify-between'>
+                                <div className="flex justify-between items-center mt-4">
+                                    <span className="text-xl text-[#292929] font-bold">€{product.price}</span>
+                                </div>
+                                <div className="flex justify-between items-center mt-4">
+                                    <span className="text-md text-[#292929]">Quantity: {product.Order_Products.quantity}</span>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
                                 ))}
                             </div>
                         </div>

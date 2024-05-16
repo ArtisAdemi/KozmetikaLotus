@@ -57,12 +57,13 @@ const Orders = ({userId, location}) => {
                     <h2 className='text-xl md:text-2xl text-[#212121] font-semibold'>Recent Orders</h2>
                 </div>
                 <div className='hidden md:flex justify-between items-center p-2 pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Order #</h2>
-                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Email</h2>
-                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Full Name</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[10%]'>Order #</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[25%]'>Email</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[19%]'>Full Name</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Date</h2>
                     <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Phone Number</h2>
-                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Status</h2>
-                    <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Action</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[13%]'>Status</h2>
+                    <h2 className='text-[#333333] md:text-lg font-semibold w-[10%]'>Action</h2>
                 </div>
 
                 {/* Display only the specified number of orders */}
@@ -75,15 +76,18 @@ const Orders = ({userId, location}) => {
                         order.Products.forEach(product => {
                             totalPrice += (product.price * product.Order_Products.quantity); // Sum up the price of each product
                         });
+
+                    const formattedDate = new Date(order.createdAt).toLocaleDateString('en-GB');
                     
                     return (
                         <div key={index} className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
-                    <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{order.id}</h2>
-                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{user.email}</h2>
-                    <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{fullName}</h2>
+                    <h2 className='text-[#333333] md:text-lg w-[5%] md:w-[10%]'>{order.id}</h2>
+                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[25%]'>{user.email}</h2>
+                    <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[19%]'>{fullName}</h2>
+                    <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{formattedDate}</h2>
                     <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{user.phoneNumber}</h2>
-                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{order.status}</h2>
-                    <h2 onClick={() => handleOrderDetails(order.id, totalPrice)} className='text-[#828282] text-end md:text-start md:text-lg w-[16.6%] cursor-pointer'>View Order</h2>
+                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[13%]'>{order.status}</h2>
+                    <h2 onClick={() => handleOrderDetails(order.id, totalPrice)} className='text-[#828282] text-end md:text-start md:text-lg w-[10%] cursor-pointer'>View Order</h2>
                    </div>
                 )
                 {/* Button to load more orders */}
