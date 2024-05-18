@@ -10,12 +10,22 @@ const UserForm = ({ closeModal, user, setUser }) => {
     phoneNumber: user?.phoneNumber || '',
     currentPassword: user?.currentPassword || '', // Initialize currentPassword
     password: user?.password || '', // Initialize newPassword
-
+    passwordError: '',
   });
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormData({ ...formData, [name]: value });
+
+    // If changing the password, reset the password error
+    if (name === 'password') {
+      setFormData((prevData) => ({
+        ...prevData,
+        passwordError: value.length < 8 ? 'Password must be at least 8 characters long' : '',
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -33,27 +43,38 @@ const UserForm = ({ closeModal, user, setUser }) => {
       }
     });
 
+    if (formData.password && formData.password.length < 8) {
+      throw new Error('Password must be at least 8 characters long');
+    }
+
     // Add currentPassword and password only if they are provided
     if (formData.currentPassword && formData.password) {
       updatedFields.currentPassword = formData.currentPassword;
       updatedFields.password = formData.password;
     }
 
-    const res = await UserService.updateUser(user.id, updatedFields).then(() => {
-      setUser({ ...user, ...updatedFields });
-      Swal.fire({
-        title: "Profile Updated!",
-        text: "You profile has been successfully updated!",
-        icon: "success",
-        confirmButtonText: "Ok"
-      })
+    const res = await UserService.updateUser(user.id, updatedFields).then((res) => {
+      if(res.user){
+        setUser({ ...user, ...updatedFields });
+        Swal.fire({
+          title: "Profile Updated!",
+          text: "You profile has been successfully updated!",
+          icon: "success",
+          confirmButtonText: "Ok"
+        })
+        closeModal();
+      }
     });
   } catch (err) {
+    setError('Email and Password don\'t match!');
     console.error("Error updating user", err);
   }
-  closeModal();
+  
 };
 
+
+
+const isEditEnabled = !formData.password && !formData.currentPassword || formData.password.length >= 8 && formData.currentPassword.length >=1;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -87,18 +108,37 @@ const UserForm = ({ closeModal, user, setUser }) => {
             </div>
             <div className='flex'>
              <h2 className='mr-3 w-1/3'>New Password: </h2>
-             <input type="password" name="password" onChange={handleInputChange}  className="input px-3 input-bordered w-full" value={formData.password} disabled={!formData.currentPassword}/>
+             
+              <input type="password" name="password" onChange={handleInputChange}  className="input px-3 input-bordered w-full" value={formData.password} disabled={!formData.currentPassword}/>
+             
             </div>
+
+              {formData.passwordError && (
+                <div>
+                  <div className='mr-3 w-1/3'></div>
+                  <p className="text-red-500 text-xs">{formData.passwordError}</p>
+                </div>
+              )}
+
+              {error === 'Email and Password don\'t match!' &&
+                   <h2 className="w-[60%] text-red-500 text-sm -mt-10 -mb-5 mx-auto">{error}</h2>
+              }
              
             <div className="flex justify-end space-x-2">
 
               <button type="button" onClick={closeModal} className="btn btn-outline btn-accent border rounded-lg p-3 bg-[#A3A7FC] text-white hover:opacity-80">
                 Cancel
               </button>
-
-              <button type="submit" className="btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80">
-                Edit
-              </button>
+              
+              <button
+              type="submit"
+              className={`btn btn-primary border rounded-lg py-3 px-6 bg-green-700 text-white hover:opacity-80 ${
+                isEditEnabled ? '' : 'opacity-50 cursor-not-allowed'
+              }`}
+              disabled={!isEditEnabled}
+            >
+              Edit
+            </button>
               
             </div>
               {/* More input fields and submission button */}

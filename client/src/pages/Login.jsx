@@ -5,6 +5,7 @@ import UserService from "../services/Users";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Navbar } from "../components";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -31,10 +32,9 @@ const Login = () => {
                 localStorage.setItem("token", res.token)
                 if (!res.message) {
                     navigate("/admin");
-                }
+                }                
             } catch (err) {
-                setError(err);
-                alert(error)
+                setError('Email and Password don\'t match!');
                 console.error("Error logging in: ", err);
             }
         },
@@ -66,6 +66,10 @@ const Login = () => {
                             <h2 className='w-[60%] text-red-500 text-sm -mt-10 -mb-5 mx-auto'>{formik.errors.password}</h2>}
                             
                             <button type="submit" className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md hover:opacity-80 border-2 p-3 md:p-4 w-[60%] mx-auto text-[#FFFFFF] shadow-xl'>Login</button>
+
+                            {error === 'Email and Password don\'t match!' &&
+                                <h2 className="w-[60%] text-red-500 text-sm -mt-10 -mb-5 mx-auto">{error}</h2>
+                            }
 
                         <h2 className="mx-auto">Don't have an account ? <a className="text-[#A3A7FC]" href="/register">Register</a></h2>
                         </form>

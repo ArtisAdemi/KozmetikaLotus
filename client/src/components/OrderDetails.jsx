@@ -44,7 +44,7 @@ const OrderDetails = ( {closeOrderDetails, id, totalPrice, location} ) => {
                         <div className='w-[100%] flex flex-col gap-10 justify-center '>
 
 
-                            <h1 className='text-[#212121] w-[100%] md:w-[100%] pb-4  border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-xl md:text-2xl'>#{order?.id}</h1>
+                            <h1 className='text-[#212121] w-[100%] md:w-[100%] pb-4 mt-10 border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-xl md:text-2xl'>#{order?.id}</h1>
                             <div className='hidden md:flex flex-col md:flex-row w-full'>
 
                                     <div className='flex md:w-[20%] flex-col md:mr-36'>
