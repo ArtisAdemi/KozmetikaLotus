@@ -84,7 +84,7 @@ const isEditEnabled = !formData.password && !formData.currentPassword || formDat
 
             <div className='flex items-center'>
                 <h2 className='mr-3 w-1/3'>Email: </h2>
-                <input type="text" name="email" onChange={handleInputChange} placeholder="Email" required className="input p-3 input-bordered w-full" value={formData.email} />
+                <input type="text" name="email" onChange={handleInputChange} placeholder="Email" disabled required className="input p-3 input-bordered w-full" value={formData.email} />
             </div>
 
             <div className='flex items-center'>

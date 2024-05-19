@@ -5,7 +5,6 @@ import UserService from "../services/Users";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Navbar } from "../components";
-import Swal from "sweetalert2";
 
 const Login = () => {
     const navigate = useNavigate();

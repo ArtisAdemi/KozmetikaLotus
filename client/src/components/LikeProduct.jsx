@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaRegHeart } from 'react-icons/fa';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import WishlistService from '../services/Wishlist';
 import AuthService from '../services/AuthService';
 import Swal from 'sweetalert2';
@@ -87,7 +87,12 @@ const LikeProduct = ({productId}) => {
 
   return (
     <div className='cursor-pointer'>
-        <FaRegHeart size={25} color={isLiked ? 'red' : 'black'} onClick={handleLike} />
+            {isLiked &&
+              <FaHeart size={25} color={'red'} onClick={handleLike} />
+            }
+            { !isLiked &&
+              <FaRegHeart size={25} color={'black'} onClick={handleLike} />
+            }
     </div>
   )
 }
