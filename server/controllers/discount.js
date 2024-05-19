@@ -9,12 +9,12 @@ const giveDiscount = async (req, res) => {
     try {
         const user = await Users.findByPk(userId);
         
-        user.discount = discount;
+        user.discount = parseInt(discount);
         await user.save();
         
         res.status(200).json({ message: "Discount given successfully" });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.json({ error: err.message });
     }
 }
 

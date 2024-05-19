@@ -69,7 +69,11 @@ const OrderService = {
     registerOrder: async (data) => {
         let endpoint = `${USER_ROUTES}`
         try {
-            const response = await axiosWithAuth.post(endpoint, data);
+            const response = await axios.post(endpoint, data, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             return response.data;
         } catch (err) {
             console.error("Error registering order", err);

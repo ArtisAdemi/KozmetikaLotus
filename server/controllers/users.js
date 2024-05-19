@@ -154,17 +154,6 @@ const getUserData = async (req, res) => {
     }
 };
 
-const changeDiscount = async (req, res) => {
-    const { userId, discount } = req.body;
-    
-    try {
-        await giveDiscount(req, res); // Utilize the giveDiscount function from discount.js
-        res.status(200).json({ message: "Discount changed successfully" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-
 // export controller functions
 module.exports = {
     getUsers,
@@ -173,5 +162,4 @@ module.exports = {
     loginUser,
     updateUser,
     getUserData,
-    changeDiscount,
 };

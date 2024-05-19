@@ -20,7 +20,17 @@ const validateToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-    validateToken(req, res, next);
+    const authHeader = req.header('Authorization');
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Access denied. No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+     const decoded = jwt.verify(token, 'Thisisveryverysecret');
+    req.user = decoded;
+
     if (req.user && req.user.role === 'admin') {
         next();
     } else {

@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import UserService from '../services/Users';
 
 
 const DiscountModal = ({ closeDiscountModal, userId, discountValue }) => {
@@ -8,8 +10,18 @@ const DiscountModal = ({ closeDiscountModal, userId, discountValue }) => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  closeDiscountModal();
+  try {
+    const res = await UserService.giveDiscount(userId, newValue);
+    console.log("res",res)
+   closeDiscountModal();
+} catch (error) {
+    console.error("Error changing discount:", error);
+}
 };
+
+ const onChangeInput = (e) => {
+  setNewValue(e.target.value)
+ }
 
 
   return (
@@ -23,7 +35,7 @@ const DiscountModal = ({ closeDiscountModal, userId, discountValue }) => {
             </div>
             <div className='flex items-center'>
                 <h2 className='mr-3 w-2/3'>Current Value: </h2>
-                <input type="text" name="discount" value={newValue} placeholder="0" required className="input p-3 input-bordered w-[100px] border-2 rounded-md border-black" />
+                <input onChange={onChangeInput} type="text" name="discount" value={newValue} placeholder="0" required className="input p-3 input-bordered w-[100px] border-2 rounded-md border-black" />
                 <span>%</span>
             </div>
 

@@ -138,7 +138,8 @@ const getUserOrders = async (req, res) => {
             
             totalPrice = totalPrice - ((totalPrice * user.discount)/100);
 
-            await resetDiscount(userId);
+            user.discount = 0;
+            await user.save();
             
             const order = await Orders.create({
                 status: 'Pending',
