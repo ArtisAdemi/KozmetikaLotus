@@ -20,6 +20,7 @@ const validateToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
+    validateToken(req, res, next);
     if (req.user && req.user.role === 'admin') {
         next();
     } else {

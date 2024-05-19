@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 
-const DiscountModal = ({ closeDiscountModal }) => {
-
+const DiscountModal = ({ closeDiscountModal, userId, discountValue }) => {
+  const [newValue, setNewValue] = useState(discountValue)
 
  
 
@@ -18,9 +18,13 @@ const DiscountModal = ({ closeDiscountModal }) => {
       <h2 className="text-xl font-semibold text-gray-900">Discount</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
 
+            <div className='flex items-center pb-6'>
+                <p className='text-xs font-semibold'>The discount given will be % value based. Next order the user makes will spend the discount.</p>
+            </div>
             <div className='flex items-center'>
-                <h2 className='mr-3 w-2/3'>Discount Value: </h2>
-                <input type="text" name="discount" placeholder="0" required className="input p-3 input-bordered w-full" />
+                <h2 className='mr-3 w-2/3'>Current Value: </h2>
+                <input type="text" name="discount" value={newValue} placeholder="0" required className="input p-3 input-bordered w-[100px] border-2 rounded-md border-black" />
+                <span>%</span>
             </div>
 
              

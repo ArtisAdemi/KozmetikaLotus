@@ -5,18 +5,16 @@ const Clients = db.Clients
 const Users = db.Users
  
 const giveDiscount = async (req, res) => {
-    const {userId, discount} = req.body.userId
-    try{
+    const { userId, discount } = req.body;
+    try {
         const user = await Users.findByPk(userId);
         
-
-        user.discount = discount
-        await user.update(user);
-
-        res.status(200).json({message : "Discount given successfully"})
-        } catch (err) {
+        user.discount = discount;
+        await user.save();
+        
+        res.status(200).json({ message: "Discount given successfully" });
+    } catch (err) {
         res.status(500).json({ error: err.message });
-        throw new Error("Error giving discount");
     }
 }
 

@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt')
 const db = require("../models");
 const Users = db.Users;
 const validateToken = require('../middleware/AuthMiddleware')
- 
+const { giveDiscount } = require('./discount');
+
 // Controller functions
 
 // Get users
@@ -86,13 +87,13 @@ const loginUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { email, firstName, lastName, phoneNumber, role, password, currentPassword, discount } = req.body;
+    const { email, firstName, lastName, phoneNumber, role, password, currentPassword } = req.body;
     
     try {
         // Find User by id
         const user = await Users.findByPk(userId);
         if (!user) {
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({ message: "User not found" });
         }
 
         // Check if current password matches the user's password
@@ -116,7 +117,6 @@ const updateUser = async (req, res) => {
             lastName: lastName || user.lastName,
             phoneNumber: phoneNumber || user.phoneNumber,
             role: role || user.role,
-            discount: discount || user.discount,
         };
 
         // Add password field only if it's provided
@@ -127,9 +127,10 @@ const updateUser = async (req, res) => {
         // Update the user details
         await user.update(updatedUser);
 
-        res.status(200).json({ message: "User updated successfully", user });
+        return res.status(200).json({ message: "User updated successfully", user }); // Return the response here
+
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message }); // Return the error response
     }
 };
 
@@ -153,6 +154,17 @@ const getUserData = async (req, res) => {
     }
 };
 
+const changeDiscount = async (req, res) => {
+    const { userId, discount } = req.body;
+    
+    try {
+        await giveDiscount(req, res); // Utilize the giveDiscount function from discount.js
+        res.status(200).json({ message: "Discount changed successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 // export controller functions
 module.exports = {
     getUsers,
@@ -161,4 +173,5 @@ module.exports = {
     loginUser,
     updateUser,
     getUserData,
+    changeDiscount,
 };

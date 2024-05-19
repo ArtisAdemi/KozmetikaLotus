@@ -64,7 +64,7 @@ const Orders = ({userId, location}) => {
                 </div>
 
                 {/* Display only the specified number of orders */}
-                {orders.length > 0 && orders.slice(0, displayedOrders).map((order, index) => {
+                {orders.length > 0 && orders.slice(0, displayedOrders).reverse().map((order, index) => {
                     const user = order.User
 
                     const fullName = `${user.firstName} ${user.lastName}`
@@ -72,7 +72,7 @@ const Orders = ({userId, location}) => {
                     return (
                         <div key={index} className='flex justify-between items-center p-2 md:pr-10 w-full border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0'>
                     <h2 className='text-[#333333] md:text-lg w-[10%] md:w-[16.6%]'>{order.id}</h2>
-                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{user.email}</h2>
+                    <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%] overflow-ellipsis overflow-hidden whitespace-nowrap'>{user.email}</h2>
                     <h2 className='text-[#333333] md:text-lg w-[16.6%]'>{fullName}</h2>
                     <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{user.phoneNumber}</h2>
                     <h2 className='hidden md:block text-[#333333] md:text-lg w-[16.6%]'>{order.status}</h2>

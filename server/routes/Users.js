@@ -4,6 +4,7 @@ const authMiddleware = require("../middleware/AuthMiddleware")
 const userController = require('../controllers/users');
 const wishlistController = require('../controllers/wishlist');
 const orderController = require('../controllers/orders');
+const { giveDiscount } = require('../controllers/discount');
 
 // Routes
 
@@ -12,6 +13,8 @@ router.get('/', userController.getUsers);
 
 // ORDERS
 router.post("/orders", authMiddleware.validateToken, orderController.registerOrder)
+
+router.put("/discount", authMiddleware.isAdmin, giveDiscount)
 
 router.delete("/orders/:id", authMiddleware.validateToken, orderController.deleteOrder)
 
