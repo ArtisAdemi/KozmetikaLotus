@@ -28,7 +28,6 @@ const CartMenu = () => {
     const getDiscount = async () => {
         try {
             const res = await AuthService.decodeUser();
-            console.log("res", res)
             if (res.discount) {
                 setDiscount(res.discount);
             }

@@ -84,12 +84,11 @@ const Checkout = () => {
     const getDiscount = async () => {
         try {
             const res = await AuthService.decodeUser();
-            console.log("res", res)
             if (res.discount) {
                 setDiscount(res.discount);
             }
         } catch (err) {
-
+            console.error(err);
         }
     }
 
@@ -113,11 +112,10 @@ const Checkout = () => {
       useEffect(() => {
         handleTotalPrice();
         getUserData();
-      }, [])
+      }, [discount])
 
       //Second useEffect is to handle the form changes -- (to set initial pre-loaded user data)
       useEffect(() => {
-        console.log(products)
         // Set formik initialValues when user data changes
         formik.setValues({
             firstName: user.firstName || '',
