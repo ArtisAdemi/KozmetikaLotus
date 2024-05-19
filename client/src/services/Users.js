@@ -82,6 +82,18 @@ const UserService = {
         }
     },
 
+    giveDiscount: async (userId, discount) => {
+        let endpoint = `${USERS_API_URL}/discount`
+
+        try {
+            const response = await axiosInstance.put(endpoint, {userId: userId, discount: discount});
+            return response.data
+        } catch (err) {
+            console.error('Error updating discount:', err);
+            return null;
+        }
+    }
+
     // getUsersWishlist: async (userId) => {
     //     let endpoint = `${USERS_API_URL}/${userId}/wishlist`
     //     try{

@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navbar, ProductSlider } from '../components'
 import overlap from "../images/overlap.png"
 import {useNavigate} from 'react-router-dom';
 import HeroCarousel from '../components/HeroCarousel';
+import HomeDiscountModal from '../components/HomeDiscountModal';
+import UserService from '../services/Users';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [homeDiscount, setHomeDiscount] = useState(true);
+  const [currentUser, setCurrentUser] = useState(false);
+
+  const isLoggedIn = async () => {
+    const user = await UserService.validateToken();
+    if(user){
+        setCurrentUser(true);
+    }
+  }
+
+  useEffect(() => { 
+    isLoggedIn();
+  }, [])
 
 
   return (
@@ -113,6 +128,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {!currentUser && homeDiscount && <HomeDiscountModal closeHomeDiscount={() => setHomeDiscount(false)} />}
     </div>
   )
 }

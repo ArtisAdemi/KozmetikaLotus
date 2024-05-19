@@ -7,6 +7,7 @@ const Users = db.Users;
 const Images = db.Images;
 const validateToken = require('../middleware/AuthMiddleware');
 const { createClient } = require('./clients');
+const { resetDiscount } = require('./discount');
  
 // Controller functions
 
@@ -127,19 +128,30 @@ const getUserOrders = async (req, res) => {
         try {
             const { products, address } = req.body; // Assuming products are sent in the request body
             
+            const user = await Users.findByPk(userId);
             // Create or find the client associated with the user
             const client = await createClient(userId);
+            let totalPrice = 0
+            for (const product of products) {
+                totalPrice += (product.price * product.quantity)
+            }
+            
+            totalPrice = totalPrice - ((totalPrice * user.discount)/100);
+
+            user.discount = 0;
+            await user.save();
             
             const order = await Orders.create({
                 status: 'Pending',
                 address: address,
-                UserId: userId 
+                UserId: userId,
+                totalPrice: totalPrice
             }); // Create the order
-              
+            
             // Loop through each product and add it to the order with the specified quantity
             for (const product of products) {
                 await order.addProducts(product.id, {
-                     through: { quantity: product.quantity } 
+                    through: { quantity: product.quantity } 
                 });
             }            
     

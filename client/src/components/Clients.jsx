@@ -42,7 +42,7 @@ const Clients = () => {
                             <h2 className='text-[#333333] md:text-lg font-semibold w-[16.6%]'>Action</h2>
                         </div>
 
-                        {clients.length > 0 && clients.map((client, index) => {
+                        {clients.length > 0 && clients.slice().reverse().map((client, index) => {
                             const user = client.User
                             let fullName = `${user.firstName} ${user.lastName}`
                             return (

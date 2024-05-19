@@ -86,7 +86,7 @@ const AdminPannel = () => {
         )}
        </div>
      </div>
-     {selectedTab === 'Orders' && <Orders/>}
+     {selectedTab === 'Orders' && <Orders location={"admin"}/>}
      {selectedTab === 'Products' && <AdminProducts/>}
      {selectedTab === 'Clients' && <Clients/>}
 
