@@ -6,6 +6,8 @@ import RemoveIcon from "@mui/icons-material/Remove"
 import styled from "@emotion/styled"
 import { decreaseCount, increaseCount, removeFromCart, setIsCartOpen } from "../state"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import AuthService from "../services/AuthService"
 
 const FlexBox = styled(Box)`
     display: flex;
@@ -18,10 +20,42 @@ const CartMenu = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart);
     const isCartOpen = useSelector((state) => state.cart.isCartOpen);
+    const [discount, setDiscount] = useState(0)
+    const [fullPrice, setFullPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    const totalPrice = cart.reduce((total, item) => {
-        return total + item?.count * item?.price;
-    }, 0)
+
+    const getDiscount = async () => {
+        try {
+            const res = await AuthService.decodeUser();
+            console.log("res", res)
+            if (res.discount) {
+                setDiscount(res.discount);
+            }
+        } catch (err) {
+
+        }
+    }
+
+    const handlePrice = () => {
+        const totalPrice = cart.reduce((total, item) => {
+            return total + item?.count * item?.price;
+        }, 0)
+        setFullPrice(totalPrice)
+        if (discount > 0) {
+            let priceWithDiscount = totalPrice;
+            priceWithDiscount = totalPrice - (totalPrice * discount / 100);
+            setTotalPrice(priceWithDiscount);
+        }
+
+    }
+    useEffect(() => {
+        getDiscount();
+    }, []);
+
+    useEffect(() => {
+       handlePrice();
+    }, [cart, discount])
 
   return (
     <Box //overlay
@@ -103,7 +137,16 @@ const CartMenu = () => {
                  <Box m="20px 0">
                     <FlexBox m="20px 0">
                         <Typography fontWeight={"bold"}>SUBTOTAL</Typography>
-                        <Typography fontWeight={"bold"}>{totalPrice}€</Typography>
+                        <Box>
+                            <Typography fontWeight={"bold"}>{fullPrice}€</Typography>
+                            { discount > 0 &&
+                            <>
+                             <span fontWeight={"bold"}>-{discount}%</span>
+                             <hr/>
+                            <Typography fontWeight={"bold"}>{totalPrice}€</Typography>
+                            </>
+                            }
+                        </Box>
                     </FlexBox>
                     <Button
                     sx={{

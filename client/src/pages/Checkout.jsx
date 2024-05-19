@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
     const [user, setUser] = useState({});
     const products = useSelector((state) => state.cart.cart)
+    const [discount, setDiscount] = useState(0)
+    const [fullPrice, setFullPrice] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -79,13 +81,34 @@ const Checkout = () => {
         }
     }
 
+    const getDiscount = async () => {
+        try {
+            const res = await AuthService.decodeUser();
+            console.log("res", res)
+            if (res.discount) {
+                setDiscount(res.discount);
+            }
+        } catch (err) {
+
+        }
+    }
+
     const handleTotalPrice = () => {
         let price = 0
         products.forEach(product => {
              price += (product.price * product.count); // Sum up the price of each product
         });
-        setTotalPrice(price)
+        setFullPrice(price);
+        if (discount > 0) {
+            let priceWithDiscount = price;
+            priceWithDiscount = price - (price * discount / 100);
+            setTotalPrice(priceWithDiscount);
+        }
     }
+
+    useEffect(() => {
+        getDiscount();
+    }, []);
 
       useEffect(() => {
         handleTotalPrice();
@@ -157,7 +180,17 @@ const Checkout = () => {
                                         </div>
                                              {formik.errors.address && formik.touched.address && 
                                             <h2 className='w-[50%] md:w-[60%] text-red-500 text-xs md:text-sm -mt-4 md:-mt-5 mx-auto'>{formik.errors.address}</h2>}
-                                        <h2 className='font-semibold'>Total Price: €{totalPrice}</h2>
+                                            <div>
+
+                                        <h2 className='font-semibold'>Total Price: €{fullPrice}</h2>
+                                        { discount > 0 &&
+                                        <>
+                                        <span fontWeight={"bold"}>-{discount}%</span>
+                                        <hr/>
+                                        <span fontWeight={"bold"}>{totalPrice}€</span>
+                                        </>
+                                        }
+                                        </div>
                                       <button type='submit' className='border-[#A3A7FC] bg-[#A3A7FC] rounded-md border-2 p-3 md:p-4 w-full md:w-[50%]  text-[#FFFFFF] shadow-xl hover:opacity-80'>
                                           Porosit
                                       </button>
