@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt')
 const db = require("../models");
 const Users = db.Users;
 const validateToken = require('../middleware/AuthMiddleware')
- 
+const { giveDiscount } = require('./discount');
+
 // Controller functions
 
 // Get users
@@ -34,7 +35,7 @@ const getUserById = async (req, res) => {
 // Register User
 
 const registerUser = async (req, res) => {
-    const { email, firstName, lastName, phoneNumber, role, password, discount} = req.body;
+    const { email, firstName, lastName, phoneNumber, role, password} = req.body;
     try{
         // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -47,7 +48,7 @@ const registerUser = async (req, res) => {
             phoneNumber: phoneNumber,
             role: role,
             password: hashedPassword,
-            discount: discount
+            discount: 15,
         });
         res.status(201).json(newUser);
     } catch (err) {
@@ -86,13 +87,13 @@ const loginUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { email, firstName, lastName, phoneNumber, role, password, currentPassword, discount } = req.body;
+    const { email, firstName, lastName, phoneNumber, role, password, currentPassword } = req.body;
     
     try {
         // Find User by id
         const user = await Users.findByPk(userId);
         if (!user) {
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({ message: "User not found" });
         }
 
         // Check if current password matches the user's password
@@ -116,7 +117,6 @@ const updateUser = async (req, res) => {
             lastName: lastName || user.lastName,
             phoneNumber: phoneNumber || user.phoneNumber,
             role: role || user.role,
-            discount: discount || user.discount,
         };
 
         // Add password field only if it's provided
@@ -127,9 +127,10 @@ const updateUser = async (req, res) => {
         // Update the user details
         await user.update(updatedUser);
 
-        res.status(200).json({ message: "User updated successfully", user });
+        return res.status(200).json({ message: "User updated successfully", user }); // Return the response here
+
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message }); // Return the error response
     }
 };
 

@@ -67,7 +67,7 @@ const Orders = ({userId, location}) => {
                 </div>
 
                 {/* Display only the specified number of orders */}
-                {orders.length > 0 && orders.slice(0, displayedOrders).map((order, index) => {
+                {orders?.length > 0 && orders.slice(0, displayedOrders).map((order, index) => {
                     const user = order.User
 
                     const fullName = `${user.firstName} ${user.lastName}`

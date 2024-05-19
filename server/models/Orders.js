@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false,
         },
+        totalPrice:{
+            type: DataTypes.FLOAT,
+            allowNull: false
+        }
     });
      // This creates a table with many to many relation
      Orders.associate = (models) => {

@@ -143,11 +143,13 @@ const Profile = () => {
                         </div>
 
                         {/* STATIC ORDER DATA */}
-                        {orders.length > 0 && orders.map((order, index) => {
+                        {orders?.length > 0 && orders.map((order, index) => {
                         let totalPrice = 0; // Initialize totalPrice to 0 for each order
-                        order.Products.forEach(product => {
-                            totalPrice += (product.price * product.Order_Products.quantity); // Sum up the price of each product
-                        });
+                        if (order.Products) {
+                            order.Products.forEach(product => {
+                                totalPrice += (product.price * product.Order_Products.quantity);
+                            });
+                        }
 
                          // Format the date
                         const formattedDate = new Date(order.createdAt).toLocaleDateString('en-GB'); // 'en-GB' uses day/month/year format

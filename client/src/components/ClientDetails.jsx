@@ -48,6 +48,12 @@ const ClientDetails = ( {closeClientDetails, user} ) => {
                                         <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Phone: </h2>
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{`0${user.phoneNumber}`}</h2>
                                     </div>
+                                    {user.discount > 0 && 
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start'>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Discount: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{`${user.discount}%`}</h2>
+                                    </div>
+                                    }
                                 </div>
                             </div>
 
@@ -76,6 +82,14 @@ const ClientDetails = ( {closeClientDetails, user} ) => {
                                         <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{`0${user.phoneNumber}`}</h2>
                                     </div>
                                 </div>
+                                {user.discount > 0 &&
+                                <div className='flex md:w-[20%] flex-col'>
+                                    <div className='flex md:flex-col mb-8 justify-start items-center md:items-start '>
+                                        <h2 className='md:mr-3 w-[25%] md:w-[100%] text-sm md:text-base font-medium'>Phone: </h2>
+                                        <h2 className='rounded-md w-[75%] md:w-[100%] text-sm md:text-base p-3 md:p-4 border bg-[#FBFCFDF0] border-[#E4E7EB]'>{`0${user.phoneNumber}`}</h2>
+                                    </div>
+                                </div>
+                                }
                             </div>
                             
                             <div className='flex flex-col md:flex-row justify-between md:w-[50%]'>
@@ -93,7 +107,7 @@ const ClientDetails = ( {closeClientDetails, user} ) => {
             </div>
                 <Orders userId={user.id} location={"clients"}/>
 
-            {discountModal && <DiscountModal closeDiscountModal={() => setDiscountModal(false)}/>}
+            {discountModal && <DiscountModal userId={user.id} discountValue={user.discount} closeDiscountModal={() => setDiscountModal(false)}/>}
         </div>
 
     )
