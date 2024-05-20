@@ -5,7 +5,7 @@ const Categories = db.Categories;
 const Products = db.Products;
 const SubCategories = db.Subcategory
 const Images = db.Images;
-const Brands = db.Brands;
+const Brand = db.Brand;
 const fs = require('fs');
 const path = require('path');
 const {notifyUsersOfStockChange} = require("../middleware/Mailer")
@@ -19,7 +19,7 @@ const getProducts = async (req, res) => {
     const offset = (page - 1) * limit;
     const subCategory = req.query.subCategory;
     const productName = req.query.productName;
-    const brandName = req.query.brandName; // Add brandName parameter
+    const brand = req.query.brand; // Add brandName parameter
 
     let whereCondition = {};
     let includeCondition = [];
@@ -46,10 +46,10 @@ const getProducts = async (req, res) => {
         });
     }
 
-    if (brandName) {
+    if (brand) {
         includeCondition.push({
-            model: Brands,
-            where: { name: brandName },
+            model: Brand,
+            where: { name: brand },
         });
     }
 

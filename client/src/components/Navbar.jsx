@@ -278,7 +278,7 @@ const Navbar = () => {
                         <h2
                           key={index}
                           className="text-[#292929] ml-5 capitalize font-semibold cursor-pointer p-3 border-b border-[#DFDFDF]"
-                          onClick={() => {redirect(brand.name); setBrandModal(!brandModal)}}
+                          onClick={() => {redirect(`/brands/${brand.name}`); setBrandModal(!brandModal)}}
                         >
                           {brand.name}
                         </h2>
@@ -377,7 +377,7 @@ const Navbar = () => {
                      <div className="modal flex items-center justify-center">
                        <div className="flex flex-wrap gap-y-2 gap-x-10 justify-center items-center">
                          {brands.map((brand, index) => (
-                           <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(brand.name)}>
+                           <h2 key={index} className="text-[#FFFFFF] text-sm cursor-pointer hover:underline capitalize" onClick={() => redirect(`brands/${brand.name}`)}>
                              {brand.name}
                            </h2>
                          ))}

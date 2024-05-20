@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Footer } from './components';
 import { AboutUs, ContactUs, Home, Products, Login, Register, SingleProduct, AdminPannel, AdminProductDetails, Wishlist, Profile, Checkout } from './pages';
 import CartMenu from './components/CartMenu';
+import BrandsPage from './pages/Brands';
 
 
 
@@ -16,6 +17,7 @@ function App() {
             <Route path='/' exact Component={Home} />
             <Route path='/products/:subCategoryName'exact Component={Products}/>
             <Route path='/products/:categoryName/:productName'exact Component={SingleProduct}/>
+            <Route path='/products/brands/:brandName'exact Component={BrandsPage}/>
             <Route path='/about'exact Component={AboutUs}/>
             <Route path='/wishlist'exact Component={Wishlist}/>
             <Route path='/contact'exact Component={ContactUs}/>
