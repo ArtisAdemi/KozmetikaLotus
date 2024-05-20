@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 import Swal from 'sweetalert2';
 
-const ProductList = ({ subCategory, productName, isAdmin }) => {
+const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0); // Track total number of products
     const [page, setPage] = useState(1);
@@ -19,7 +19,7 @@ const ProductList = ({ subCategory, productName, isAdmin }) => {
 
     useEffect(() => {
        fetchProducts();
-    }, [page, subCategory, productName]);
+    }, [page, subCategory, productName, brand]);
 
     // First useEffect to decode user and set userId
     useEffect(() => {
@@ -59,8 +59,9 @@ const ProductList = ({ subCategory, productName, isAdmin }) => {
             const filterModel = {
                 subCategory: subCategory !== 'all' ? subCategory : null,
                 name: productName ? productName : null,
+                brand: brand ? brand : null,
                 page: page,
-                limit: limit
+                limit: limit,
             };
 
             const result = await ProductService.getProductsByFilter(filterModel);
