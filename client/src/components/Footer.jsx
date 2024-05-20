@@ -60,9 +60,9 @@ const Footer = () => {
             <div>
                 <h2 className='text-lg font-bold mb-3'>Kategoritë</h2>
                 <div className='w-full grid grid-cols-2 gap-x-12 gap-y-3'>
-                    <h2 className=' text-lg cursor-pointer' onClick={() => redirect("all")}>Të gjitha</h2>
+                    <h2 className=' md:text-lg cursor-pointer' onClick={() => redirect("all")}>Të gjitha</h2>
                         {categories.map((category, index) => (
-                           <h2 className=' text-lg cursor-pointer' key={index}>{category.name}</h2>
+                           <h2 className=' md:text-lg cursor-pointer' key={index}>{category.name}</h2>
                            ))}
                 </div>
             </div>
@@ -101,7 +101,7 @@ const Footer = () => {
         </div>
     </div>
     <div className='bg-[#292929] text-center py-3'>
-            <span>© 2024 ProSolutions. All Rights Reserved.</span>
+            <span>© {(new Date().getFullYear())} ProSolutions. All Rights Reserved.</span>
     </div>
 </div>
   )

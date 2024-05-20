@@ -6,11 +6,11 @@ import Product3Home from '../images/Product3Home.png'
 import CardGiftcard from '../Icons/CardGiftcard';
 import Discount from '../Icons/Discount';
 import QAndA from '../Icons/Q&A';
-import ProductSlider from './ProductSlider';
 import LikeProduct from './LikeProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../state';
 import Swal from 'sweetalert2';
+import ProductSliderDetails from './ProductSliderDetails';
 
 
 const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, inStock, isAdmin}) => {
@@ -178,7 +178,7 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
           <div className='w-[80%] text-center p-6'>
             <h1 className='font-bold text-xl'>You May Also Like</h1>
             <div className='mt-10 pb-10'>
-              <ProductSlider subCategory={subCategory}/>
+              <ProductSliderDetails subCategory={subCategory}/>
             </div>
           </div>
         </div>
