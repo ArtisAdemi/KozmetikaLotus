@@ -1,11 +1,17 @@
 import axios from 'axios';
+import buildUrl from "../helpers/BuildParam";
 const API_URL = 'http://localhost:3001/api/clients';
 
 const ClientsService = {
-    getClients: async () => {
+    getClients: async (limit) => {
+        let endpoint = `${API_URL}?`
         try{
-
-            const response = await axios.get(`${API_URL}`);
+            let params = {}
+            if (limit) {
+                params["limit"] = limit
+            }
+            endpoint += buildUrl(params)
+            const response = await axios.get(endpoint);
             return response.data;
         } catch (err) {
             console.error('Error fetching categories:', err);

@@ -85,7 +85,7 @@ const ProductListItem = ({title, shortDescription, price, subCategory, id, isAdm
         </div>
         <div className="p-4">
           <h2 className="text-start text-xl text-[#292929] font-bold max-h-10 overflow-ellipsis overflow-hidden whitespace-nowrap">{title}</h2>
-          <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{shortDescription}</p>
+          <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap">{shortDescription}</p>
           {/* Lower Part */}
           <div className="flex justify-between items-center mt-4">
             <span className="text-xl text-[#292929] font-bold">€{price}</span>

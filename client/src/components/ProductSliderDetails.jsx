@@ -19,7 +19,7 @@ const truncateDescription = (description, maxLength) => {
 
 
 
-const ProductSlider = ({ subCategory, uniqueCategories }) => {
+const ProductSliderDetails = ({ subCategory, uniqueCategories }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -107,7 +107,7 @@ const ProductSlider = ({ subCategory, uniqueCategories }) => {
       <div className='w-[80%]'>
         <Slider {...settings}>
         {products.length > 0 && products.map((product, index) => (
-          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg cursor-pointer" onClick={() => redirect(product.Subcategories[0].name)} key={index}>
+          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg cursor-pointer" onClick={() => redirect(`${product.Subcategories[0].name}/${product.id}`)} key={index}>
           <div className="flex justify-center items-center w-full">
           {product.Images && product.Images.length > 0 && (
                   <img className="object-cover w-full min-h-[375px] max-h-[375px]" src={`/uploads/${product.Images[0].fileName}`} alt={product.title} />
@@ -129,4 +129,4 @@ const ProductSlider = ({ subCategory, uniqueCategories }) => {
   );
 };
 
-export default ProductSlider;
+export default ProductSliderDetails;
