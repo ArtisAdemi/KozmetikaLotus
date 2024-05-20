@@ -168,16 +168,16 @@ const OrderDetails = ( {closeOrderDetails, id, location} ) => {
                             <div className='md:mt-5'>
                                 <h2 className='text-[#212121] pb-4  border border-b-[#E0E0E0] border-l-0 border-r-0 border-t-0 font-semibold text-xl md:text-2xl'>Products</h2>
                             </div>
-                            <div className='grid justify-center md:grid-cols-4 sm:grid-cols-1 sm:justify-between mb-5'>
+                            <div className='grid justify-center lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 sm:justify-between '>
 
                                 {order.Products && order?.Products.length > 0 && order?.Products.map((product, index) => (
-                                <div key={index} className="max-w-[250px] flex justify-between flex-col w-auto  bg-white shadow-lg h-[430px]">
+                                <div key={index} className="max-w-[250px] flex justify-between flex-col w-auto  bg-white shadow-lg h-[430px] mb-5">
                                     <div className="flex justify-center items-center w-full">
-                                      <img className="object-cover max-w-[200px]" src={`uploads/${product?.Images[0]?.fileName}`} alt="Image here" />
+                                      <img className="object-cover max-w-[250px] min-h-[300px] max-h-[300px]" src={`uploads/${product?.Images[0]?.fileName}`} alt="Image here" />
                                     </div>
                                     <div className="p-4">
                                       <h2 className="text-start text-xl text-[#292929] font-bold">{product?.title}</h2>
-                                      <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{product?.shortDescription}</p>
+                                      <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap">{product?.shortDescription}</p>
                                       <div className="flex justify-between items-center mt-4">
                                         <span className="text-xl text-[#292929] font-bold">€{product?.price}</span>
                                         <span className="text-md text-[#292929]">Quantity: {product?.Order_Products.quantity}</span>

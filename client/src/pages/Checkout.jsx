@@ -213,7 +213,7 @@ const Checkout = () => {
                                         </div>
                                         <div className="p-4">
                                         <h2 className="text-start text-xl text-[#292929] font-bold max-h-10 overflow-ellipsis overflow-hidden whitespace-nowrap">{product.title}</h2>
-                                        <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap h-4">{product.shortDescription}</p>
+                                        <p className="mt-1 text-start text-[#292929] text-sm overflow-ellipsis overflow-hidden whitespace-nowrap">{product.shortDescription}</p>
                                         {/* Lower Part */}
                                         <div className='flex justify-between'>
                                         <div className="flex justify-between items-center mt-4">
