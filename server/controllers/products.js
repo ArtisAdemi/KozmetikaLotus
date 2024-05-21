@@ -330,9 +330,11 @@ const remindMeWhenInStock = async (req, res) => {
             }
         });
 
+
         if (notification) {
             // Update existing notification
-            await notification.update({ remindMe });
+            notification.notify = remindMe
+            await notification.save();
         } else {
             // Create new notification
             await db.StockNotifications.create({
@@ -360,7 +362,7 @@ const remindMeForThisProduct = async (req, res) => {
             }
         });
 
-        if (notification) {
+        if (notification.notify) {
             return res.status(200).json({notification: true});
         }
         return res.status(200).json({notification: false});

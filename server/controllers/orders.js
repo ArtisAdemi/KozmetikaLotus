@@ -182,15 +182,22 @@ const getUserOrders = async (req, res) => {
            // Update the order details
             await order.update(updatedOrder);
 
-            const user = await Users.findByPk(order.userId);
+            const user = await Users.findByPk(order.UserId);
             if (!user) {
-                console.error(`User with id ${order.userId} not found.`);
+                console.error(`User with id ${order.UserId} not found.`);
             } else {
-                console.log('User found:', user.email);
-                let msg = `Order with id: ${order.id} now has a status of ${order.status}`;
+                let msg = `
+                    <html>
+                        <body>
+                            <p>Hello ${user.firstName}!</p>
+                            <p>Your order with id: ${order.id} has been updated to status: ${order.status}.</p>
+                            <p>You can check your order in the profile page in our website.</p>
+                            <p>Thank you for shopping with us!</p>
+                        </body>
+                    </html>
+                `;
                 try {
                     await sendEmail(user.email, "Order Status Has Changed", msg);
-                    console.log(`Email sent to ${user.email}`);
                 } catch (emailError) {
                     console.error(`Failed to send email to ${user.email}:`, emailError);
                 }

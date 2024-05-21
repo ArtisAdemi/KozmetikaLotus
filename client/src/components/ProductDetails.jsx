@@ -77,7 +77,7 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
       try{
 
         await ProductService.remindMeForThisProduct(id).then((res) => {
-          setRemindMe(res)
+          setRemindMe(res.notification)
         })
       } catch (err) {
         console.error(err)

@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const db = require("../models")
+const Products = db.Products;
 
 // Configuring email transporter
 const transporter = nodemailer.createTransport({
@@ -68,7 +69,7 @@ const sendContactEmail = (userData) => {
 const sendEmail = async (to, subject, message) => {
     console.log('Preparing to send email...');
     let transporter = nodemailer.createTransport({
-        host: "smtp.example.com",
+        host: "smtp.gmail.com",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
@@ -81,13 +82,11 @@ const sendEmail = async (to, subject, message) => {
         from: process.env.EMAIL,
         to: to,
         subject: subject,
-        text: message,
+        html: message,
     };
 
     try {
-        console.log('Sending email to:', to);
         let info = await transporter.sendMail(mailOptions);
-        console.log('Message sent: %s', info.messageId);
     } catch (error) {
         console.error('Error sending email:', error);
         throw error;  // rethrow error to be handled in the caller function
@@ -102,62 +101,28 @@ async function notifyUsersOfStockChange(productId) {
         },
     });
 
+    const product = await Products.findByPk(productId);
+
+
     notifications.forEach(async (notification) => {
         const user = await db.Users.findByPk(notification.userId)
-        sendEmail({
-            email: user.email,
-            subject: "Product Back in Stock",
-            message: `The product you were interested in is now back in stock!`
-        });
+        let msg =  `
+            <html>
+                <body>
+                    <p>Hello ${user.firstName}!</p>
+                    <p>The product you were interested in titled: ${product.title}, was recently put back in stock.</p>
+                    <a href="http://localhost:3000/products/all/${product.id}">Check it our here</a>
+                    <p>Thank you for shopping with us!</p>
+                </body>
+            </html>
+        `;
+        sendEmail(user.email, "Product Back in Stock", msg);
+
 
         // Update notification to false after sending email
         await notification.update({ notify: false });
     });
 };
 
-const sendOrderStatusEmail = async (userId) => {
-    const statusUpdate = await db.Orders.findAll({
-        where: {
-            userId: userId
-        }
-    });
 
-    statusUpdate.forEach(async (status) => {
-        const user = await db.Users.findByPk(status.userId)
-        sendEmail({
-            email: user.email,
-            subject: "Order Update",
-            message: `The order you made has updated in status!`
-        });
-    })
-
-    // const user = await db.Users.findByPk(userId);
-    // const order = await db.Orders.findByPk(orderId);
-
-    // if (!user || !order) {
-    //     console.log("User or Order not found");
-    //     return;
-    // }
-
-    // const mailOptions = {
-    //     from: process.env.EMAIL,
-    //     to: user.email,
-    //     subject: "Order Status Update",
-    //     html: `
-    //         <p>Hello ${user.email},</p>
-    //         <p>Your order status has been updated to: ${selectedStatus}</p>
-    //         <p>Thank you for shopping with us!</p>
-    //     `
-    // };
-
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log("Email sent: " + info.response);
-    //     }
-    // });
-    
-};
-
-module.exports = { sendContactEmail, notifyUsersOfStockChange, sendOrderStatusEmail, sendEmail };
+module.exports = { sendContactEmail, notifyUsersOfStockChange, sendEmail };
