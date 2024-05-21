@@ -8,6 +8,7 @@ const Images = db.Images;
 const validateToken = require('../middleware/AuthMiddleware');
 const { createClient } = require('./clients');
 const { resetDiscount } = require('./discount');
+const { sendEmail } = require('../middleware/Mailer');
  
 // Controller functions
 
@@ -180,6 +181,27 @@ const getUserOrders = async (req, res) => {
             };
            // Update the order details
             await order.update(updatedOrder);
+
+            const user = await Users.findByPk(order.UserId);
+            if (!user) {
+                console.error(`User with id ${order.UserId} not found.`);
+            } else {
+                let msg = `
+                    <html>
+                        <body>
+                            <p>Hello ${user.firstName}!</p>
+                            <p>Your order with id: ${order.id} has been updated to status: ${order.status}.</p>
+                            <p>You can check your order in the profile page in our website.</p>
+                            <p>Thank you for shopping with us!</p>
+                        </body>
+                    </html>
+                `;
+                try {
+                    await sendEmail(user.email, "Order Status Has Changed", msg);
+                } catch (emailError) {
+                    console.error(`Failed to send email to ${user.email}:`, emailError);
+                }
+            }
     
             res.status(200).json({ message: "Order updated successfully", order });
         } catch (err) {

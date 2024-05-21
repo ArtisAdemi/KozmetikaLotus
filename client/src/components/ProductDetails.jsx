@@ -67,11 +67,24 @@ const ProductDetails = ({title, subCategory, shortDescription, longDescription, 
 
     try{
       const res = await ProductService.remindMeWhenInStock(id, remindMeBool);
-      console.log(res);
     } catch (err) {
       console.error (err.message)
     }
   }
+
+  useEffect(() => {
+    const fetchRemindMe = async () => {
+      try{
+
+        await ProductService.remindMeForThisProduct(id).then((res) => {
+          setRemindMe(res.notification)
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchRemindMe();
+  }, [])
     
   
 

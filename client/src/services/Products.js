@@ -200,6 +200,17 @@ const ProductService = {
             console.error('Error fetching images', err);
             return null;
         }
+    },
+
+    remindMeForThisProduct: async (productId) => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}/remindWhenInStock/${productId}`)
+
+            return res.data;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
     }
 
 };
