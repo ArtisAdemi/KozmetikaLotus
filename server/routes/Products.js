@@ -12,6 +12,8 @@ router.post('/', validateToken, fileUpload, productsController.registerProduct);
 // RemindMe when in stock
 router.post('/remindWhenInStock', validateToken ,productsController.remindMeWhenInStock);
 
+router.get('/remindWhenInStock/:productId', validateToken ,productsController.remindMeForThisProduct);
+
 // Update Product
 router.put('/:id', productsController.updateProduct)
 

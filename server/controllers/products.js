@@ -174,6 +174,10 @@ const updateProduct = async(req, res) => {
             await notifyUsersOfStockChange(productId);
         }
 
+        const users = await db.StockNotifications.findAll({
+            where: {productId: product.id}
+        })
+        
         // If images have been uploaded, save their paths in the Images table
         if (req.uploadedFiles && req.uploadedFiles.length > 0) {
             const imageRecords = req.uploadedFiles.map(file => ({
@@ -310,8 +314,6 @@ const getBrands = async (req, res) => {
 const remindMeWhenInStock = async (req, res) => {
     const userId = req.user.id; // Assuming you have user's ID from the session or token
     const { productId, remindMe } = req.body; // `remindMe` is a boolean indicating whether to notify the user
-    console.log("----------------------------------")
-    console.log("productId in backend", productId)
 
     try {
         // Check if the product exists
@@ -344,7 +346,28 @@ const remindMeWhenInStock = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+
 };
+const remindMeForThisProduct = async (req, res) => {
+    const {productId} = req.params
+    const userId = req.user.id
+
+    try {
+        const notification = await db.StockNotifications.findOne({
+            where:{
+                userId: userId,
+                productId: productId,
+            }
+        });
+
+        if (notification) {
+            return res.status(200).json({notification: true});
+        }
+        return res.status(200).json({notification: false});
+    } catch (err) {
+        console.error(err)
+    }
+}
 
 module.exports = {
     getProducts,
@@ -355,5 +378,6 @@ module.exports = {
     getUniqueProductPerCategory,
     getProductImages,
     getBrands,
-    remindMeWhenInStock
+    remindMeWhenInStock,
+    remindMeForThisProduct,
 }

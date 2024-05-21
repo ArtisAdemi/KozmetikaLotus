@@ -10,6 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [homeDiscount, setHomeDiscount] = useState(true);
   const [currentUser, setCurrentUser] = useState(false);
+  const token = localStorage.getItem("token");
 
   const isLoggedIn = async () => {
     const user = await UserService.validateToken();
@@ -128,7 +129,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {!currentUser && homeDiscount && <HomeDiscountModal closeHomeDiscount={() => setHomeDiscount(false)} />}
+      {!currentUser && !token && homeDiscount && <HomeDiscountModal closeHomeDiscount={() => setHomeDiscount(false)} />}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import OrderService from '../services/OrderService';
+import MailerService from '../services/Mailer';
 import Swal from "sweetalert2"
 
 
