@@ -70,7 +70,7 @@ const Home = () => {
           </div>
         </div>
       <div className='bg-[#F2E2DA] capitalize pb-20 mt-10 w-full'>
-        <ProductSlider subCategory={"tonic"}/>
+        <ProductSlider bestSeller={true}/>
       </div>
       </div>
       {/* About us section */}

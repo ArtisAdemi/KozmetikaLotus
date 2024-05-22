@@ -24,6 +24,7 @@ router.get('/productPerCategory', productsController.getUniqueProductPerCategory
 router.get('/brands', productsController.getBrands)
 // Get Products
 router.get("/", productsController.getProducts)
+router.get('/best-selling', productsController.getBestSellingProducts);
 
 // Get Product by ID
 router.get('/:id', productsController.getProductById)

@@ -371,6 +371,52 @@ const remindMeForThisProduct = async (req, res) => {
     }
 }
 
+const getBestSellingProducts = async (req, res) => {
+    try {
+
+        const bestSellingProducts = await db.Order_Products.findAll({
+            attributes: ['ProductId', [Sequelize.fn('COUNT', Sequelize.col('ProductId')), 'totalOrders']],
+            group: ['ProductId'],
+            order: [[Sequelize.literal('COUNT("ProductId")'), 'DESC']],
+            limit: 4
+        });
+
+        if (bestSellingProducts.length > 0) {
+            // Extract product IDs from the result
+            const productIds = bestSellingProducts.map(product => product.ProductId);
+
+            // Fetch product details for these IDs
+            const products = await db.Products.findAll({
+                where: {
+                    id: productIds
+                },
+                include: [{
+                    model: db.Images,
+                    as: 'Images', // Ensure the alias matches your association definition
+                },
+                {
+                    model: SubCategories,
+                }]
+            });
+
+            // Merge product details with totalOrders
+            const result = bestSellingProducts.map(orderProduct => {
+                const product = products.find(prod => prod.id === orderProduct.ProductId);
+                return {
+                    product,
+                    totalOrders: orderProduct.getDataValue('totalOrders')
+                };
+            });
+            return res.json(result);
+        }
+
+        return res.json([]);
+    } catch (err) {
+        console.error("Error in getBestSellingProducts:", err); // Log error
+        return res.status(500).json({ error: err.message });
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
@@ -382,4 +428,5 @@ module.exports = {
     getBrands,
     remindMeWhenInStock,
     remindMeForThisProduct,
+    getBestSellingProducts,
 }

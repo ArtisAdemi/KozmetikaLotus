@@ -211,6 +211,16 @@ const ProductService = {
             console.error(err);
             return null;
         }
+    },
+
+    getBestSellers: async () => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}/best-selling`)
+            return res.data;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
     }
 
 };
