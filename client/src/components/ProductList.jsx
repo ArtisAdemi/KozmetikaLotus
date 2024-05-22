@@ -5,6 +5,8 @@ import WishlistService from '../services/Wishlist'; // Import WishlistService
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../state';
 
 const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
     const [products, setProducts] = useState([]);
@@ -16,6 +18,7 @@ const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
     const limit = 12; // Assuming each page shows 12 products
     const navigate = useNavigate();
     const token = localStorage.getItem("token"); // Assuming you store token in localStorage
+    const dispatch = useDispatch();
 
     useEffect(() => {
        fetchProducts();
@@ -44,7 +47,9 @@ const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
             if (userId) { // Ensure userId is not null
                 try {
                     const wishlistItems = await WishlistService.getUsersWishlist(userId);
-                    setWishlist(wishlistItems.map(item => item.id));
+                    if (wishlistItems.length > 0){
+                        setWishlist(wishlistItems.map(item => item.id));
+                    }
                 } catch (error) {
                     console.error("Error fetching wishlist", error);
                 }
@@ -92,6 +97,7 @@ const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
                         confirmButtonText: "Ok",
                       })
                 });
+                dispatch(removeFromWishlist())
                 setWishlist(wishlist.filter(id => id !== productId));
             } else {
                 // Call service to add to wishlist
@@ -103,6 +109,7 @@ const ProductList = ({ subCategory, productName, brand, isAdmin }) => {
                         confirmButtonText: "Ok",
                       })
                 });
+                  dispatch(addToWishlist())
                 setWishlist([...wishlist, productId]);
             }
         } catch (error) {

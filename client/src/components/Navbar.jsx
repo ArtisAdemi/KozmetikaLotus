@@ -11,6 +11,8 @@ import AuthService from '../services/AuthService';
 import { setIsCartOpen } from '../state';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductService from '../services/Products';
+import WishlistService from '../services/Wishlist';
+import { setWishlistLength } from '../state';
 
 
 const Navbar = () => {
@@ -25,12 +27,14 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart)
+    const wishlistLength = useSelector((state) => state.cart.wishlist)
     const isCartOpen = useSelector((state) => state.cart.isCartOpen)
     const [subCategories, setSubCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [brands, setBrands] = useState([]);
     const [brandModal, setBrandModal] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
 
 
 
@@ -51,6 +55,26 @@ const Navbar = () => {
     const navWishList = () => {
         navigate('/wishlist');
     }
+
+  useEffect(() => {
+    const fetchWishlistItems = async () => {
+        try {
+          let token = localStorage.getItem("token")
+          if (token) {
+            if(user.id){
+              const userId = user.id;
+              await WishlistService.getUsersWishlist(userId).then((res) => {
+                setWishlist(res);
+                dispatch(setWishlistLength(res.length))
+              });
+            }
+          }
+        } catch (error) {
+            console.error("Error fetching wishlist", error);
+        }
+    };
+    fetchWishlistItems();
+}, [user]);
 
     const isLoggedIn = async () => {
         const user = await UserService.validateToken();
@@ -187,8 +211,9 @@ const Navbar = () => {
         <div className='w-[100px] hidden md:flex mt-1 -mb-3 justify-between items-center'>
             {/* Wishlist Icon*/}
             {currentUser && 
-                <div onClick={navWishList} className='wishlist flex items-center pr-3 -ml-6 cursor-pointer'>
-                    <FaRegHeart size={20}/>
+                <div onClick={navWishList} className='relative wishlist flex items-center p-2 pr-4 -ml-6 mb-[3px] cursor-pointer'>
+                    <FaRegHeart size={22}/>
+                    <span className="text-xs absolute right-0 top-0 transform translate-x-50% -translate-y-50% text-white bg-red-700 font-semibold rounded-full pr-1 p-1">{wishlistLength && wishlistLength > 0 ? wishlistLength : "0"}</span>
                 </div>
             }
 

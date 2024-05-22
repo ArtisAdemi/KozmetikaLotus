@@ -24,10 +24,25 @@ const Checkout = () => {
     const getUserData = async () => {
         let res;
         try{
-          res = await AuthService.decodeUser();
-          setUser(res);
+            let token = localStorage.getItem("token");
+            if (token) {
+                await AuthService.decodeUser().then((res) => {
+                    console.log("res", res)
+                    setUser(res);
+                    setDiscount(res?.discount)
+                });
+            } else {
+                Swal.fire({
+                    title: "You are not logged in!",
+                    text: "Please log in before making an order",
+                    icon: "warning"
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                        navigate("/login")
+                    }
+                  })
+            }
         } catch (err) {
-          console.error(err)
           return null;
         }
       }
@@ -40,10 +55,10 @@ const Checkout = () => {
       const formik = useFormik({
         initialValues: {
             // Preload user data into initialValues
-            firstName: user.firstName || '', // Ensure to handle cases where user.firstName might be undefined
-            lastName: user.lastName || '',
-            email: user.email || '',
-            phoneNumber: user.phoneNumber || '',
+            firstName: user?.firstName || '', // Ensure to handle cases where user.firstName might be undefined
+            lastName: user?.lastName || '',
+            email: user?.email || '',
+            phoneNumber: user?.phoneNumber || '',
             address: '',
         },
         validationSchema: validationSchema,
@@ -81,16 +96,16 @@ const Checkout = () => {
         }
     }
 
-    const getDiscount = async () => {
-        try {
-            const res = await AuthService.decodeUser();
-            if (res.discount) {
-                setDiscount(res.discount);
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    // const getDiscount = async () => {
+    //     try {
+    //         const res = await AuthService.decodeUser();
+    //         if (res.discount) {
+    //             setDiscount(res.discount);
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
 
     const handleTotalPrice = () => {
         let price = 0
@@ -105,10 +120,6 @@ const Checkout = () => {
         }
     }
 
-    useEffect(() => {
-        getDiscount();
-    }, []);
-
       useEffect(() => {
         handleTotalPrice();
         getUserData();
@@ -118,10 +129,10 @@ const Checkout = () => {
       useEffect(() => {
         // Set formik initialValues when user data changes
         formik.setValues({
-            firstName: user.firstName || '',
-            lastName: user.lastName || '',
-            email: user.email || '',
-            phoneNumber: user.phoneNumber || '',
+            firstName: user?.firstName || '',
+            lastName: user?.lastName || '',
+            email: user?.email || '',
+            phoneNumber: user?.phoneNumber || '',
             address: '',
         });
     }, [user]); // Listen for changes in the user state

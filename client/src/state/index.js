@@ -11,6 +11,7 @@ const loadFromLocalStorage = () => {
 const initialState = {
     isCartOpen: false,
     cart: loadFromLocalStorage() || [],
+    wishlist: 0,
     items: [],
 };
 
@@ -71,7 +72,18 @@ export const cartSlice = createSlice({
 
         setIsCartOpen: (state) => {
             state.isCartOpen = !state.isCartOpen;
-        }
+        },
+
+        addToWishlist: (state, action) => {
+            state.wishlist += 1;
+        },
+        
+        removeFromWishlist: (state, action) => {
+            state.wishlist -= 1;
+        },
+        setWishlistLength: (state, action) => {
+            state.wishlist = action.payload
+        },
     }
 })
 
@@ -90,6 +102,9 @@ export const {
     decreaseCount,
     setIsCartOpen,
     resetCart,
+    addToWishlist,
+    removeFromWishlist,
+    setWishlistLength
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

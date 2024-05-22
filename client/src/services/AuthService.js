@@ -20,8 +20,7 @@ const AuthService = {
             const response = await axiosInstance.get(`${AUTH_API_URL}/getUserData`);
             return response.data;
         } catch (err) {
-            console.error("Error fetching users", err);
-            throw err;
+            console.log("You are not logged in");
         }
     }
 }

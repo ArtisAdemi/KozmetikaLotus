@@ -5,8 +5,11 @@ const { validateToken } = require('../middleware/AuthMiddleware');
 const getDecodedUser = (req, res) => {
     try {
         validateToken(req, res, () => {
-            const decodedUser = req.user;
-            res.json(decodedUser); // Return the decoded user information
+            if (req.user){
+                let decodedUser = req.user;
+                res.json(decodedUser); // Return the decoded user information
+            }
+            res.json({message: "You are not logged in!"});
         });
     } catch (error) {
         res.status(400).json({ message: 'Error decoding token' });

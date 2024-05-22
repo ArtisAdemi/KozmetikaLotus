@@ -9,8 +9,19 @@ const axiosInstance = axios.create({
     }
 });
 
+
 const WishlistService = {
+    setAuthToken: () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        } else {
+            delete axiosInstance.defaults.headers.common['Authorization'];
+        }
+    },
+
     getUsersWishlist: async (userId) => {
+        WishlistService.setAuthToken();
         let endpoint = `${USERS_API_URL}/${userId}/wishlist`
         try{
             const result = await axiosInstance.get(endpoint);

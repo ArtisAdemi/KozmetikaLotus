@@ -27,9 +27,13 @@ const CartMenu = () => {
 
     const getDiscount = async () => {
         try {
-            const res = await AuthService.decodeUser();
-            if (res.discount) {
-                setDiscount(res.discount);
+            let token = localStorage.getItem("token")
+            if (token) {
+
+                const res = await AuthService.decodeUser();
+                if (res.discount) {
+                    setDiscount(res.discount);
+                }
             }
         } catch (err) {
 
