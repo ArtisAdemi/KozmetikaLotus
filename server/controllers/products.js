@@ -3,9 +3,12 @@ const db = require('../models');
 const { Sequelize, Op } = require('sequelize');
 const Categories = db.Categories;
 const Products = db.Products;
+const SubCategories = db.Subcategory
 const Images = db.Images;
+const Brand = db.Brand;
 const fs = require('fs');
 const path = require('path');
+const {notifyUsersOfStockChange} = require("../middleware/Mailer")
 
 // Controller functions
 
@@ -14,8 +17,9 @@ const getProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1; // Default page is 1
     const limit = parseInt(req.query.limit) || 12; // Default limit is 12
     const offset = (page - 1) * limit;
-    const category = req.query.category;
+    const subCategory = req.query.subCategory;
     const productName = req.query.productName;
+    const brand = req.query.brand; // Add brandName parameter
 
     let whereCondition = {};
     let includeCondition = [];
@@ -24,16 +28,28 @@ const getProducts = async (req, res) => {
         whereCondition.title = { [Op.iLike]: `%${productName}%` };
     }
 
-    if (category) {
+    if (subCategory) {
+        const subCategory = req.query.subCategory.replace(/-/g, ' ');
         includeCondition.push({
-            model: Categories,
-            where: { name: category },
+            model: SubCategories,
+            where: { name: subCategory },
             through: { attributes: [] }, // Hide the join table attributes
         });
+        includeCondition.push({
+            model: Images,
+            // through: { attributes: ["fileName"] },
+        })
     } else {
         includeCondition.push({
-            model: Categories,
+            model: SubCategories,
             through: { attributes: [] }, // Optionally hide the join table attributes if not needed
+        });
+    }
+
+    if (brand) {
+        includeCondition.push({
+            model: Brand,
+            where: { name: brand },
         });
     }
 
@@ -67,7 +83,7 @@ const getProductById = async (req, res) => {
     
     try{
         const product = await Products.findByPk(productId, {
-            include: Categories
+            include: SubCategories
         });
         if (product) {
             res.status(200).json(product);
@@ -81,17 +97,16 @@ const getProductById = async (req, res) => {
 
 // Register Product
 const registerProduct = async (req, res) => {
-    const {title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames} = req.body;
-    
+    const { title, shortDescription, longDescription, brandName, quantity, price, discount, subCategoryId, inStock } = req.body;
     try {
         // Create new product using variables from body
         const newProduct = await Products.create({
             title,
             shortDescription,
             longDescription,
-            brand,
             quantity,
             price,
+            inStock,
             discount,
         });
 
@@ -104,29 +119,33 @@ const registerProduct = async (req, res) => {
             await Images.bulkCreate(imageRecords);
         }
 
-        // Check if categoryNames have been provided
-        if (categoryNames && categoryNames.length > 0) {
-            // Promise.all takes an array of promises and returns a new promise that holds in an array all the values of those promises 
-            const categories = await Promise.all(
-                // For each category name Find it in DB. If not existant create it.
-                categoryNames.map(name => 
-                    Categories.findOrCreate({ where: { name } })
-                        .then(([category]) => category)
-                )
-            );
-            // This populates the ProductsCategories Table with the id of product and category
-            await newProduct.setCategories(categories);
+        // Check if subCategoryId is provided
+        if (subCategoryId) {
+            const subCategory = await db.Subcategory.findByPk(subCategoryId);
+            // This populates the Product_Categories Table with the id of product and subcategory
+            await newProduct.addSubcategory(subCategory);
         }
+
+        if (brandName){
+            const brand = await db.Brand.findOne({
+                where: {name: brandName}
+            });
+
+            if(brand){
+                await newProduct.setBrand(brand);
+            }
+        }
+
         
         res.status(201).json(newProduct);
     } catch (err) {
-        res.status(500).json({ error: err.message});
+        res.status(500).json({ error: err.message });
     }
 }
 // Update Product 
 const updateProduct = async(req, res) => {
     const productId = req.params.id;
-    const { title, shortDescription, longDescription, brand, quantity, price, discount, categoryNames } = req.body;
+    const { title, shortDescription, longDescription, brand, quantity, price, discount, subCategoryId, inStock } = req.body;
     
     try {
         // Find Product by id
@@ -134,6 +153,9 @@ const updateProduct = async(req, res) => {
         if (!product) {
             return res.status(404).json({message: "Product not found"});
         }
+
+        const wasInStock = product.inStock;
+        const isNowInStock = inStock;
 
         // Update the product details
         await product.update({
@@ -143,9 +165,19 @@ const updateProduct = async(req, res) => {
             brand,
             quantity,
             price,
+            inStock,
             discount,
         });
 
+        // Notify users if the product is now in stock and was not before
+        if (!wasInStock && isNowInStock) {
+            await notifyUsersOfStockChange(productId);
+        }
+
+        const users = await db.StockNotifications.findAll({
+            where: {productId: product.id}
+        })
+        
         // If images have been uploaded, save their paths in the Images table
         if (req.uploadedFiles && req.uploadedFiles.length > 0) {
             const imageRecords = req.uploadedFiles.map(file => ({
@@ -155,14 +187,13 @@ const updateProduct = async(req, res) => {
             await Images.bulkCreate(imageRecords);
         }
 
-        // Update the categories associated with the product
-        if (categoryNames && categoryNames.length > 0) {
-          const categories = await Promise.all(
-            categoryNames.map(name =>
-                Categories.findOrCreate({ where: { name } })
-                    .then(([category]) => category))
-          );
-          await product.setCategories(categories);  
+        if (subCategoryId) {
+            const subCategory = await db.Subcategory.findByPk(subCategoryId);
+            if (subCategory) {
+                await product.setSubcategories([subCategory]);
+            } else {
+                throw new Error("Subcategory not found");
+            }
         }
 
         res.status(200).json(product);
@@ -213,7 +244,7 @@ const deleteProduct = async (req, res) => {
 // Get unique product per category with associated image
 const getUniqueProductPerCategory = async (req, res) => {
     try {
-        const categories = await Categories.findAll({
+        const subCategories = await SubCategories.findAll({
             include: [{
                 model: Products,
                 include: [{
@@ -221,7 +252,7 @@ const getUniqueProductPerCategory = async (req, res) => {
                     order: [['createdAt', 'DESC']] // Order by creation date
                 },
                 {
-                    model: Categories
+                    model: SubCategories
                 }
             ],
                 order: [['createdAt', 'DESC']] // Order by creation date
@@ -229,11 +260,11 @@ const getUniqueProductPerCategory = async (req, res) => {
         });
 
         // Filter out categories without associated products
-        const validCategories = categories.filter(category => category.Products.length > 0);
+        const validCategories = subCategories.filter(subCategory => subCategory.Products.length > 0);
 
-        // Extract the first product with image for each valid category
-        const uniqueProducts = validCategories.map(category => {
-            const product = category.Products[0]; // Get the first product
+        // Extract the first product with image for each valid subCategory
+        const uniqueProducts = validCategories.map(subCategory => {
+            const product = subCategory.Products[0]; // Get the first product
             if (product) {
                 product.Images = product.Images.slice(0, 1); // Get the first image for the product
             }
@@ -266,6 +297,126 @@ const getProductImages = async (req, res) => {
     }
 };
 
+const getBrands = async (req, res) => {
+    try{
+        const brands = await db.Brand.findAll();
+
+        if (brands.length > 0) {
+            res.status(200).json(brands);
+        } else {
+            res.status(404).json({message: "No brands where found!"});
+        }
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+};
+
+const remindMeWhenInStock = async (req, res) => {
+    const userId = req.user.id; // Assuming you have user's ID from the session or token
+    const { productId, remindMe } = req.body; // `remindMe` is a boolean indicating whether to notify the user
+
+    try {
+        // Check if the product exists
+        const productExists = await db.Products.findByPk(productId);
+        if (!productExists) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        // Check if there's an existing notification setup
+        const notification = await db.StockNotifications.findOne({
+            where: {
+                userId: userId,
+                productId: productId
+            }
+        });
+
+
+        if (notification) {
+            // Update existing notification
+            notification.notify = remindMe
+            await notification.save();
+        } else {
+            // Create new notification
+            await db.StockNotifications.create({
+                userId: userId,
+                productId: productId,
+                notify: remindMe
+            });
+        }
+
+        res.status(200).json({ message: "Notification setting updated successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+
+};
+const remindMeForThisProduct = async (req, res) => {
+    const {productId} = req.params
+    const userId = req.user.id
+
+    try {
+        const notification = await db.StockNotifications.findOne({
+            where:{
+                userId: userId,
+                productId: productId,
+            }
+        });
+
+        if (notification.notify) {
+            return res.status(200).json({notification: true});
+        }
+        return res.status(200).json({notification: false});
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+const getBestSellingProducts = async (req, res) => {
+    try {
+
+        const bestSellingProducts = await db.Order_Products.findAll({
+            attributes: ['ProductId', [Sequelize.fn('COUNT', Sequelize.col('ProductId')), 'totalOrders']],
+            group: ['ProductId'],
+            order: [[Sequelize.literal('COUNT("ProductId")'), 'DESC']],
+            limit: 4
+        });
+
+        if (bestSellingProducts.length > 0) {
+            // Extract product IDs from the result
+            const productIds = bestSellingProducts.map(product => product.ProductId);
+
+            // Fetch product details for these IDs
+            const products = await db.Products.findAll({
+                where: {
+                    id: productIds
+                },
+                include: [{
+                    model: db.Images,
+                    as: 'Images', // Ensure the alias matches your association definition
+                },
+                {
+                    model: SubCategories,
+                }]
+            });
+
+            // Merge product details with totalOrders
+            const result = bestSellingProducts.map(orderProduct => {
+                const product = products.find(prod => prod.id === orderProduct.ProductId);
+                return {
+                    product,
+                    totalOrders: orderProduct.getDataValue('totalOrders')
+                };
+            });
+            return res.json(result);
+        }
+
+        return res.json([]);
+    } catch (err) {
+        console.error("Error in getBestSellingProducts:", err); // Log error
+        return res.status(500).json({ error: err.message });
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
@@ -273,5 +424,9 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getUniqueProductPerCategory,
-    getProductImages
+    getProductImages,
+    getBrands,
+    remindMeWhenInStock,
+    remindMeForThisProduct,
+    getBestSellingProducts,
 }

@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const truncateDescription = (description, maxLength) => {
   if(description.length <= maxLength) {
@@ -16,10 +17,29 @@ const truncateDescription = (description, maxLength) => {
   return truncated + '...';
 }
 
-const ProductSlider = ({ category, uniqueCategories }) => {
-  const [products, setProducts] = useState([])
-  
 
+
+const ProductSlider = ({ subCategory, uniqueCategories, bestSeller }) => {
+  const [products, setProducts] = useState([]);
+  const [helperProductsArray, setHelperProductsArray] = useState([]);
+  const navigate = useNavigate();
+
+  const handleProducts = () => {
+    if(bestSeller){
+      let productArray = [];
+      helperProductsArray.map((product) => {
+        productArray.push(product.product)
+      });
+
+      setProducts(productArray);
+    }
+  }
+
+  
+  const redirect = (name) => {
+    name = name.toString().toLowerCase().replace(/\s+/g, '-');
+    navigate(`/products/${name}`); // addition to remove navbar after navigating to categories..
+}
 
   // Settings for the slider
   const settings = {
@@ -28,6 +48,9 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     speed: 650,
     vertical: false,
     horizontal: true,
+    arrows: false,
+    // autoplay:true,
+    // autoplaySpeed: 1500,
     slidesToShow: products.length > 0 ? Math.min(products.length, 4) : 1,
     slidesToScroll: 1,
     lazyLoad: 'ondemand',
@@ -58,9 +81,14 @@ const ProductSlider = ({ category, uniqueCategories }) => {
   useEffect(() => {
     fetchProducts();
   }, [])
+
+  useEffect(() => {
+    handleProducts();
+
+  }, [helperProductsArray])
   
   const filterModel = {
-    category: category,
+    subCategory: subCategory,
   }
 
   const fetchProducts = async () => {
@@ -72,13 +100,19 @@ const ProductSlider = ({ category, uniqueCategories }) => {
           setProducts(result.data);
         }
       } else {
-        if (filterModel.category) {
+        if (filterModel.subCategory) {
           result = await ProductService.getProductsByFilter(filterModel);
           if (result) {
             setProducts(result.products);
           }
         }
-        else {
+        else if (bestSeller){
+          result = await ProductService.getBestSellers();
+          if (result) {
+            setHelperProductsArray(result);
+          }
+        }
+        else{
           result = await ProductService.getProducts();
           if (result) {
             setProducts(result);
@@ -96,12 +130,14 @@ const ProductSlider = ({ category, uniqueCategories }) => {
       <div className='w-[80%]'>
         <Slider {...settings}>
         {products.length > 0 && products.map((product, index) => (
-          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg" key={index}>
+          <div className="max-w-[250px] w-auto mx-auto bg-white shadow-lg cursor-pointer" onClick={() => bestSeller ? navigate(`products/all/${product.id}`) : redirect(product.Subcategories[0].name)} key={index}>
           <div className="flex justify-center items-center w-full">
-            <img className="object-cover w-full" src={require('../images/Product3Home.png')} alt={product.title} />
+          {product.Images && product.Images.length > 0 && (
+                  <img className="object-cover w-full min-h-[375px] max-h-[375px]" src={`/uploads/${product.Images[0].fileName}`} alt={product.title} />
+                )}
           </div>
           <div className="p-4">
-            {uniqueCategories ? <h3 className="text-start text-xl text-[#292929] font-bold">{product.Categories[0].name}</h3> : <h3 className="text-start text-xl text-[#292929] font-bold">{product.title}</h3>}
+            {uniqueCategories ? <h3 className="text-start text-xl text-[#292929] font-bold">{product.Subcategories[0].name}</h3> : <h3 className="text-start text-xl text-[#292929] font-bold">{product.title}</h3>}
             {uniqueCategories ? null : <p className="mt-1 text-start text-[#292929] text-sm">{truncateDescription(product.shortDescription, 10)}</p>}
             <div className="flex justify-start items-start mt-4">
               <span className="text-xl text-[#292929] font-bold">
@@ -115,13 +151,5 @@ const ProductSlider = ({ category, uniqueCategories }) => {
     </div>
   );
 };
-          // <div key={index}>
-          //   <img src={require('../images/Product1Home.png')} alt={product.title} />
-          //   <div>
-          //     {uniqueCategories ? <h3>{product.Categories[0].name}</h3> : <h3>{product.title}</h3>}
-          //     {uniqueCategories ? null : <p>{truncateDescription(product.shortDescription, 10)}</p>}
-          //     {uniqueCategories ? null : <span>€{product.price}</span>}
-          //   </div>
-          // </div>
 
 export default ProductSlider;

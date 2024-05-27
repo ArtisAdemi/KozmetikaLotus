@@ -6,15 +6,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         shortDescription:{
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         longDescription: {
             type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        brand:{
-            type: DataTypes.STRING(30),
             allowNull: true,
         },
         quantity:{
@@ -25,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.FLOAT,
             allowNull: true,
         },
+        inStock: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
         discount:{
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -32,8 +32,16 @@ module.exports = (sequelize, DataTypes) => {
     });
      // This creates a table with many to many relation
      Products.associate = (models) => {
-        Products.belongsToMany(models.Categories, { through: 'ProductCategories' });
+        Products.belongsToMany(models.Subcategory, { through: 'Product_Categories' });
+        Products.belongsToMany(models.Orders, { through: 'Order_Products' });
+        Products.belongsToMany(models.Users, { through: 'Wishlist' });
         Products.hasMany(models.Images, { foreignKey: 'ProductId' });
+        Products.belongsTo(models.Brand, { foreignKey: 'BrandId' });
+        Products.belongsToMany(models.Users, {
+            through: models.StockNotifications,
+            as: 'InterestedUsers',
+            foreignKey: 'productId'
+        });
     };
 
     return Products;

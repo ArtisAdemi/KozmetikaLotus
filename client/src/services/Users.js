@@ -2,6 +2,15 @@ import axios from "axios";
 
 const USERS_API_URL = 'http://localhost:3001/api/users';
 const AUTH_API_URL = 'http://localhost:3001/api/auth';
+
+const axiosInstance = axios.create();
+
+axiosInstance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization =  token ? `Bearer ${token}` : '';
+    return config;
+});
+
 const UserService = {
     getUsers: async () => {
         try {
@@ -38,7 +47,6 @@ const UserService = {
         let endpoint = `${AUTH_API_URL}/login`
         try {
             const response = await axios.post(endpoint, credentials);
-            localStorage.setItem('token', response.data.token);
             return response.data;
         } catch (err) {
             console.error("Error logging in", err);
@@ -50,7 +58,7 @@ const UserService = {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                throw new Error("No token provided");
+                return false;
             }
             const response = await axios.get(`${AUTH_API_URL}/validateToken`, {
                 headers: {
@@ -62,7 +70,40 @@ const UserService = {
             console.error("Error validating token", err);
             throw err;
         }
+    },
+
+    updateUser: async (userId, userData) => {
+        try {
+            const response = await axiosInstance.put(`${USERS_API_URL}/${userId}`, userData);
+            return response.data;
+        } catch (err) {
+            console.error('Error updating user:', err);
+            return null;
+        }
+    },
+
+    giveDiscount: async (userId, discount) => {
+        let endpoint = `${USERS_API_URL}/discount`
+
+        try {
+            const response = await axiosInstance.put(endpoint, {userId: userId, discount: discount});
+            return response.data
+        } catch (err) {
+            console.error('Error updating discount:', err);
+            return null;
+        }
     }
+
+    // getUsersWishlist: async (userId) => {
+    //     let endpoint = `${USERS_API_URL}/${userId}/wishlist`
+    //     try{
+    //         const result = await axiosInstance.get(endpoint);
+    //         return result.data;
+    //     } catch (err) {
+    //         console.error("Error getting wishlist", err);
+    //         throw err;
+    //     }
+    // },
 }
 
 export default UserService;

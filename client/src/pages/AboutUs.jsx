@@ -1,8 +1,8 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import about1 from "../images/about1.png"
-import carissa from "../images/carissa.png"
-import overlap from "../images/overlap.png"
+import carissa from "../images/carisa.png"
+import overlap from "../images/overlap2.jpg"
 
 const AboutUs = () => {
   return (
@@ -24,8 +24,7 @@ const AboutUs = () => {
           <img src={about1} alt="blla" className="h-[200px] w-full object-cover md:w-full md:h-[80%]" />
 
           <div className='pt-6 pb-10'>
-            <p className='text-[#292929] text-md'>Mireserdhe në Kozmetika Lotus! Ne jemi një biznes kozmetike i themeluar që nga viti 2015, me një pasion për kujdesin</p>
-            <p className='text-[#292929] text-md'>E lëkurës. Ne ofrojmë produkte të cilësisë së lartë.</p>
+            <p className='text-[#292929] text-md'>Mireserdhe në Kozmetika Lotus! Ne jemi një biznes kozmetike i themeluar që nga viti 2015, me një pasion për kujdesin E lëkurës. Ne ofrojmë produkte të cilësisë së lartë.</p>
           </div>
         </div>
       </div>
@@ -50,20 +49,20 @@ const AboutUs = () => {
       <div className='flex items-center flex-col pt-8  bg-[#FBEFF2]'>
         <div className='w-[80%] flex flex-col justify-center'>
 
-        <div className='mb-3 md:w-[70%]'>
-          <h2 className='text-2xl font-bold text-[#292929]'>Shkëlqimi Natyral për Fytyrën Tënde</h2>
+        <div className='mb-4 md:w-[70%]'>
+          <h2 className='text-2xl font-bold mb-2 text-[#292929]'>Shkëlqimi Natyral për Fytyrën Tënde</h2>
           <p className='text-md text-[#292929]'>Lotus është një produkt kozmetik i shkëlqyer i krijuar për të sjellë një bukuri natyrale dhe të freskët për fytyrën tënde. Përbërësit e zgjedhur me kujdes dhe formula e veçantë e këtij produkti bëjnë të mundur që të përjetosh një ndjenjë të pashembullt të freskisë dhe të relaksimit.</p>
         </div>
-        <div className='mb-3 md:w-[70%]'>
-          <h2 className='font-bold text-xl text-[#292929]'>Rikujdesi Natyral për Flokët: Sekreti për Shkëlqim dhe Forcë</h2>
+        <div className='mb-4 md:w-[70%]'>
+          <h2 className='font-bold text-xl mb-2 text-[#292929]'>Rikujdesi Natyral për Flokët: Sekreti për Shkëlqim dhe Forcë</h2>
           <p className='text-md text-[#292929]'>Shëndeti dhe bukuria e flokëve janë prioriteti kryesor për të gjithë. Produktet e kujdesit për flokët janë përgjegjëse për të ofruar një bashkërendim të përshtatshëm të përbërësve dhe formulave të specializuara për të forcuar, për të sjellë shkëlqim dhe elasticitet, duke mbrojtur strukturën e tyre.</p>
         </div>
-        <div className='mb-3 md:w-[70%]'>
-          <h2 className='font-bold text-xl text-[#292929]'>Freskia dhe Kujdesi për Trupin: Eksperiencë e Natyrshme për Bukurinë dhe Shëndetin</h2>
+        <div className='mb-4 md:w-[70%]'>
+          <h2 className='font-bold text-xl mb-2 text-[#292929]'>Freskia dhe Kujdesi për Trupin: Eksperiencë e Natyrshme për Bukurinë dhe Shëndetin</h2>
           <p className='text-md text-[#292929]'>Kujdesi për trupin është një pjesë e rëndësishme e rutinës së kujdesit personal, duke siguruar një ndjenjë të përgjithshme të freskisë, paqeje dhe kujdesi për lëkurën dhe trupin tënd. Produktet për kujdesin e trupit përdorin formulat më të mira, të pasura me përbërës natyralë për të mbajtur lëkurën e trupit tërheqëse dhe të shëndetshme.</p>
         </div>
         <div className='md:w-[70%]'>
-          <h2 className='font-bold text-xl text-[#292929]'>Bukuria e Natyrës për Lëkurën: Kujdesi Natyral për Freskinë dhe Mbrojtjen</h2>
+          <h2 className='font-bold text-xl mb-2 text-[#292929]'>Bukuria e Natyrës për Lëkurën: Kujdesi Natyral për Freskinë dhe Mbrojtjen</h2>
           <p className='text-md text-[#292929] mb-4'>Gjatë kujdesit për lëkurën, ne ecim në rrugën drejt një lëkure të shëndetshme dhe të bukur. Produktet e kujdesit për lëkurën janë krijuar me kujdes për të siguruar një kombinim të përshtatshëm të përbërësve natyralë dhe teknologjisë inovative, me qëllim për të përmirësuar strukturën dhe pamjen e lëkurës.</p>
         </div>
         </div>
@@ -82,7 +81,7 @@ const AboutUs = () => {
           <div className='w-[80%] lg:flex gap-10'>
 
             <div className='-mt-28'>
-              <img src={overlap} alt="blla" className="w-[777px] " />
+              <img src={overlap} alt="blla" className="w-[777px] rounded-md" />
             </div>
             <div className='mt-3 lg:w-96 lg:h-48'>
               <h2 className='font-bold text-2xl text-[#292929] mb-5'>Diversiteti, Barazia dhe Përfshirja.</h2>

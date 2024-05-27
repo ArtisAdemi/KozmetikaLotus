@@ -8,7 +8,7 @@ import ProductService from '../services/Products'
 
 
 const SingleProduct = () => {
-  const { categoryName, productName } = useParams();
+  const { productName } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const SingleProduct = () => {
                 <FontAwesomeIcon icon={faChevronRight} />
               </div>
               <div className='mt-1 ml-2'>
-                <span>{categoryName}</span>
+                <span>{product?.Subcategories[0].name}</span>
               </div>
               <div className='mt-1 ml-2'>
                 <FontAwesomeIcon icon={faChevronRight} />
@@ -51,9 +51,10 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
+        {console.log("product", product)}
           {product && (
             <div>
-              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} category={product.Categories[0].name} price={product.price} id={product.id}/>
+              <ProductDetails title={product.title} shortDescription={product.shortDescription} longDescription={product.longDescription} subCategory={product.Subcategories[0].name} price={product.price} id={product.id} inStock={product.inStock}/>
             </div>
           )}
     </div>

@@ -1,4 +1,6 @@
 require('dotenv').config();
+const seedCategories = require("./seed/categoriesSeed")
+const seedBrands = require("./seed/brandsSeed")
 const express = require('express');
 const app = express();
 const cors = require("cors");
@@ -15,7 +17,7 @@ const apiRouter = express.Router();
 // Mounting Routes under /api endpoint
 
 // UserRouter
-const userRouter = require('./routes/users')
+const userRouter = require('./routes/Users')
 apiRouter.use("/users", userRouter);
 // Auth Router
 const authRouter = require('./routes/Auth');
@@ -25,16 +27,24 @@ const productRouter = require('./routes/Products')
 apiRouter.use("/products", productRouter);
 // CategoryRouter
 const categoryRouter = require('./routes/Categories');
-apiRouter.use("/categories", categoryRouter)
+apiRouter.use("/categories", categoryRouter);
+// OrderRouter
+const orderRouter = require('./routes/Orders');
+apiRouter.use("/orders", orderRouter);
 // Mailer Routes
 const mailerRouter = require("./routes/Mailer");
 apiRouter.use("/mailer", mailerRouter)
+
+const clientsRouter = require("./routes/Clients");
+apiRouter.use("/clients", clientsRouter)
 
 // Mount the apiRouter under the /api endpoint
 app.use("/api", apiRouter)
 
 // Creating sequelize sync with db
 db.sequelize.sync().then(() => {
+    seedCategories();
+    seedBrands();
     // After sync is complete we start server
     app.listen(3001, () => {
         console.log(`Server started on port: 3001`);

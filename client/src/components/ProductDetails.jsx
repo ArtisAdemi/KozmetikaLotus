@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import ProductService from '../services/Products';
-import ProductImageSlider from './ProductImageSlider';
 import Product1Home from '../images/Product1Home.png'
 import Product2Home from '../images/Product2Home.png'
 import Product3Home from '../images/Product3Home.png'
 import CardGiftcard from '../Icons/CardGiftcard';
 import Discount from '../Icons/Discount';
 import QAndA from '../Icons/Q&A';
-import ProductSlider from './ProductSlider';
+import LikeProduct from './LikeProduct';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../state';
+import Swal from 'sweetalert2';
+import ProductSliderDetails from './ProductSliderDetails';
 
 
-
-const ProductDetails = ({title, category, shortDescription, longDescription, id, price, isAdmin}) => {
+const ProductDetails = ({title, subCategory, shortDescription, longDescription, id, price, inStock, isAdmin}) => {
   const [images, setImages] = useState([]);
+  const dispatch = useDispatch()
+  const [remindMe, setRemindMe] = useState(false)
+ 
+
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     const fetchImages = async () => {
@@ -36,6 +42,49 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
     const handleImageSelect = (imagePath) => {
       setSelectedImage(imagePath);
     };
+
+    const handleAddToCart = () => {
+      const product = {
+          title,
+          subCategory,
+          shortDescription,
+          longDescription,
+          id,
+          price,
+          imgUrl: selectedImage
+      };
+      dispatch(addToCart({ product }));
+      Swal.fire({
+        title: "Item Added!",
+        text: "Item was successfully added to cart!",
+        icon: 'success',
+        confirmButtonText: "Ok"
+      })
+  };
+
+  const handleRemindMe = async (remindMeBool) => {
+    setRemindMe(!remindMe);
+
+    try{
+      const res = await ProductService.remindMeWhenInStock(id, remindMeBool);
+    } catch (err) {
+      console.error (err.message)
+    }
+  }
+
+  useEffect(() => {
+    const fetchRemindMe = async () => {
+      try{
+
+        await ProductService.remindMeForThisProduct(id).then((res) => {
+          setRemindMe(res.notification)
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchRemindMe();
+  }, [])
     
   
 
@@ -56,10 +105,11 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
                 ))}
               </div>
             </div>
-            <div className='block md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
-              <p className='w-full font-bold text-xl mt-5 mb-10 bg-[#ffecf0] rounded-lg py-3 px-5'>
+            <div className='flex flex-col w-full  md:hidden border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+              <p className='w-full font-bold text-xl mt-5 mb-5 bg-[#ffecf0] rounded-lg py-3 px-5'>
                 €{price}
               </p>
+                <LikeProduct productId={id}/>
             </div>
             <div className='w-full md:w-[40%]'>
               <div className='hidden md:block mb-3'>
@@ -68,15 +118,39 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
               <div className='hidden md:block mb-4'>
                 <p className='text-sm'>{shortDescription}</p>
               </div>
-              <div className='hidden md:block w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
-              <p className='w-full font-bold text-xl'>
-                €{price}
-              </p>
+              <div className='hidden md:flex w-full border border-t-0 border-r-0 border-l-0 border-b-[#606060]'>
+                <p className='w-full font-bold text-xl'>€{price}</p>
+                <LikeProduct productId={id}/>  
               </div>
-              <div className='navbar-right mt-3 border-[2px] border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
-                <button className='text-center items-center py-2'><a href="/contact" className='text-center items-center text-[#292929]'>Contact Us</a></button>
+              {inStock && 
+              <div onClick={handleAddToCart} className='navbar-right mt-3 border-[2px] cursor-pointer border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
+                <button className='text-center items-center py-2 font-semibold' >Add To Cart</button>
               </div>
-              <div className='text-xs mt-6 bg-[#A3A7FC] p-8 text-[#FFFFFF] font-sans font-semibold'>
+              }
+              {!inStock &&
+              <div> 
+
+              <div className='navbar-right mt-3 border-[2px] disabled:opacity-75 border-[#292929] rounded-lg px-5 items-center justify-center text-center md:flex'>
+                <button className='text-center items-center py-2 font-semibold cursor-default' >Out Of Stock</button>
+              </div>
+              {/* Remind me when in stock button */}
+              <div className='mt-3 flex flex-col'>
+              <span className="mb-1 md:text-sm font-semibold text-gray-500 border-0">Remind me when in stock!</span>
+              <label className="relative inline-flex items-center cursor-pointer mb-2">
+              <input type="checkbox"
+              className="sr-only peer"
+              name="inStock"
+              checked={remindMe}
+              onChange={() => handleRemindMe(!remindMe)}
+              />
+                <div
+                  className="w-11 h-6 bg-gray-200 dark:bg-dark-input rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-0  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500">
+                </div>
+              </label>
+              </div>
+              </div> 
+              }
+              <div className='text-xs mt-6 bg-[#292929] p-8 text-[#FFFFFF] font-sans font-semibold'>
                 <div className='flex mb-3'>
                   <div>
                     <CardGiftcard />
@@ -117,7 +191,7 @@ const ProductDetails = ({title, category, shortDescription, longDescription, id,
           <div className='w-[80%] text-center p-6'>
             <h1 className='font-bold text-xl'>You May Also Like</h1>
             <div className='mt-10 pb-10'>
-              <ProductSlider category={category}/>
+              <ProductSliderDetails subCategory={subCategory}/>
             </div>
           </div>
         </div>

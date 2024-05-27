@@ -1,5 +1,6 @@
 import axios from 'axios';
 import buildUrl from '../helpers/BuildParam';
+import Swal from 'sweetalert2';
 const API_URL = 'http://localhost:3001/api/products';
 
 // Create an axios instance for authenticated requests
@@ -45,11 +46,16 @@ const ProductService = {
         let endpoint = `${API_URL}?`;
         try {
             let params = {};
-            if (filterModel.category) {
-                params['category'] = filterModel.category;
+            if (filterModel.subCategory) {
+                const subCategory = filterModel.subCategory.toLowerCase();
+                params['subCategory'] = subCategory;
             }
             if (filterModel.name) {
                 params['productName'] = filterModel.name;
+            }
+            //  E kom shtu ktu per brands dmth
+            if (filterModel.brand) {
+                params['brand'] = filterModel.brand; // Add brandName to the params
             }
             if (filterModel.page) {
                 params['page'] = filterModel.page;
@@ -92,7 +98,6 @@ const ProductService = {
     
     registerProduct: async (productData, images) => {
     const formData = new FormData();
-    console.log("productData",productData)
     // Append product data fields to formData, excluding categoryNames
     Object.keys(productData).forEach(key => {
             if (Array.isArray(productData[key])) {
@@ -116,10 +121,17 @@ const ProductService = {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
-        });
+        })
+
         return response.data;
     } catch (err) {
         console.error('Error registering product:', err);
+        Swal.fire({
+            title: "Error!",
+            text: `${err.message}`,
+            icon: "error",
+            confirmButtonText: "Ok"
+          })
         return null;
     }
 },
@@ -130,17 +142,84 @@ const ProductService = {
             return response.data;
         } catch (err) {
             console.error('Error updating product:', err);
+            Swal.fire({
+                title: "Error!",
+                text: "Product could not be saved",
+                icon: "error",
+                confirmButtonText: "Ok"
+              })
             return null;
         }
     },
 
     deleteProduct: async (productId) => {
         try{
-            const response = await axiosInstance.delete(`${API_URL}/${productId}`)
+            const response = await axiosInstance.delete(`${API_URL}/${productId}`).then(() => {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Product was deleted successfully",
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                  })
+            })
             return response;
         } catch (err){
+            Swal.fire({
+                title: "Error!",
+                text: "Product could not be deleted",
+                icon: "error",
+                confirmButtonText: "Ok"
+              })
             console.error('Error deleting product:', err);
             return null
+        }
+    },
+
+    getBrands: async () => {
+        try{
+            const res = await axios.get(`${API_URL}/brands`);
+            return res.data;
+        } catch (err) {
+            console.error('Error fetching images', err);
+            return [];
+        }
+    },
+
+    remindMeWhenInStock: async (productId, remindMe) => {
+        try{
+            const res = await axios.post(`${API_URL}/remindWhenInStock`, {
+                productId: productId,
+                remindMe: remindMe
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            return res.data
+        } catch (err) {
+            console.error('Error fetching images', err);
+            return null;
+        }
+    },
+
+    remindMeForThisProduct: async (productId) => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}/remindWhenInStock/${productId}`)
+
+            return res.data;
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
+    },
+
+    getBestSellers: async () => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}/best-selling`)
+            return res.data;
+        } catch (err) {
+            console.error(err);
+            return null;
         }
     }
 
