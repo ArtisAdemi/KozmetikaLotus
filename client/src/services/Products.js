@@ -1,7 +1,8 @@
 import axios from 'axios';
 import buildUrl from '../helpers/BuildParam';
 import Swal from 'sweetalert2';
-const API_URL = 'http://localhost:3001/api/products';
+import API_URL from './backendUrl';
+const PRODUCTS_API_URL = `${API_URL}/products`;
 
 // Create an axios instance for authenticated requests
 const axiosInstance = axios.create({
@@ -14,7 +15,7 @@ const ProductService = {
     getProducts: async () => {
         try{
 
-            const response = await axios.get(`${API_URL}`);
+            const response = await axios.get(`${PRODUCTS_API_URL}`);
             return response.data;
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -24,7 +25,7 @@ const ProductService = {
 
     getProductById: async(id) => {
         try{
-            const response = await axios.get(`${API_URL}/${id}`)
+            const response = await axios.get(`${PRODUCTS_API_URL}/${id}`)
             return response.data
         } catch (err){
             console.error('Error fetching products:', err);
@@ -43,7 +44,7 @@ const ProductService = {
     // }
 
     getProductsByFilter: async(filterModel) => {
-        let endpoint = `${API_URL}?`;
+        let endpoint = `${PRODUCTS_API_URL}?`;
         try {
             let params = {};
             if (filterModel.subCategory) {
@@ -77,7 +78,7 @@ const ProductService = {
     
     getUniqueCategory: async () => {
         try{
-            const response = await axios.get(`${API_URL}/productPerCategory`);
+            const response = await axios.get(`${PRODUCTS_API_URL}/productPerCategory`);
             return response;
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -88,7 +89,7 @@ const ProductService = {
     // Product images
     getProductImages: async (productId) => {
         try{
-            const res = await axios.get(`${API_URL}/${productId}/images`);
+            const res = await axios.get(`${PRODUCTS_API_URL}/${productId}/images`);
             return res.data;
         } catch (err) {
             console.error('Error fetching images', err);
@@ -117,7 +118,7 @@ const ProductService = {
     });
     
     try {
-        const response = await axiosInstance.post(`${API_URL}`, formData, {
+        const response = await axiosInstance.post(`${PRODUCTS_API_URL}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -138,7 +139,7 @@ const ProductService = {
 
     updateProduct: async (productId, productData) => {
         try {
-            const response = await axiosInstance.put(`${API_URL}/${productId}`, productData);
+            const response = await axiosInstance.put(`${PRODUCTS_API_URL}/${productId}`, productData);
             return response.data;
         } catch (err) {
             console.error('Error updating product:', err);
@@ -154,7 +155,7 @@ const ProductService = {
 
     deleteProduct: async (productId) => {
         try{
-            const response = await axiosInstance.delete(`${API_URL}/${productId}`).then(() => {
+            const response = await axiosInstance.delete(`${PRODUCTS_API_URL}/${productId}`).then(() => {
                 Swal.fire({
                     title: "Success!",
                     text: "Product was deleted successfully",
@@ -177,7 +178,7 @@ const ProductService = {
 
     getBrands: async () => {
         try{
-            const res = await axios.get(`${API_URL}/brands`);
+            const res = await axios.get(`${PRODUCTS_API_URL}/brands`);
             return res.data;
         } catch (err) {
             console.error('Error fetching images', err);
@@ -187,7 +188,7 @@ const ProductService = {
 
     remindMeWhenInStock: async (productId, remindMe) => {
         try{
-            const res = await axios.post(`${API_URL}/remindWhenInStock`, {
+            const res = await axios.post(`${PRODUCTS_API_URL}/remindWhenInStock`, {
                 productId: productId,
                 remindMe: remindMe
             }, {
@@ -204,7 +205,7 @@ const ProductService = {
 
     remindMeForThisProduct: async (productId) => {
         try{
-            const res = await axiosInstance.get(`${API_URL}/remindWhenInStock/${productId}`)
+            const res = await axiosInstance.get(`${PRODUCTS_API_URL}/remindWhenInStock/${productId}`)
 
             return res.data;
         } catch (err) {
@@ -215,7 +216,7 @@ const ProductService = {
 
     getBestSellers: async () => {
         try{
-            const res = await axiosInstance.get(`${API_URL}/best-selling`)
+            const res = await axiosInstance.get(`${PRODUCTS_API_URL}/best-selling`)
             return res.data;
         } catch (err) {
             console.error(err);

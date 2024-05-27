@@ -1,8 +1,9 @@
 import axios from "axios";
 import buildUrl from "../helpers/BuildParam";
+import API_URL from "./backendUrl";
 
-const USER_ROUTES = 'http://localhost:3001/api/users/orders';
-const ORDER_ROUTES = 'http://localhost:3001/api/orders';
+const USER_ROUTES = `${API_URL}/users`;
+const ORDER_ROUTES = `${API_URL}/orders`;
 
 const axiosWithAuth = axios.create({
     headers: {

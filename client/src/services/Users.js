@@ -1,7 +1,8 @@
 import axios from "axios";
+import API_URL from "./backendUrl";
 
-const USERS_API_URL = 'http://localhost:3001/api/users';
-const AUTH_API_URL = 'http://localhost:3001/api/auth';
+const USERS_API_URL = `${API_URL}/users`;
+const AUTH_API_URL = `${API_URL}/auth`;
 
 const axiosInstance = axios.create();
 
