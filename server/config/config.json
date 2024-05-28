@@ -20,7 +20,7 @@
     "database": "postgres",
     "host": "aws-0-eu-central-1.pooler.supabase.com",
     "dialect": "postgres",
-    "port" : 5432
-
+    "port" : 5432,
+    "dialectModule": "pg"
   }
 }
