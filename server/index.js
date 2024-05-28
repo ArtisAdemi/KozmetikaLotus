@@ -1,11 +1,11 @@
 require('dotenv').config();
-const seedCategories = require('./seed/categoriesSeed');
-const seedBrands = require('./seed/brandsSeed');
+const seedCategories = require("./seed/categoriesSeed")
+const seedBrands = require("./seed/brandsSeed")
 const express = require('express');
-const cors = require('cors');
+const cors = require("cors");
 
 const app = express();
-const db = require('./models');
+const db = require("./models");
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -18,51 +18,36 @@ const apiRouter = express.Router();
 
 // UserRouter
 const userRouter = require('./routes/Users');
-apiRouter.use('/users', userRouter);
+apiRouter.use("/users", userRouter);
 // Auth Router
 const authRouter = require('./routes/Auth');
-apiRouter.use('/auth', authRouter);
+apiRouter.use("/auth", authRouter);
 // Product router
 const productRouter = require('./routes/Products');
-apiRouter.use('/products', productRouter);
+apiRouter.use("/products", productRouter);
 // CategoryRouter
 const categoryRouter = require('./routes/Categories');
-apiRouter.use('/categories', categoryRouter);
+apiRouter.use("/categories", categoryRouter);
 // OrderRouter
 const orderRouter = require('./routes/Orders');
-apiRouter.use('/orders', orderRouter);
+apiRouter.use("/orders", orderRouter);
 // Mailer Routes
-const mailerRouter = require('./routes/Mailer');
-apiRouter.use('/mailer', mailerRouter);
+const mailerRouter = require("./routes/Mailer");
+apiRouter.use("/mailer", mailerRouter);
 
-const clientsRouter = require('./routes/Clients');
-apiRouter.use('/clients', clientsRouter);
+const clientsRouter = require("./routes/Clients");
+apiRouter.use("/clients", clientsRouter);
 
 // Mount the apiRouter under the /api endpoint
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
 
 // Creating sequelize sync with db
-const startServer = async () => {
-  try {
-    await db.sequelize.sync();
-    console.log('Database synced successfully');
-
-    await seedCategories();
-    console.log('Categories seeded successfully');
-
-    await seedBrands();
-    console.log('Brands seeded successfully');
-
+db.sequelize.sync().then(() => {
+    seedCategories();
+    seedBrands();
+    // After sync is complete we start server
     const port = process.env.PORT || 3001;
     app.listen(port, () => {
-      console.log(`Server started on port: ${port}`);
+        console.log(`Server started on port: ${port}`);
     });
-  } catch (error) {
-    console.error('Error starting server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();
-
-module.exports = app
+});
