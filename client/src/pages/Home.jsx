@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Navbar, ProductSlider } from '../components'
+import { ProductSlider } from '../components'
 import overlap from "../images/overlap.png"
 import {useNavigate} from 'react-router-dom';
 import HeroCarousel from '../components/HeroCarousel';
 import HomeDiscountModal from '../components/HomeDiscountModal';
 import UserService from '../services/Users';
-
+import Navbar from "../components/Navbar"
 const Home = () => {
   const navigate = useNavigate();
   const [homeDiscount, setHomeDiscount] = useState(true);
