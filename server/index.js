@@ -7,9 +7,15 @@ const cors = require("cors");
 const app = express();
 const db = require("./models");
 
+
 // Middleware to parse JSON
 app.use(express.json());
-app.use(cors());
+// Configure CORS
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://kozmetika-lotus.vercel.app/'], // Allow requests from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
+    credentials: true // Allow cookies to be sent with requests
+  }));
 
 // Creating a new router for the /api endpoint
 const apiRouter = express.Router();
