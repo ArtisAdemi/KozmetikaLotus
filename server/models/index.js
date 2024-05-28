@@ -15,6 +15,10 @@ let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
+  if(env === "production"){
+    const pg = require('pg'); // Explicitly require pg for production
+    config.dialectModule = pg; // Assign pg module to dialectModule
+  }
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
