@@ -2,7 +2,8 @@ const fs = require('fs');
 const models = require("../models"); // Adjust the path according to your project structure
 
 const seedCategories = async () => {
-  const categoriesData = JSON.parse(fs.readFileSync('categories.json', 'utf8'));
+  const categoriesPath = path.resolve(__dirname, '../categories.json');
+  const categoriesData = JSON.parse(fs.readFileSync(categoriesPath, 'utf8'));
 
   for (const { name, subcategories } of categoriesData) {
     const [category, created] = await models.Categories.findOrCreate({
