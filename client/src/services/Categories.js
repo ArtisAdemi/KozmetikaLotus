@@ -1,12 +1,13 @@
 import axios from 'axios';
 import buildUrl from '../helpers/BuildParam';
-const API_URL = 'http://localhost:3001/api/categories';
+import API_URL from './backendUrl';
+const CATEGORIES_API_URL = `${API_URL}/categories`;
 
 const CategoryService = {
     getCategories: async () => {
         try{
 
-            const response = await axios.get(`${API_URL}`);
+            const response = await axios.get(`${CATEGORIES_API_URL}`);
             return response.data;
         } catch (err) {
             console.error('Error fetching categories:', err);
@@ -15,7 +16,7 @@ const CategoryService = {
     },
 
     getSubcategories: async (id) => {
-        let endpoint = `${API_URL}/${id}/subcategories`
+        let endpoint = `${CATEGORIES_API_URL}/${id}/subcategories`
         try{
             const response = await axios.get(endpoint);
             return response.data

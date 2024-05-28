@@ -1,11 +1,12 @@
 import axios from 'axios';
+import API_URL from './backendUrl';
 //import buildUrl from '../middleware/BuildParam';
-const API_URL = 'http://localhost:3001/api/mailer';
+const MAILER_API_URL = `${API_URL}/mailer`;
 
 const MailerService = {
     sendEmail: async (userData) => {
         try {
-            const response = await axios.post(`${API_URL}`, userData);
+            const response = await axios.post(`${MAILER_API_URL}`, userData);
             console.log('Email sent successfully:', response.data);
             return response.data;
         } catch (error) {

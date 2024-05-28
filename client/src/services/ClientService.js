@@ -1,10 +1,11 @@
 import axios from 'axios';
 import buildUrl from "../helpers/BuildParam";
-const API_URL = 'http://localhost:3001/api/clients';
+import API_URL from './backendUrl';
+const CLIENTS_API_URL = `${API_URL}/clients`;
 
 const ClientsService = {
     getClients: async (limit) => {
-        let endpoint = `${API_URL}?`
+        let endpoint = `${CLIENTS_API_URL}?`
         try{
             let params = {}
             if (limit) {
