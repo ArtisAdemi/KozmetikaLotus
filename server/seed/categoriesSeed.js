@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const models = require("../models"); // Adjust the path according to your project structure
 
 const seedCategories = async () => {
