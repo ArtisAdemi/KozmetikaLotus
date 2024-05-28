@@ -9,10 +9,7 @@ const db = require("./models");
 
 // Middleware to parse JSON
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
+app.use(cors());
 
 // Creating a new router for the /api endpoint
 const apiRouter = express.Router();
