@@ -4,6 +4,7 @@ import API_URL from './backendUrl';
 const AUTH_API_URL = `${API_URL}/auth`;
 
 const axiosInstance = axios.create();
+axiosInstance.defaults.headers.common['Access-Control-Allow-Origin'] = `*`;
 
 const AuthService = {
     setAuthToken: () => {

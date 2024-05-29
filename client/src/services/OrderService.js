@@ -7,7 +7,8 @@ const ORDER_ROUTES = `${API_URL}/orders`;
 
 const axiosWithAuth = axios.create({
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Access-Control-Allow-Origin': '*',
     }
 });
 
@@ -72,7 +73,8 @@ const OrderService = {
         try {
             const response = await axios.post(endpoint, data, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Access-Control-Allow-Origin': `*`,
                 }
             });
             return response.data;

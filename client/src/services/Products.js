@@ -7,7 +7,8 @@ const PRODUCTS_API_URL = `${API_URL}/products`;
 // Create an axios instance for authenticated requests
 const axiosInstance = axios.create({
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Access-Control-Allow-Origin': '*',
     }
 });
 
@@ -121,6 +122,7 @@ const ProductService = {
         const response = await axiosInstance.post(`${PRODUCTS_API_URL}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Access-Control-Allow-Origin': '*',
             },
         })
 
@@ -193,7 +195,8 @@ const ProductService = {
                 remindMe: remindMe
             }, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Access-Control-Allow-Origin': '*',
                 }
             });
             return res.data

@@ -5,7 +5,8 @@ const USERS_API_URL = `${API_URL}/users`;
 
 const axiosInstance = axios.create({
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Access-Control-Allow-Origin': '*',
     }
 });
 
