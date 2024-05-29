@@ -10,7 +10,7 @@ const db = require("./models");
 // Middleware to parse JSON
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://kozmetika-lotus.vercel.app'],
+    origin: ['http://localhost:3000', 'https://kozmetika-lotus.vercel.app', 'https://kozmetika-lotus-3ng8.vercel.app'],
     credentials: true
 }));
 
