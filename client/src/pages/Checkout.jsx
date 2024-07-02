@@ -194,7 +194,9 @@ const Checkout = () => {
                                         <h2 className='font-semibold'>Total Price: €{fullPrice}</h2>
                                         { discount > 0 &&
                                         <>
-                                        <span fontWeight={"bold"}>-{discount}%</span>
+                                        <span fontWeight={"bold"}>-{discount}% (Zbritje)</span>
+                                        <br></br>
+                                        <span fontWeight={"bold"}>+2€(Transporti)</span>
                                         <hr/>
                                         <span fontWeight={"bold"}>{totalPrice}€</span>
                                         </>
