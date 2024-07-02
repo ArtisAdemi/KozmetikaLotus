@@ -1,21 +1,23 @@
 require('dotenv').config();
-const seedCategories = require("./seed/categoriesSeed")
-const seedBrands = require("./seed/brandsSeed")
+const seedCategories = require("./seed/categoriesSeed");
+const seedBrands = require("./seed/brandsSeed");
 const express = require('express');
 const cors = require("cors");
 
 const app = express();
 const db = require("./models");
 
+// Middleware to parse JSON
+app.use(express.json());
+
+// CORS config
 const corsOptions = {
-    origin: 'https://kozmetika-lotus-apo5imvrc-artisademis-projects.vercel.app/', // Replace with your frontend domain
+    origin: 'https://kozmetika-lotus.vercel.app/', // Replace with your frontend domain
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
 };
-// Middleware to parse JSON
-app.use(express.json());
-// CORS config
+
 app.use(cors(corsOptions));
 
 // Creating a new router for the /api endpoint
@@ -58,3 +60,6 @@ db.sequelize.sync().then(() => {
         console.log(`Server started on port: ${port}`);
     });
 });
+
+// Export the app for serverless function
+module.exports = app;
