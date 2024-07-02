@@ -12,7 +12,7 @@ app.use(express.json());
 
 // CORS config
 const corsOptions = {
-    origin: 'https://kozmetika-lotus.vercel.app/', // Replace with your frontend domain
+    origin: ['https://kozmetika-lotus.vercel.app', 'https://kozmetika-lotus-3ng8.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204
