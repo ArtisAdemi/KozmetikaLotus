@@ -6,6 +6,7 @@ const USER_ROUTES = `${API_URL}/users`;
 const ORDER_ROUTES = `${API_URL}/orders`;
 
 const axiosWithAuth = axios.create({
+    withCredentials: true,
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Access-Control-Allow-Origin': '*',
@@ -21,7 +22,7 @@ const OrderService = {
                 params["limit"] = limit
             }
             endpoint += buildUrl(params)
-            const response = await axios.get(endpoint);
+            const response = await axios.get(endpoint, {withCredentials: true});
             return response.data;
         } catch (err) {
             console.error("Error fetching orders", err);
@@ -60,7 +61,7 @@ const OrderService = {
 
     getOrderById: async (id) => {
         try {
-            const response = await axios.get(`${ORDER_ROUTES}/${id}`);
+            const response = await axios.get(`${ORDER_ROUTES}/${id}`, {withCredentials: true});
             return response.data;
         } catch (err) {
             console.error("Error fetching order by ID", err);
@@ -72,6 +73,7 @@ const OrderService = {
         let endpoint = `${USER_ROUTES}`
         try {
             const response = await axios.post(endpoint, data, {
+                withCredentials: true,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Access-Control-Allow-Origin': `*`,

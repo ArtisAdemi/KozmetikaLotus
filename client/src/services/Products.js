@@ -6,6 +6,7 @@ const PRODUCTS_API_URL = `${API_URL}/products`;
 
 // Create an axios instance for authenticated requests
 const axiosInstance = axios.create({
+    withCredentials: true,
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Access-Control-Allow-Origin': '*',
@@ -16,7 +17,7 @@ const ProductService = {
     getProducts: async () => {
         try{
 
-            const response = await axios.get(`${PRODUCTS_API_URL}`);
+            const response = await axios.get(`${PRODUCTS_API_URL}`, {withCredentials:true});
             return response.data;
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -26,7 +27,7 @@ const ProductService = {
 
     getProductById: async(id) => {
         try{
-            const response = await axios.get(`${PRODUCTS_API_URL}/${id}`)
+            const response = await axios.get(`${PRODUCTS_API_URL}/${id}`, {withCredentials: true})
             return response.data
         } catch (err){
             console.error('Error fetching products:', err);
@@ -67,7 +68,7 @@ const ProductService = {
             }
             endpoint += buildUrl(params);
     
-            const response = await axios.get(endpoint);
+            const response = await axios.get(endpoint, {withCredentials: true});
             return response.data;
         } catch (err) {
             console.error('Error fetching products: ', err);
@@ -79,7 +80,7 @@ const ProductService = {
     
     getUniqueCategory: async () => {
         try{
-            const response = await axios.get(`${PRODUCTS_API_URL}/productPerCategory`);
+            const response = await axios.get(`${PRODUCTS_API_URL}/productPerCategory`, {withCredentials:true});
             return response;
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -90,7 +91,7 @@ const ProductService = {
     // Product images
     getProductImages: async (productId) => {
         try{
-            const res = await axios.get(`${PRODUCTS_API_URL}/${productId}/images`);
+            const res = await axios.get(`${PRODUCTS_API_URL}/${productId}/images`, {withCredentials: true});
             return res.data;
         } catch (err) {
             console.error('Error fetching images', err);
@@ -120,6 +121,7 @@ const ProductService = {
     
     try {
         const response = await axiosInstance.post(`${PRODUCTS_API_URL}`, formData, {
+            withCredentialsq: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*',
@@ -180,7 +182,7 @@ const ProductService = {
 
     getBrands: async () => {
         try{
-            const res = await axios.get(`${PRODUCTS_API_URL}/brands`);
+            const res = await axios.get(`${PRODUCTS_API_URL}/brands`, {withCredentials:true});
             return res.data;
         } catch (err) {
             console.error('Error fetching images', err);
@@ -194,6 +196,7 @@ const ProductService = {
                 productId: productId,
                 remindMe: remindMe
             }, {
+                withCredentials: true,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Access-Control-Allow-Origin': '*',
@@ -219,7 +222,7 @@ const ProductService = {
 
     getBestSellers: async () => {
         try{
-            const res = await axiosInstance.get(`${PRODUCTS_API_URL}/best-selling`)
+            const res = await axiosInstance.get(`${PRODUCTS_API_URL}/best-selling`, {withCredentials: true})
             return res.data;
         } catch (err) {
             console.error(err);
