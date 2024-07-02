@@ -7,10 +7,16 @@ const cors = require("cors");
 const app = express();
 const db = require("./models");
 
+const corsOptions = {
+    origin: 'https://kozmetika-lotus-apo5imvrc-artisademis-projects.vercel.app/', // Replace with your frontend domain
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
 // Middleware to parse JSON
 app.use(express.json());
 // CORS config
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Creating a new router for the /api endpoint
 const apiRouter = express.Router();

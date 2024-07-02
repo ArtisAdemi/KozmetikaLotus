@@ -7,7 +7,7 @@ const CategoryService = {
     getCategories: async () => {
         try{
 
-            const response = await axios.get(`${CATEGORIES_API_URL}`);
+            const response = await axios.get(`${CATEGORIES_API_URL}`, {withCredentials: true});
             return response.data;
         } catch (err) {
             console.error('Error fetching categories:', err);
@@ -18,7 +18,7 @@ const CategoryService = {
     getSubcategories: async (id) => {
         let endpoint = `${CATEGORIES_API_URL}/${id}/subcategories`
         try{
-            const response = await axios.get(endpoint);
+            const response = await axios.get(endpoint, {withCredentials: true});
             return response.data
         }
         catch (err) {  
