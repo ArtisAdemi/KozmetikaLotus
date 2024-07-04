@@ -19,7 +19,7 @@ if (config.use_env_variable) {
       max: 20, // Maximum number of connection in pool
       min: 0, // Minimum number of connection in pool
       acquire: 30000, // Maximum time (ms) that pool will try to get connection before throwing error
-      idle: 7000 // Maximum time (ms) that a connection can be idle before being released
+      idle: 10000 // Maximum time (ms) that a connection can be idle before being released
     }
   });
 } else {
@@ -30,7 +30,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, {
     ...config,
     pool: {
-      max: 5, // Maximum number of connection in pool
+      max: 20, // Maximum number of connection in pool
       min: 0, // Minimum number of connection in pool
       acquire: 30000, // Maximum time (ms) that pool will try to get connection before throwing error
       idle: 10000 // Maximum time (ms) that a connection can be idle before being released
