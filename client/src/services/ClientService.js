@@ -12,7 +12,7 @@ const ClientsService = {
                 params["limit"] = limit
             }
             endpoint += buildUrl(params)
-            const response = await axios.get(endpoint);
+            const response = await axios.get(endpoint, {withCredentials:true});
             return response.data;
         } catch (err) {
             console.error('Error fetching categories:', err);
