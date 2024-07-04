@@ -13,29 +13,13 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], {
-    ...config,
-    pool: {
-      max: 20, // Maximum number of connection in pool
-      min: 0, // Minimum number of connection in pool
-      acquire: 30000, // Maximum time (ms) that pool will try to get connection before throwing error
-      idle: 10000 // Maximum time (ms) that a connection can be idle before being released
-    }
-  });
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   if(env === "production"){
     const pg = require('pg'); // Explicitly require pg for production
     config.dialectModule = pg; // Assign pg module to dialectModule
   }
-  sequelize = new Sequelize(config.database, config.username, config.password, {
-    ...config,
-    pool: {
-      max: 20, // Maximum number of connection in pool
-      min: 0, // Minimum number of connection in pool
-      acquire: 30000, // Maximum time (ms) that pool will try to get connection before throwing error
-      idle: 10000 // Maximum time (ms) that a connection can be idle before being released
-    }
-  });
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs
