@@ -50,16 +50,6 @@ apiRouter.use("/clients", clientsRouter);
 // Mount the apiRouter under the /api endpoint
 app.use("/api", apiRouter);
 
-// Middleware to close Sequelize connection after each request
-app.use((req, res, next) => {
-    res.on('finish', () => {
-        db.sequelize.close()
-            .then(() => console.log('Sequelize connection closed'))
-            .catch(err => console.error('Error closing Sequelize connection:', err));
-    });
-    next();
-});
-
 // Creating sequelize sync with db
 db.sequelize.sync().then(() => {
     seedCategories();
