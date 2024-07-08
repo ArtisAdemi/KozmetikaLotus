@@ -1,0 +1,46 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Use the Node.js version your project needs
+
+    - name: Install client dependencies
+      run: npm install
+      working-directory: ./client # Install client dependencies
+
+    - name: Install server dependencies
+      run: npm install
+      working-directory: ./server # Install server dependencies
+
+    - name: Build client
+      run: npm run build
+      working-directory: ./client
+
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+
+    - name: Deploy to VPS
+      env:
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+        VPS_PATH: ${{ secrets.VPS_PATH }}
+      run: |
+        sshpass -p "$PASSWORD" rsync -avz -e "ssh -o StrictHostKeyChecking=no" client/build/ $USER@$VPS_HOST:$VPS_PATH/client/build
+        sshpass -p "$PASSWORD" rsync -avz -e "ssh -o StrictHostKeyChecking=no" server/ $USER@$VPS_HOST:$VPS_PATH/server
+        sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USER@$VPS_HOST 'cd $VPS_PATH/server && npm install && pm2 restart all'
+      working-directory: ./
